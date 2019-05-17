@@ -1,0 +1,19 @@
+{
+  "name": "insg",
+  "version": "1.0.0",
+  "description": "This is full-stack project generated with nodejs & Angular 7.\r Please refer to http://45.76.63.76 for demo.",
+  "main": ".\\server\\dist\\server.js",
+  "scripts": {
+    "build": "cd ./server/ && npm run build && cd ../client/ && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seesea2/insg.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/seesea2/insg/issues"
+  },
+  "homepage": "https://github.com/seesea2/insg#readme"
+}

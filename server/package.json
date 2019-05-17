@@ -1,9 +1,10 @@
 {
   "name": "server",
-  "main": "webpack.config.js",
+  "version": "0.0.1",
   "scripts": {
     "build": "webpack --concfig webpack.config.js --progress --colors"
   },
+  "private": true,
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
@@ -27,7 +28,5 @@
     "webpack-cli": "^3.3.2",
     "webpack-node-externals": "^1.7.2"
   },
-  "description": "server",
-  "author": "",
   "license": "ISC"
 }
