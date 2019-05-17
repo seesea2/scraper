@@ -1,0 +1,61 @@
+################ Get product
+http://localhost/api/gifts/products
+
+############### Add product
+
+POST http://localhost/api/gifts/products HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Bag",
+    "category": "/Bags",
+    "price": 100,
+    "packaging": "N.A.",
+    "material": "Nilon",
+    "size": "35x28x15 cm",
+    "note": "no note."
+}
+
+############################# Edit product
+
+PUT http://localhost/api/gifts/products HTTP/1.1
+content-type: application/json
+
+{
+    "_id": "5c28a5fa9f69f23264e0375a",
+    "img": ["electronics1.jpg"],
+    "name": "IT",
+    "category": "/IT",
+    "price": 100,
+    "packaging": "metal",
+    "material": "Copper",
+    "size": "100x50x50 cm",
+    "note": "no note.",
+    "retailer": "fg"
+}
+
+################### Delete product
+
+DELETE http://localhost/api/gifts/products?_id=5c28a5ed9f69f23264e03759
+
+################### Get Inventory
+
+http://localhost/api/gifts/products/inventory
+
+################### Edit Inventory
+
+PUT http://localhost/api/gifts/products/inventory HTTP/1.1
+content-type: application/json
+
+{
+    "product": 
+    {
+        "_id": "5c28b72583495120102b82a4"
+    },
+    "qty": 40
+}
+
+################### Get catalog
+http://localhost/api/gifts/products/samples
+################### Get catalog
+http://localhost/api/gifts/products/categories
