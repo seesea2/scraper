@@ -33,15 +33,15 @@ app.use(
 app.use('/api', apiRouter);
 
 app.get('/', (req: Request, res: Response) => {
-  return res.status(200).sendFile(join(__dirname, '/browser/index.html'));
+  return res.status(200).sendFile(join(__dirname, '/client/index.html'));
 });
 
-// Server static files from /browser
-app.use(express.static(join(__dirname, '/browser')));
+// Server static files from /client
+app.use(express.static(join(__dirname, '/client')));
 
 // error handling - 1
 app.all('/*', (req: Request, res: Response) => {
-  return res.status(200).sendFile(join(__dirname, '/browser/index.html'));
+  return res.status(200).sendFile(join(__dirname, '/client/index.html'));
 });
 // error handling - 2
 app.use((req: Request, res: Response, next: NextFunction) => {
