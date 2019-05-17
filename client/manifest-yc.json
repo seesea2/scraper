@@ -1,7 +1,7 @@
 {
   "lang": "en",
-  "short_name": "insg",
-  "name": "insg-info",
+  "short_name": "InSg",
+  "name": "InSg",
   "icons": [{
       "src": "/images/icons-192.png",
       "type": "image/png",
@@ -13,7 +13,7 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "insg.info",
+  "start_url": "insg",
   "background_color": "#3367D6",
   "display": "standalone",
   "scope": "/",
