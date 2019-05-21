@@ -11,9 +11,8 @@ import { apiRouter } from './api-router';
 
 // Express server
 const app = express();
-const HOST =
-  process.env.IP || process.env.OPENSHIFT_NODEJS_IP || 'localhost' || '0.0.0.0';
-const PORT = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 80;
+const HOST = 'localhost';
+const PORT = 80;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -49,14 +48,14 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 // Start up the Node server
-// liych - http
+// http
 app.set('domain', HOST);
 app.set('port', PORT);
 app.listen(app.get('port'), () => {
   console.log(`Node server listening on http://${HOST}:${PORT}`);
 });
 
-// liych - https default port
+// https default port
 // const httpsOptions = {
 //   cert: fs.readFileSync(join(__dirname, '/keys/certificate.pem')),
 //   key: fs.readFileSync(join(__dirname, '/keys/privatekey.pem'))

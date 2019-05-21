@@ -48,30 +48,34 @@ function trimToFirstCapital(org_string: string): string {
   return output_str;
 }
 
-const randomTypes = { capital: 'capital', number: 'number', string: 'string' };
+enum RandomTypes {
+  Capital,
+  Number,
+  String
+}
 
 // return string of random numbers with specified length.
 function randomNumber(length: number): string {
-  return random(randomTypes.number, length);
+  return random(RandomTypes.Number, length);
 }
 
 // return string of random capital characters with specified length.
 function randomCapitals(length: number): string {
-  return random(randomTypes.capital, length);
+  return random(RandomTypes.Capital, length);
 }
 
 // return string of random characters or numbers with specified length.
 function randomString(length: number): string {
-  return random(randomTypes.string, length);
+  return random(RandomTypes.String, length);
 }
 
-function random(type: string, length: number): string {
+function random(type: RandomTypes, length: number): string {
   let rString: string = '';
-  if (type === randomTypes.string) {
+  if (type === RandomTypes.String) {
     rString = 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  } else if (type === randomTypes.number) {
+  } else if (type === RandomTypes.Number) {
     rString = '0123456789';
-  } else if (type === randomTypes.capital) {
+  } else if (type === RandomTypes.Capital) {
     rString = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   } else {
     return '';
@@ -89,5 +93,5 @@ export {
   randomCapitals,
   randomNumber,
   randomString,
-  randomTypes
+  RandomTypes
 };

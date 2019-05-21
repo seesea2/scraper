@@ -5,19 +5,18 @@ const MONGO_URL =
 
 let database: Db;
 
-async function InitDb() {
+async function InitDb(): Promise<Db> {
   try {
-    const client = await MongoClient.connect(
-      MONGO_URL,
-      { useNewUrlParser: true }
-    );
+    const client = await MongoClient.connect(MONGO_URL, {
+      useNewUrlParser: true
+    });
     return (database = client.db('insg'));
   } catch (e) {
     throw 'Database connection failed.';
   }
 }
 
-async function MongoDb() {
+async function MongoDb(): Promise<Db> {
   if (database) {
     return database;
   }
