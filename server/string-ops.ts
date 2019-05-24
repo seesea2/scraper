@@ -5,10 +5,10 @@ const password = 'inSGyc83';
 const key = crypto.scryptSync(password, 'salt', 24);
 const iv = Buffer.alloc(16, 0);
 
-export function encrypt(text: string) {
+export function encrypt(text: string): string {
   try {
     let cipher = crypto.createCipheriv(algorithm, key, iv);
-    let crypted = cipher.update(text, 'utf8', 'hex');
+    let crypted: string = cipher.update(text, 'utf8', 'hex');
     crypted += cipher.final('hex');
     return crypted;
   } catch (e) {
@@ -16,38 +16,20 @@ export function encrypt(text: string) {
   }
 }
 
-export function decrypt(text: string) {
-  let decipher = crypto.createDecipheriv(algorithm, key, iv);
-  let dec = decipher.update(text, 'hex', 'utf8');
-  dec += decipher.final('utf8');
-  return dec;
+export function decrypt(text: string): string {
+  try {
+    let decipher = crypto.createDecipheriv(algorithm, key, iv);
+    let dec: string = decipher.update(text, 'hex', 'utf8');
+    dec += decipher.final('utf8');
+    return dec;
+  } catch (e) {
+    console.log('decrypt => ', e);
+  }
 }
 
 /*
  * string operation
  */
-
-// Adjust string to better display. Capital first character of each word.
-function trimToFirstCapital(org_string: string): string {
-  if (!org_string) {
-    return '';
-  }
-  let output_str = '';
-  const str_split = org_string.trim().split(' ');
-  str_split.forEach(org => {
-    org = org.trim();
-    if (!org) {
-      return;
-    } else if (output_str) {
-      output_str +=
-        ' ' + org.charAt(0).toUpperCase() + org.substring(1).toLowerCase();
-    } else {
-      output_str = org.charAt(0).toUpperCase() + org.substring(1).toLowerCase();
-    }
-  });
-  return output_str;
-}
-
 enum RandomTypes {
   Capital,
   Number,

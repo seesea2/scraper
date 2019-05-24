@@ -161,7 +161,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<router-outlet>Loading...</router-outlet>\n\n<app-footer></app-footer>\n"
+module.exports = "<router-outlet>Loading...</router-outlet>\r\n\r\n<app-footer></app-footer>\r\n"
 
 /***/ }),
 
@@ -1053,7 +1053,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\source-code\insg\client\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! C:\projects\insg\client\src\main.ts */"./src/main.ts");
 
 
 /***/ })
