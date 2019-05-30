@@ -1,7 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CartCheckoutComponent } from './checkout.component';
-import { MatStepperModule, MatFormFieldModule } from '@angular/material';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatStepperModule } from '@angular/material/stepper';
 
 describe('CheckoutComponent', () => {
   let component: CartCheckoutComponent;

@@ -2,7 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 
 import { ViewProductComponent } from './view-product.component';
-import { MatProgressSpinnerModule, MatCardModule, MatFormFieldModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 describe('ViewProductComponent', () => {
   let component: ViewProductComponent;

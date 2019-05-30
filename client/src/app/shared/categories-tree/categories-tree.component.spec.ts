@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatTreeModule } from '@angular/material';
+import { MatTreeModule } from '@angular/material/tree';
 
 import { CategoriesTreeComponent } from './categories-tree.component';
 

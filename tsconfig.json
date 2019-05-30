@@ -5,10 +5,7 @@
     "outDir": "./dist/out-tsc",
     "module": "es2015",
     "moduleResolution": "node",
-    "target": "es5",
-    "lib": [
-      "es2018",
-      "dom"
-    ]
-	}
+    "target": "es2015",
+    "lib": ["es2018", "dom"]
+  }
 }
