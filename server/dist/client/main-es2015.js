@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<router-outlet>Loading...</router-outlet>\r\n\r\n<app-footer></app-footer>\r\n"
+module.exports = "<router-outlet></router-outlet>\r\n\r\n<app-footer></app-footer>"
 
 /***/ }),
 

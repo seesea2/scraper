@@ -70,10 +70,4 @@ function random(type: RandomTypes, length: number): string {
   return result;
 }
 
-export {
-  trimToFirstCapital,
-  randomCapitals,
-  randomNumber,
-  randomString,
-  RandomTypes
-};
+export { randomCapitals, randomNumber, randomString, RandomTypes };

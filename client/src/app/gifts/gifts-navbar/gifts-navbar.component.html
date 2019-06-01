@@ -13,7 +13,8 @@
     </a>
     <a routerLink="/gifts/cart" matTooltip="View Cart">
       <button *ngIf="cartItemCount<=0" mat-button class="text-white">Cart</button>
-      <button *ngIf="cartItemCount>0" mat-button class="text-white" matBadge="{{cartItemCount}}" matBadgeColor="accent">Cart</button>
+      <button *ngIf="cartItemCount>0" mat-button class="text-white" matBadge="{{cartItemCount}}"
+        matBadgeColor="accent">Cart</button>
     </a>
     <a routerLink="/gifts/trackOrder" matTooltip="Track Order">
       <button mat-button class="text-white">Order</button>
