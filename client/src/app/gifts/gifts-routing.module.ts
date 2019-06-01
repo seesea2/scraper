@@ -10,30 +10,41 @@ const giftsRoutes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: '../gifts-home/gifts-home.module#GiftsHomeModule'
+        loadChildren: () =>
+          import('../gifts-home/gifts-home.module').then(m => m.GiftsHomeModule)
       },
       {
         path: 'browse',
-        loadChildren: '../gifts-browse/gifts-browse.module#GiftsBrowseModule'
+        loadChildren: () =>
+          import('../gifts-browse/gifts-browse.module').then(
+            m => m.GiftsBrowseModule
+          )
       },
       {
         path: 'cart',
-        loadChildren: '../gifts-cart/gifts-cart.module#GiftsCartModule'
+        loadChildren: () =>
+          import('../gifts-cart/gifts-cart.module').then(m => m.GiftsCartModule)
       },
       {
         path: 'trackOrder',
-        loadChildren:
-          '../gifts-track-order/gifts-track-order.module#GiftsTrackOrderModule'
+        loadChildren: () =>
+          import('../gifts-track-order/gifts-track-order.module').then(
+            m => m.GiftsTrackOrderModule
+          )
       },
       {
         path: 'view',
-        loadChildren:
-          '../gifts-view-product/gifts-view-product.module#GiftsViewProductModule'
+        loadChildren: () =>
+          import('../gifts-view-product/gifts-view-product.module').then(
+            m => m.GiftsViewProductModule
+          )
       },
       {
         path: 'registerLogin',
-        loadChildren:
-          '../register-login/register-login.module#RegisterLoginModule'
+        loadChildren: () =>
+          import('../register-login/register-login.module').then(
+            m => m.RegisterLoginModule
+          )
       }
     ]
   }

@@ -1,5 +1,28 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["main"],{
 
+/***/ "./$$_lazy_route_resource lazy recursive":
+/*!******************************************************!*\
+  !*** ./$$_lazy_route_resource lazy namespace object ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function webpackEmptyAsyncContext(req) {
+	// Here Promise.resolve().then() is used instead of new Promise() to prevent
+	// uncaught exception popping up in devtools
+	return Promise.resolve().then(function() {
+		var e = new Error("Cannot find module '" + req + "'");
+		e.code = 'MODULE_NOT_FOUND';
+		throw e;
+	});
+}
+webpackEmptyAsyncContext.keys = function() { return []; };
+webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
+module.exports = webpackEmptyAsyncContext;
+webpackEmptyAsyncContext.id = "./$$_lazy_route_resource lazy recursive";
+
+/***/ }),
+
 /***/ "./node_modules/raw-loader/index.js!./src/app/app.component.html":
 /*!**************************************************************!*\
   !*** ./node_modules/raw-loader!./src/app/app.component.html ***!
@@ -44,90 +67,6 @@ module.exports = "<form [formGroup]=\"sendMessageFormGroup\" class=\"container\"
 
 /***/ }),
 
-/***/ "./src/$$_lazy_route_resource lazy recursive":
-/*!**********************************************************!*\
-  !*** ./src/$$_lazy_route_resource lazy namespace object ***!
-  \**********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var map = {
-	"../gifts-browse/gifts-browse.module": [
-		"./src/app/gifts-browse/gifts-browse.module.ts",
-		"common",
-		"gifts-browse-gifts-browse-module"
-	],
-	"../gifts-cart/gifts-cart.module": [
-		"./src/app/gifts-cart/gifts-cart.module.ts",
-		"common",
-		"gifts-cart-gifts-cart-module"
-	],
-	"../gifts-home/gifts-home.module": [
-		"./src/app/gifts-home/gifts-home.module.ts",
-		"gifts-home-gifts-home-module"
-	],
-	"../gifts-track-order/gifts-track-order.module": [
-		"./src/app/gifts-track-order/gifts-track-order.module.ts",
-		"gifts-track-order-gifts-track-order-module"
-	],
-	"../gifts-view-product/gifts-view-product.module": [
-		"./src/app/gifts-view-product/gifts-view-product.module.ts",
-		"common",
-		"gifts-view-product-gifts-view-product-module"
-	],
-	"../register-login/register-login.module": [
-		"./src/app/register-login/register-login.module.ts",
-		"default~register-login-register-login-module~staffs-staffs-module"
-	],
-	"../staffs-inventory/staffs-inventory.module": [
-		"./src/app/staffs-inventory/staffs-inventory.module.ts",
-		"staffs-inventory-staffs-inventory-module"
-	],
-	"./dictionary/dictionary.module": [
-		"./src/app/dictionary/dictionary.module.ts",
-		"dictionary-dictionary-module"
-	],
-	"./gifts/gifts.module": [
-		"./src/app/gifts/gifts.module.ts",
-		"common",
-		"gifts-gifts-module"
-	],
-	"./lunchfun/lunchfun.module": [
-		"./src/app/lunchfun/lunchfun.module.ts",
-		"lunchfun-lunchfun-module"
-	],
-	"./staffs/staffs.module": [
-		"./src/app/staffs/staffs.module.ts",
-		"default~register-login-register-login-module~staffs-staffs-module",
-		"staffs-staffs-module"
-	],
-	"./web-dev/web-dev.module": [
-		"./src/app/web-dev/web-dev.module.ts",
-		"web-dev-web-dev-module"
-	]
-};
-function webpackAsyncContext(req) {
-	if(!__webpack_require__.o(map, req)) {
-		return Promise.resolve().then(function() {
-			var e = new Error("Cannot find module '" + req + "'");
-			e.code = 'MODULE_NOT_FOUND';
-			throw e;
-		});
-	}
-
-	var ids = map[req], id = ids[0];
-	return Promise.all(ids.slice(1).map(__webpack_require__.e)).then(function() {
-		return __webpack_require__(id);
-	});
-}
-webpackAsyncContext.keys = function webpackAsyncContextKeys() {
-	return Object.keys(map);
-};
-webpackAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
-module.exports = webpackAsyncContext;
-
-/***/ }),
-
 /***/ "./src/app/app-routing.module.ts":
 /*!***************************************!*\
   !*** ./src/app/app-routing.module.ts ***!
@@ -152,18 +91,32 @@ var routes = [
     },
     {
         path: 'gifts',
-        loadChildren: './gifts/gifts.module#GiftsModule'
+        loadChildren: function () { return __webpack_require__.e(/*! import() | gifts-gifts-module */ "gifts-gifts-module").then(__webpack_require__.bind(null, /*! ./gifts/gifts.module */ "./src/app/gifts/gifts.module.ts")).then(function (m) { return m.GiftsModule; }); }
     },
     {
         path: 'dict',
-        loadChildren: './dictionary/dictionary.module#DictionaryModule'
+        loadChildren: function () {
+            return __webpack_require__.e(/*! import() | dictionary-dictionary-module */ "dictionary-dictionary-module").then(__webpack_require__.bind(null, /*! ./dictionary/dictionary.module */ "./src/app/dictionary/dictionary.module.ts")).then(function (m) { return m.DictionaryModule; });
+        }
     },
     {
         path: 'lunch',
-        loadChildren: './lunchfun/lunchfun.module#LunchfunModule'
+        loadChildren: function () {
+            return __webpack_require__.e(/*! import() | lunchfun-lunchfun-module */ "lunchfun-lunchfun-module").then(__webpack_require__.bind(null, /*! ./lunchfun/lunchfun.module */ "./src/app/lunchfun/lunchfun.module.ts")).then(function (m) { return m.LunchfunModule; });
+        }
     },
-    { path: 'staffs', loadChildren: './staffs/staffs.module#StaffsModule' },
-    { path: 'webdev', loadChildren: './web-dev/web-dev.module#WebDevModule' }
+    {
+        path: 'staffs',
+        loadChildren: function () {
+            return Promise.all(/*! import() | staffs-staffs-module */[__webpack_require__.e("default~register-login-register-login-module~staffs-staffs-module"), __webpack_require__.e("staffs-staffs-module")]).then(__webpack_require__.bind(null, /*! ./staffs/staffs.module */ "./src/app/staffs/staffs.module.ts")).then(function (m) { return m.StaffsModule; });
+        }
+    },
+    {
+        path: 'webdev',
+        loadChildren: function () {
+            return __webpack_require__.e(/*! import() | web-dev-web-dev-module */ "web-dev-web-dev-module").then(__webpack_require__.bind(null, /*! ./web-dev/web-dev.module */ "./src/app/web-dev/web-dev.module.ts")).then(function (m) { return m.WebDevModule; });
+        }
+    }
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {

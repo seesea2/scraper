@@ -134,15 +134,15 @@ const routes = [
         children: [
             {
                 path: '',
-                loadChildren: '../staffs-inventory/staffs-inventory.module#StaffsInventoryModule'
+                loadChildren: () => __webpack_require__.e(/*! import() | staffs-inventory-staffs-inventory-module */ "staffs-inventory-staffs-inventory-module").then(__webpack_require__.bind(null, /*! ../staffs-inventory/staffs-inventory.module */ "./src/app/staffs-inventory/staffs-inventory.module.ts")).then(m => m.StaffsInventoryModule)
             },
             {
                 path: 'inventory',
-                loadChildren: '../staffs-inventory/staffs-inventory.module#StaffsInventoryModule'
+                loadChildren: () => __webpack_require__.e(/*! import() | staffs-inventory-staffs-inventory-module */ "staffs-inventory-staffs-inventory-module").then(__webpack_require__.bind(null, /*! ../staffs-inventory/staffs-inventory.module */ "./src/app/staffs-inventory/staffs-inventory.module.ts")).then(m => m.StaffsInventoryModule)
             },
             {
                 path: 'registerLogin',
-                loadChildren: '../register-login/register-login.module#RegisterLoginModule'
+                loadChildren: () => Promise.resolve(/*! import() */).then(__webpack_require__.bind(null, /*! ../register-login/register-login.module */ "./src/app/register-login/register-login.module.ts")).then(m => m.RegisterLoginModule)
             }
         ]
     }

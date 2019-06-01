@@ -10,18 +10,24 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren:
-          '../staffs-inventory/staffs-inventory.module#StaffsInventoryModule'
+        loadChildren: () =>
+          import('../staffs-inventory/staffs-inventory.module').then(
+            m => m.StaffsInventoryModule
+          )
       },
       {
         path: 'inventory',
-        loadChildren:
-          '../staffs-inventory/staffs-inventory.module#StaffsInventoryModule'
+        loadChildren: () =>
+          import('../staffs-inventory/staffs-inventory.module').then(
+            m => m.StaffsInventoryModule
+          )
       },
       {
         path: 'registerLogin',
-        loadChildren:
-          '../register-login/register-login.module#RegisterLoginModule'
+        loadChildren: () =>
+          import('../register-login/register-login.module').then(
+            m => m.RegisterLoginModule
+          )
       }
     ]
   }

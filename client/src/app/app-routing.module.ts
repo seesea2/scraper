@@ -9,18 +9,28 @@ const routes: Routes = [
   },
   {
     path: 'gifts',
-    loadChildren: './gifts/gifts.module#GiftsModule'
+    loadChildren: () => import('./gifts/gifts.module').then(m => m.GiftsModule)
   },
   {
     path: 'dict',
-    loadChildren: './dictionary/dictionary.module#DictionaryModule'
+    loadChildren: () =>
+      import('./dictionary/dictionary.module').then(m => m.DictionaryModule)
   },
   {
     path: 'lunch',
-    loadChildren: './lunchfun/lunchfun.module#LunchfunModule'
+    loadChildren: () =>
+      import('./lunchfun/lunchfun.module').then(m => m.LunchfunModule)
   },
-  { path: 'staffs', loadChildren: './staffs/staffs.module#StaffsModule' },
-  { path: 'webdev', loadChildren: './web-dev/web-dev.module#WebDevModule' }
+  {
+    path: 'staffs',
+    loadChildren: () =>
+      import('./staffs/staffs.module').then(m => m.StaffsModule)
+  },
+  {
+    path: 'webdev',
+    loadChildren: () =>
+      import('./web-dev/web-dev.module').then(m => m.WebDevModule)
+  }
 ];
 
 @NgModule({
