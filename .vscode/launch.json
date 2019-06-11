@@ -10,7 +10,7 @@
       "name": "Launch Program",
       "runtimeExecutable": "node",
       "program": "${workspaceFolder}/server/dist/server.js",
-      "restart": true
+      "restart": false
     }
   ]
 }

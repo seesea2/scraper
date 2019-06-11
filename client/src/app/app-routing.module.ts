@@ -22,6 +22,11 @@ const routes: Routes = [
       import('./lunchfun/lunchfun.module').then(m => m.LunchfunModule)
   },
   {
+    path: 'http',
+    loadChildren: () =>
+      import('./send-http/send-http.module').then(m => m.SendHttpModule)
+  },
+  {
     path: 'staffs',
     loadChildren: () =>
       import('./staffs/staffs.module').then(m => m.StaffsModule)
