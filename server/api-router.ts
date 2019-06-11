@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { Request, Response } from './interface';
 
+import { busRouter } from './lta/router';
 import {
   dictionaryRouter,
   lunchfunRouter
@@ -13,6 +14,7 @@ const apiRouter = Router();
 // url: /api
 apiRouter.use('/dictionary', dictionaryRouter);
 apiRouter.use('/lunchfun', lunchfunRouter);
+apiRouter.use('/lta/bus', busRouter);
 apiRouter.use('/gifts', giftsRouter);
 
 // msg from users; forward it via nodemailer.

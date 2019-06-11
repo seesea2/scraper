@@ -1,8 +1,8 @@
-import * as express from 'express';
-import { Response, NextFunction } from 'express';
+// import * as express from 'express';
+import { Request, Response, NextFunction } from 'express';
 
-interface Request extends express.Request {
+interface RequestInterface extends Request {
   session: any;
 }
 
-export { Request, Response, NextFunction };
+export { RequestInterface as Request, Response, NextFunction };
