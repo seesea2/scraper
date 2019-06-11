@@ -1,4 +1,4 @@
-export interface Product {
+interface Product {
   _id: string;
   name: string;
   price: number;
@@ -11,3 +11,5 @@ export interface Product {
   retailer: string;
   modifiedOn: Date;
 }
+
+export default Product;

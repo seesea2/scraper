@@ -17,4 +17,4 @@ giftsStaffsRouter.delete('/deleteuser', (req: Request, res: Response) => {
   // DeleteUser(req, res);
 });
 
-export { giftsStaffsRouter };
+export default giftsStaffsRouter;

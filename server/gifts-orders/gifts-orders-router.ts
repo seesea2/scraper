@@ -87,4 +87,4 @@ giftsOrdersRouter.put('/updateOrderItem', (req: Request, res: Response) => {
   return res.status(200).send({ result: 'ok' });
 });
 
-export { giftsOrdersRouter };
+export default giftsOrdersRouter;

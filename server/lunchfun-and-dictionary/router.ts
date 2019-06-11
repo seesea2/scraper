@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import { Request, Response } from '../interface';
-import { CheckOxfordDictionary } from './dictionary';
+import CheckOxfordDictionary from './dictionary';
 import { AddPal, DeletePal, GetPals, GetPalsAttendance } from './lunchfun-pals';
 import { AddRecord, DeleteRecord, GetRecords } from './lunchfun-records';
 

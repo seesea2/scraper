@@ -5,17 +5,16 @@ import { Delete, Get, Post, Put } from './http-request';
 
 const httpRouter = Router();
 
-httpRouter.get('', (req: Request, res: Response) => {
-  Get(req, res);
-});
 httpRouter.post('', (req: Request, res: Response) => {
-  Post(req, res);
-});
-httpRouter.put('', (req: Request, res: Response) => {
-  Put(req, res);
-});
-httpRouter.delete('', (req: Request, res: Response) => {
-  Delete(req, res);
+  if (req.body.type === 'DELETE') {
+    Delete(req.body, res);
+  } else if (req.body.type === 'GET') {
+    Get(req.body, res);
+  } else if (req.body.type === 'POST') {
+    Post(req.body, res);
+  } else if (req.body.type === 'PUT') {
+    Put(req.body, res);
+  }
 });
 
-export { httpRouter };
+export default httpRouter;

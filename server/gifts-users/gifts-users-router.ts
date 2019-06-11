@@ -54,4 +54,4 @@ giftsUsersRouter.post('/cart/checkout', (req: Request, res: Response) => {
   CartCheckout(req, res);
 });
 
-export { giftsUsersRouter };
+export default giftsUsersRouter;

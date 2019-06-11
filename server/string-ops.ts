@@ -5,7 +5,7 @@ const password = 'inSGyc83';
 const key = crypto.scryptSync(password, 'salt', 24);
 const iv = Buffer.alloc(16, 0);
 
-export function encrypt(text: string): string {
+function encrypt(text: string): string {
   try {
     let cipher = crypto.createCipheriv(algorithm, key, iv);
     let crypted: string = cipher.update(text, 'utf8', 'hex');
@@ -16,7 +16,7 @@ export function encrypt(text: string): string {
   }
 }
 
-export function decrypt(text: string): string {
+function decrypt(text: string): string {
   try {
     let decipher = crypto.createDecipheriv(algorithm, key, iv);
     let dec: string = decipher.update(text, 'hex', 'utf8');
@@ -70,4 +70,11 @@ function random(type: RandomTypes, length: number): string {
   return result;
 }
 
-export { randomCapitals, randomNumber, randomString, RandomTypes };
+export {
+  encrypt,
+  decrypt,
+  randomCapitals,
+  randomNumber,
+  randomString,
+  RandomTypes
+};

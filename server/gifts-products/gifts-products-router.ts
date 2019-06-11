@@ -61,4 +61,4 @@ giftsProductsRouter.put('/inventory', (req, res) => {
   AdjustInventory(req.body._id, req.body.qty, res);
 });
 
-export { giftsProductsRouter };
+export default giftsProductsRouter;

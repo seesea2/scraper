@@ -5,3 +5,15 @@ content-type: application/json
     "BusStopCode": "83139",
     "ServiceNo": 15
 }
+
+##############################################
+
+# GET http://localhost/api/http/hi?q1=1&q2=2
+POST  http://localhost/api/http?q1=1&q2=2
+content-type: application/json
+h1: 'my-name'
+
+{
+    "a": "83139",
+    "b": 15
+}

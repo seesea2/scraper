@@ -7,7 +7,7 @@ import * as cors from 'cors';
 import * as bodyParser from 'body-parser';
 
 import { Request, Response, NextFunction } from './interface';
-import { apiRouter } from './api-router';
+import apiRouter from './api-router';
 
 // Express server
 const app = express();

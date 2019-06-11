@@ -37,4 +37,4 @@ function SendEmail(body: any, res: Response) {
   return res.status(200).send({ result: 'ok' });
 }
 
-export { SendEmail };
+export default SendEmail;

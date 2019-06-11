@@ -1,4 +1,4 @@
-import * as axios from 'axios';
+import Axios from 'axios';
 
 import { Response } from '../interface';
 import { BusArrivalReturn } from './bus-arrival-interface';
@@ -23,8 +23,7 @@ function getBusArrival(res: Response, busStopCode: string, serviceNo?: string) {
   if (serviceNo) {
     url += '&serviceNo=' + serviceNo;
   }
-  axios
-    .get(url, config)
+  Axios.get(url, config)
     .then(respose => {
       console.log(respose.status);
       console.log(respose.statusText);

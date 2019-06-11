@@ -23,4 +23,4 @@ async function CheckOxfordDictionary(word: string, res: Response) {
   );
 }
 
-export { CheckOxfordDictionary };
+export default CheckOxfordDictionary;

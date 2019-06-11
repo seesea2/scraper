@@ -28,5 +28,5 @@ module.exports = {
   node: {
     __dirname: false
   },
-  watch: false
+  watch: true
 };

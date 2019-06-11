@@ -1,11 +1,11 @@
-import { Product } from '../gifts-products/products-interface';
+import Product from '../gifts-products/products-interface';
 
-export interface CartItem {
+interface CartItem {
   product: Product;
   qty: number;
 }
 
-export interface Cart {
+interface Cart {
   customer: {
     name: string;
     mobile: number;
@@ -14,3 +14,5 @@ export interface Cart {
   cartItems: CartItem[];
   total: number;
 }
+
+export { Cart, CartItem };
