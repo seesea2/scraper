@@ -4,31 +4,37 @@ import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 
 import { httpOptions } from '../core/http-interface';
-import { BusArrivalReturn } from './bus-arrival-interface';
+import { BusArrivalReturn, BusStopInfo } from './bus-arrival-interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BusArrivalService {
-  private busStopHistorySubject = new BehaviorSubject<string[]>([]);
-  busStopHistory$ = this.busStopHistorySubject.asObservable();
-  busStopHistory: string[];
+  private busStopBookmarkSubject = new BehaviorSubject<string[]>([]);
+  busStopBookmark$ = this.busStopBookmarkSubject.asObservable();
+  busStopBookmark: BusStopInfo[];
 
   constructor(
     private cookieService: CookieService,
     private httpClient: HttpClient
   ) {
-    this.busStopHistory$.subscribe(data => {
-      this.busStopHistory = data;
+    this.busStopBookmark$.subscribe(data => {
+      this.busStopBookmark = data;
     });
-    this.getBusStopHistory();
+    this.getCookieBusStopBookmark();
   }
 
-  getBusStopHistory() {
-    let cookie = this.cookieService.get('InSgBusStopCode');
+  getCookieBusStopBookmark() {
+    let cookie = this.cookieService.get('InSgBusStopBookmark');
     if (cookie) {
-      this.busStopHistorySubject.next(JSON.parse(cookie));
+      this.busStopBookmarkSubject.next(JSON.parse(cookie));
     }
+  }
+
+  getBusStopInfo(busStopCode: string) {
+    return this.httpClient.get<BusStopInfo>(
+      `/api/lta/bus/busStop/${busStopCode}`
+    );
   }
 
   getBusArrival(busStopCode: string): Observable<BusArrivalReturn> {
@@ -37,27 +43,28 @@ export class BusArrivalService {
     );
   }
 
-  bookmarkBusStop(busStopCode: string) {
-    if (this.busStopHistory.includes(busStopCode)) {
+  addBusStopBookmark(busStopInfo: BusStopInfo) {
+    if (this.busStopBookmark.includes(busStopInfo)) {
       return;
     }
-    this.busStopHistory.push(busStopCode);
-    this.busStopHistorySubject.next(this.busStopHistory);
+    this.busStopBookmark.push(busStopInfo);
+    this.busStopBookmarkSubject.next(this.busStopBookmark);
     this.cookieService.set(
-      'InSgBusStopCode',
-      JSON.stringify(this.busStopHistory),
+      'InSgBusStopBookmark',
+      JSON.stringify(this.busStopBookmark),
       365 * 10,
       '/'
     );
   }
 
-  deleteBusStopHistory(busStopCode: string) {
-    let i = this.busStopHistory.indexOf(busStopCode);
-    this.busStopHistory.splice(i, 1);
-    this.busStopHistorySubject.next(this.busStopHistory);
+  deleteBusStopBookmark(busStopInfo: BusStopInfo) {
+    let i =this.busStopBookmark.BusStopCode === busStopCode)
+      continue
+    this.busStopBookmark.splice(i, 1);
+    this.busStopBookmarkSubject.next(this.busStopBookmark);
     this.cookieService.set(
       'InSgBusStopCode',
-      JSON.stringify(this.busStopHistory),
+      JSON.stringify(this.busStopBookmark),
       365 * 10,
       '/'
     );

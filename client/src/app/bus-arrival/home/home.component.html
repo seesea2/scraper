@@ -5,7 +5,8 @@
     <mat-form-field>
       <mat-label>Bus Stop Code</mat-label>
       <input matInput #busStopCode type="text" />
-      <button mat-raised-button mat-stroked-button matSuffix color="primary" (click)="getBusArrival(busStopCode.value)">
+      <button mat-raised-button mat-stroked-button matSuffix color="primary"
+        (click)="getBusStopInfoAndBusArrivalTime(busStopCode.value)">
         Get
       </button>
     </mat-form-field>
@@ -37,7 +38,7 @@
       <tr mat-row *matRowDef="let row; columns: busTableColumn"></tr>
     </table>
 
-    <button *ngIf="bShowAddToBookmark" mat-stroked-button color="primary" (click)="bookmarkBusStop()" class="my-3">
+    <button *ngIf="bShowAddToBookmark" mat-stroked-button color="primary" (click)="addBusStopHistory()" class="my-3">
       Bookmark this Bus Stop
     </button>
   </div>
@@ -46,7 +47,7 @@
     <h3>Bus Stop History</h3>
     <mat-action-list *ngFor="let busStop of busStopHistory" dense>
       <div mat-list-item>
-        <button (click)="getBusArrival(busStop)">{{ busStop }}</button>
+        <button (click)="getBusStopInfoAndBusArrivalTime(busStop)">{{ busStop }}</button>
         <button (click)="deleteBusStopHistory(busStop)">x</button>
       </div>
     </mat-action-list>

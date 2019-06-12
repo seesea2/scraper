@@ -1,16 +1,7 @@
 import Axios from 'axios';
 
 import { Response } from '../interface';
-
-const ltaAccountKey = '6sVzf9zXRaCgkJUdjxIw2A==';
-const config = {
-  headers: {
-    AccountKey: ltaAccountKey
-  }
-};
-
-const busArrivalUrl =
-  'http://datamall2.mytransport.sg/ltaodataservice/BusArrivalv2';
+import { busArrivalUrl, headerConfig } from './lta';
 
 function getBusArrival(busStopCode: string, res: Response) {
   if (!busStopCode) {
@@ -18,7 +9,7 @@ function getBusArrival(busStopCode: string, res: Response) {
   }
 
   let url = `${busArrivalUrl}?BusStopCode=${busStopCode}`;
-  Axios.get(url, config)
+  Axios.get(url, headerConfig)
     .then(respose => {
       res.status(200).send(respose.data);
     })
@@ -27,4 +18,4 @@ function getBusArrival(busStopCode: string, res: Response) {
     });
 }
 
-export { getBusArrival };
+export default getBusArrival;

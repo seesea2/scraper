@@ -48,8 +48,17 @@ interface BusTable {
   load: string;
 }
 
+interface BusStopInfo{
+  BusStopCode: string;
+  RoadName: string;
+  Description: string;
+  Latitude: number;
+  Longitude: number;
+}
+
 export {
   BusArrivalReturn,
+  BusStopInfo,
   FeatureType,
   LoadType,
   NextBusData,

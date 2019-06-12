@@ -2,11 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { BusArrivalService } from '../bus-arrival.service';
-import {
-  BusArrivalReturn,
-  BusTable,
-  NextBusData
-} from '../bus-arrival-interface';
+import { BusStopInfo, BusTable, NextBusData } from '../bus-arrival-interface';
 
 @Component({
   selector: 'bus-arrival-home',
@@ -18,13 +14,14 @@ export class HomeComponent implements OnInit {
   busTableColumn: string[] = ['service', 'bus1', 'bus2', 'bus3', 'load'];
   busStopHistory: string[];
   validBusStopCode: string;
+  busStopInfo: BusStopInfo;
   bShowAddToBookmark: boolean;
 
   constructor(
     private busArrivalService: BusArrivalService,
     private snackBar: MatSnackBar
   ) {
-    busArrivalService.busStopHistory$.subscribe(data => {
+    busArrivalService.busStopBookmark$.subscribe(data => {
       this.busStopHistory = data;
     });
   }
@@ -35,15 +32,18 @@ export class HomeComponent implements OnInit {
     this.bShowAddToBookmark = false;
   }
 
-  bookmarkBusStop() {
-    this.busArrivalService.bookmarkBusStop(this.validBusStopCode);
+  addBusStopHistory() {
+    this.busArrivalService.addBusStopHistory(
+      this.validBusStopCode,
+      this.busStopInfo
+    );
   }
 
   deleteBusStopHistory(busStop: string) {
-    this.busArrivalService.deleteBusStopHistory(busStop);
+    this.busArrivalService.deleteBusStopBookmark(busStop);
   }
 
-  getBusArrival(busStopCode: string) {
+  getBusStopInfoAndBusArrivalTime(busStopCode: string) {
     this.busTable = [];
     this.validBusStopCode = '';
     this.bShowAddToBookmark = false;
@@ -53,6 +53,19 @@ export class HomeComponent implements OnInit {
       this.snackBar.open('Invalid Bus Stop Code.', 'Error', { duration: 5000 });
       return;
     }
+
+    this.busArrivalService.getBusStopInfo(busStopCode).subscribe(
+      data => {
+        this.busStopInfo = data;
+        this.getBusArrival(busStopCode);
+      },
+      err => {
+        this.snackBar.open(err, 'Error', { duration: 5000 });
+      }
+    );
+  }
+
+  getBusArrival(busStopCode: string) {
     this.busArrivalService.getBusArrival(busStopCode).subscribe(
       data => {
         if (data.Services.length <= 0) {
