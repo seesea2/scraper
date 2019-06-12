@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { BusArrivalService } from '../bus-arrival.service';
 import {
@@ -14,23 +14,15 @@ import {
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  formGroup: FormGroup;
-  errorMsg: string;
-  validBusStopCode: string;
   busTable: BusTable[];
-  busTableColumn: string[] = [
-    'service',
-    'bus1',
-    'bus2',
-    'bus3',
-    'operator',
-    'load'
-  ];
+  busTableColumn: string[] = ['service', 'bus1', 'bus2', 'bus3', 'load'];
   busStopHistory: string[];
+  validBusStopCode: string;
+  bShowAddToBookmark: boolean;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private busArrivalService: BusArrivalService
+    private busArrivalService: BusArrivalService,
+    private snackBar: MatSnackBar
   ) {
     busArrivalService.busStopHistory$.subscribe(data => {
       this.busStopHistory = data;
@@ -38,12 +30,9 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.formGroup = this.formBuilder.group({
-      busStopCode: ['']
-    });
     this.busTable = [];
     this.validBusStopCode = '';
-    this.errorMsg = '';
+    this.bShowAddToBookmark = false;
   }
 
   bookmarkBusStop() {
@@ -55,35 +44,46 @@ export class HomeComponent implements OnInit {
   }
 
   getBusArrival(busStopCode: string) {
-    this.errorMsg = '';
     this.busTable = [];
     this.validBusStopCode = '';
+    this.bShowAddToBookmark = false;
+
     busStopCode = busStopCode.trim();
     if (!busStopCode) {
-      this.errorMsg = 'Invalid Bus Stop Code.';
+      this.snackBar.open('Invalid Bus Stop Code.', 'Error', { duration: 5000 });
       return;
     }
     this.busArrivalService.getBusArrival(busStopCode).subscribe(
       data => {
         if (data.Services.length <= 0) {
-          this.errorMsg = 'No bus service at the Bus Stop.';
+          this.snackBar.open(
+            'Bus service unavailable at the Bus Stop.',
+            'Error',
+            {
+              duration: 5000
+            }
+          );
           return;
         }
-        this.validBusStopCode = data.BusStopCode;
+
         data.Services.forEach(service => {
           let busRow: BusTable = {
             service: service.ServiceNo,
             bus1: calculateArrivalTime(service.NextBus),
             bus2: calculateArrivalTime(service.NextBus2),
             bus3: calculateArrivalTime(service.NextBus3),
-            operator: service.Operator,
-            load: getLoadDescription(service.NextBus.Load)
+            load: service.NextBus.Load
           };
           this.busTable.push(busRow);
         });
+
+        this.validBusStopCode = data.BusStopCode;
+        this.bShowAddToBookmark = !this.busStopHistory.includes(
+          data.BusStopCode
+        );
       },
       err => {
-        this.errorMsg = err;
+        this.snackBar.open(err, 'Error', { duration: 5000 });
       }
     );
   }

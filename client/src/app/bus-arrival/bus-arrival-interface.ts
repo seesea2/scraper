@@ -45,7 +45,6 @@ interface BusTable {
   bus1: string;
   bus2: string;
   bus3: string;
-  operator: string;
   load: string;
 }
 

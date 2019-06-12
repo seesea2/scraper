@@ -25,7 +25,7 @@ export class BusArrivalService {
   }
 
   getBusStopHistory() {
-    let cookie = this.cookieService.get('busStopCode');
+    let cookie = this.cookieService.get('InSgBusStopCode');
     if (cookie) {
       this.busStopHistorySubject.next(JSON.parse(cookie));
     }
@@ -44,9 +44,9 @@ export class BusArrivalService {
     this.busStopHistory.push(busStopCode);
     this.busStopHistorySubject.next(this.busStopHistory);
     this.cookieService.set(
-      'busStopCode',
+      'InSgBusStopCode',
       JSON.stringify(this.busStopHistory),
-      10 * 365 * 24 * 60 * 60,
+      365 * 10,
       '/'
     );
   }
@@ -56,9 +56,9 @@ export class BusArrivalService {
     this.busStopHistory.splice(i, 1);
     this.busStopHistorySubject.next(this.busStopHistory);
     this.cookieService.set(
-      'busStopCode',
+      'InSgBusStopCode',
       JSON.stringify(this.busStopHistory),
-      10 * 365 * 24 * 60 * 60,
+      365 * 10,
       '/'
     );
   }
