@@ -12,7 +12,7 @@ function encrypt(text: string): string {
     crypted += cipher.final('hex');
     return crypted;
   } catch (e) {
-    console.log('encrypt => ', e);
+    // console.log('encrypt => ', e);
   }
 }
 
@@ -23,7 +23,7 @@ function decrypt(text: string): string {
     dec += decipher.final('utf8');
     return dec;
   } catch (e) {
-    console.log('decrypt => ', e);
+    // console.log('decrypt => ', e);
   }
 }
 

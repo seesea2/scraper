@@ -25,7 +25,7 @@ async function MongoDb(): Promise<Db> {
     await InitDb();
     return database;
   } catch (e) {
-    console.log(e);
+    // console.log(e);
     throw e;
   }
 }

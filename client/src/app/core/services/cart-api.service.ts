@@ -83,7 +83,7 @@ export class CartApiService {
             this.cartSubject.next(cookie_cart);
             this.cartItemCountSubject.next(cookie_cart.cartItems.length);
           }
-          
+
           this.cookieService.set(
             'InSgCart',
             JSON.stringify(cookie_cart),

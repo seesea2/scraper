@@ -7,18 +7,18 @@ interface BusArrivalReturn {
 interface Service {
   ServiceNo: string;
   Operator: string;
-  NextBus: NextBusData[];
-  NextBus2: NextBusData[];
-  NextBus3: NextBusData[];
+  NextBus: NextBusData;
+  NextBus2: NextBusData;
+  NextBus3: NextBusData;
 }
 
 interface NextBusData {
-  OriginCode: number;
-  DestinationCode: number;
-  EstimateArrival: Date;
-  Latitude: number;
-  Longitude: number;
-  VisitNumber: number;
+  OriginCode: string;
+  DestinationCode: string;
+  EstimatedArrival: string;
+  Latitude: string;
+  Longitude: string;
+  VisitNumber: string;
   Load: LoadType;
   Feature: FeatureType;
   Type: VehicleType;

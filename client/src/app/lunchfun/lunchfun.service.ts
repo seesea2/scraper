@@ -31,7 +31,7 @@ export class LunchfunService {
   }
 
   getRecords(): Observable<LunchRecord[]> {
-    return this.httpClient.get<LunchRecord[]>(`/api/lunchfun/records`);
+    return this.httpClient.get<LunchRecord[]>('/api/lunchfun/records');
   }
 
   deleteRecord(lunchRecord: LunchRecord): Observable<any> {

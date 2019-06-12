@@ -59,7 +59,7 @@ async function Register(req: Request, res: Response) {
       return res.status(500).send('Register failed. Please try again later.');
     }
   } catch (e) {
-    console.log(e);
+    // console.log(e);
     return res.status(500).send('Register failed. Please try again later.');
   }
 }
@@ -84,13 +84,11 @@ function UserInfo(session: any, res) {
   if (!bLogin(session)) {
     return res.status(403).send('User Not login.');
   }
-  return res
-    .status(200)
-    .send({
-      _id: session.user._id,
-      uid: session.user.uid,
-      email: session.user.email
-    });
+  return res.status(200).send({
+    _id: session.user._id,
+    uid: session.user.uid,
+    email: session.user.email
+  });
 }
 
 function bLogin(session: any) {

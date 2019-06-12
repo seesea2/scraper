@@ -21,12 +21,6 @@ function Delete(body: any, res: Response) {
     });
 }
 function Post(req: Request, res: Response) {
-  console.log('in get details');
-
-  console.log('req.headers', req.headers);
-  console.log('req.params', req.params);
-  console.log('req.query', req.query);
-  console.log('req.body', req.body);
   let headers = {};
 
   return res.status(200).send(req);

@@ -27,9 +27,9 @@ const routes: Routes = [
       import('./lunchfun/lunchfun.module').then(m => m.LunchfunModule)
   },
   {
-    path: 'nextbus',
+    path: 'busArrival',
     loadChildren: () =>
-      import('./next-bus/next-bus.module').then(m => m.NextBusModule)
+      import('./bus-arrival/bus-arrival.module').then(m => m.BusArrivalModule)
   },
   {
     path: 'staffs',

@@ -1,10 +1,6 @@
-GET http://datamall2.mytransport.sg/ltaodataservice/BusArrivalv2
+GET http://datamall2.mytransport.sg/ltaodataservice/BusArrivalv2?BusStopCode=83139
 content-type: application/json
-
-{
-    "BusStopCode": "83139",
-    "ServiceNo": 15
-}
+AccountKey:
 
 ##############################################
 

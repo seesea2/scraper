@@ -29,7 +29,7 @@ async function AddRecord(payer: string, attendees: string[], res: Response) {
     });
     return res.status(200).send({ result: 'ok' });
   } catch (e) {
-    console.log(e);
+    // console.log(e);
     return res.status(500).send('Error at server. Please try again later.');
   }
 }
