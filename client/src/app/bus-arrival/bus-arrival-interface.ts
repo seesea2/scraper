@@ -1,7 +1,14 @@
-interface BusArrivalReturn {
-  Status: number;
+interface BusStopInfo {
   BusStopCode: string;
-  Services: Service[];
+  RoadName: string;
+  Description: string;
+  Latitude: number;
+  Longitude: number;
+}
+
+interface BusArrivalReturn {
+  busStopInfo: BusStopInfo;
+  busArrival: { Status: number; BusStopCode: string; Services: Service[] };
 }
 
 interface Service {
@@ -46,14 +53,6 @@ interface BusTable {
   bus2: string;
   bus3: string;
   load: string;
-}
-
-interface BusStopInfo{
-  BusStopCode: string;
-  RoadName: string;
-  Description: string;
-  Latitude: number;
-  Longitude: number;
 }
 
 export {

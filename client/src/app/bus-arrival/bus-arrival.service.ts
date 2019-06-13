@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 
 import { httpOptions } from '../core/http-interface';
@@ -10,7 +10,7 @@ import { BusArrivalReturn, BusStopInfo } from './bus-arrival-interface';
   providedIn: 'root'
 })
 export class BusArrivalService {
-  private busStopBookmarkSubject = new BehaviorSubject<string[]>([]);
+  private busStopBookmarkSubject = new BehaviorSubject<BusStopInfo[]>([]);
   busStopBookmark$ = this.busStopBookmarkSubject.asObservable();
   busStopBookmark: BusStopInfo[];
 
@@ -44,7 +44,7 @@ export class BusArrivalService {
   }
 
   addBusStopBookmark(busStopInfo: BusStopInfo) {
-    if (this.busStopBookmark.includes(busStopInfo)) {
+    if (this.existingBookmark(busStopInfo)) {
       return;
     }
     this.busStopBookmark.push(busStopInfo);
@@ -58,15 +58,28 @@ export class BusArrivalService {
   }
 
   deleteBusStopBookmark(busStopInfo: BusStopInfo) {
-    let i =this.busStopBookmark.BusStopCode === busStopCode)
-      continue
-    this.busStopBookmark.splice(i, 1);
+    let i = 0;
+    for (let i = 0; i < this.busStopBookmark.length; i++) {
+      if (this.busStopBookmark[i].BusStopCode === busStopInfo.BusStopCode) {
+        this.busStopBookmark.splice(i, 1);
+        break;
+      }
+    }
     this.busStopBookmarkSubject.next(this.busStopBookmark);
     this.cookieService.set(
-      'InSgBusStopCode',
+      'InSgBusStopBookmark',
       JSON.stringify(this.busStopBookmark),
       365 * 10,
       '/'
     );
+  }
+
+  existingBookmark(busStopInfo: BusStopInfo) {
+    for (let i = 0; i < this.busStopBookmark.length; i++) {
+      if (busStopInfo.BusStopCode === this.busStopBookmark[i].BusStopCode) {
+        return true;
+      }
+    }
+    return false;
   }
 }
