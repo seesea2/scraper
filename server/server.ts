@@ -51,15 +51,15 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 // http
 app.set('domain', HOST);
 app.set('port', PORT);
-app.listen(app.get('port'), () => {
-  console.log(`Node server listening on http://${HOST}:${PORT}`);
-});
+// app.listen(app.get('port'), () => {
+//   console.log(`Node server listening on http://${HOST}:${PORT}`);
+// });
 
 // https default port
-// const httpsOptions = {
-//   cert: fs.readFileSync(join(__dirname, '/keys/certificate.pem')),
-//   key: fs.readFileSync(join(__dirname, '/keys/privatekey.pem'))
-// };
-// const server = https.createServer(httpsOptions, app);
-// server.listen(443);
+const httpsOptions = {
+  cert: fs.readFileSync(join(__dirname, '/cert/insg.key')),
+  key: fs.readFileSync(join(__dirname, '/cert/insg.crt'))
+};
+const server = https.createServer(httpsOptions, app);
+server.listen(443);
 // export { server };

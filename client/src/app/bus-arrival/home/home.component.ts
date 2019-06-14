@@ -33,6 +33,18 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.busTable = [];
     this.bExistingBookmark = false;
+
+    function positionCB(pos) {
+      console.log(pos);
+    }
+    function errorCB(err) {
+      console.log(err);
+    }
+    if (navigator && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(positionCB, errorCB);
+    } else {
+      alert('navigator.geolocation is empty');
+    }
   }
 
   addBusStopBookmark() {
