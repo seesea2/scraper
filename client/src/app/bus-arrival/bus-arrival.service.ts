@@ -58,7 +58,6 @@ export class BusArrivalService {
   }
 
   deleteBusStopBookmark(busStopInfo: BusStopInfo) {
-    let i = 0;
     for (let i = 0; i < this.busStopBookmark.length; i++) {
       if (this.busStopBookmark[i].BusStopCode === busStopInfo.BusStopCode) {
         this.busStopBookmark.splice(i, 1);
@@ -84,6 +83,10 @@ export class BusArrivalService {
   }
 
   getNearbyBusStops(coordinate: Coordinates) {
-    return this.httpClient.get('/api/lta/bus/busStops');
+    return this.httpClient.get<BusStopInfo[]>(
+      '/api/lta/bus/nearbyBusStops?' +
+        `latitude=${coordinate.latitude}` +
+        `&longitude=${coordinate.longitude}`
+    );
   }
 }

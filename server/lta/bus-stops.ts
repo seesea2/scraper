@@ -63,13 +63,13 @@ function getBusStopInfo(busStopCode: string, res: Response) {
   return res.status(400).send('Bus Stop Info not found.');
 }
 
-function getNearbyBusStops(latitude, longitude, res: Response) {
-  if (!latitude || !longitude) {
-    return res.status(400).send('Invalid coordinate.');
+function getNearbyBusStops(latitude: number, longitude: number, res: Response) {
+  if (latitude === undefined || longitude === undefined) {
+    return res.status(400).send('Invalid coordinates.');
   }
 
   let nearbyStops = [];
-  const R = 6371;
+  const R = 6371e3;
   for (let i = 0; i < busStops.length; i++) {
     let dLat = ((busStops[i].Latitude - latitude) * Math.PI) / 180;
     let dLong = ((busStops[i].Longitude - longitude) * Math.PI) / 180;
@@ -78,19 +78,15 @@ function getNearbyBusStops(latitude, longitude, res: Response) {
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
       Math.cos((busStops[i].Latitude * Math.PI) / 180) *
         Math.cos((latitude * Math.PI) / 180) *
-        Math.sin(busStops[i].Longitude / 2) *
-        Math.sin(longitude / 2);
+        Math.sin(dLong / 2) *
+        Math.sin(dLong / 2);
     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    let dist = R * c * 1000;
-    if (Math.abs(dist) < 300) {
+    let dist = R * c;
+    if (Math.abs(dist) < 400) {
       nearbyStops.push(busStops[i]);
     }
   }
   res.status(200).send(nearbyStops);
 }
-export default {
-  busStops,
-  checkBusStopLocally,
-  getBusStopInfo,
-  getNearbyBusStops
-};
+
+export { busStops, checkBusStopLocally, getBusStopInfo, getNearbyBusStops };

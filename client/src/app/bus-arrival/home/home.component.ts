@@ -21,18 +21,24 @@ export class HomeComponent implements OnInit {
   busStopInfo: BusStopInfo;
   bExistingBookmark: boolean;
   coordinates: Coordinates;
+  nearbyBusStops: BusStopInfo[];
 
   constructor(
     private busArrivalService: BusArrivalService,
     private snackBar: MatSnackBar
   ) {
+    this.busStopBookmark = [];
     busArrivalService.busStopBookmark$.subscribe(data => {
       this.busStopBookmark = data;
     });
   }
 
   ngOnInit() {
+    this.busTable = [];
+    this.nearbyBusStops = [];
+    this.busStopInfo = undefined;
     this.coordinates = undefined;
+    this.bExistingBookmark = false;
     if (navigator && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(pos => {
         if (pos && pos.coords) {
@@ -49,9 +55,9 @@ export class HomeComponent implements OnInit {
     this.busArrivalService.addBusStopBookmark(this.busStopInfo);
   }
 
-  deleteBusStopBookmark(busStop: string) {
+  deleteBusStopBookmark(busStop: BusStopInfo) {
     this.bExistingBookmark = false;
-    this.busArrivalService.deleteBusStopBookmark(this.busStopInfo);
+    this.busArrivalService.deleteBusStopBookmark(busStop);
   }
 
   getBusArrival(busStopCode: string) {
@@ -60,14 +66,14 @@ export class HomeComponent implements OnInit {
 
     busStopCode = busStopCode.trim();
     if (!busStopCode) {
-      this.snackBar.open('Invalid Bus Stop Code.', 'Error', { duration: 5000 });
+      this.snackBar.open('Invalid Bus Stop Code.', '', { duration: 4000 });
       return;
     }
     this.busArrivalService.getBusArrival(busStopCode).subscribe(
       (data: BusArrivalReturn) => {
         if (data.busArrival.Services.length <= 0) {
           this.snackBar.open('Bus service unavailable at the Bus Stop.', '', {
-            duration: 5000
+            duration: 4000
           });
           return;
         }
@@ -89,7 +95,7 @@ export class HomeComponent implements OnInit {
         );
       },
       err => {
-        this.snackBar.open(err, 'Error', { duration: 5000 });
+        this.snackBar.open(err, 'Error', { duration: 4000 });
       }
     );
   }
@@ -97,10 +103,13 @@ export class HomeComponent implements OnInit {
   getNearbyBusStops() {
     this.busArrivalService.getNearbyBusStops(this.coordinates).subscribe(
       data => {
-        console.log(data);
+        this.nearbyBusStops = data;
       },
       err => {
-        console.log(err);
+        this.nearbyBusStops = [];
+        this.snackBar.open('No Nearby Bus Stop.', '', {
+          duration: 3000
+        });
       }
     );
   }
