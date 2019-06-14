@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
   busStopBookmark: BusStopInfo[];
   busStopInfo: BusStopInfo;
   bExistingBookmark: boolean;
+  coordinates: Coordinates;
 
   constructor(
     private busArrivalService: BusArrivalService,
@@ -31,19 +32,15 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.busTable = [];
-    this.bExistingBookmark = false;
-
-    function positionCB(pos) {
-      console.log(pos);
-    }
-    function errorCB(err) {
-      console.log(err);
-    }
+    this.coordinates = undefined;
     if (navigator && navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(positionCB, errorCB);
+      navigator.geolocation.getCurrentPosition(pos => {
+        if (pos && pos.coords) {
+          this.coordinates = pos.coords;
+        }
+      });
     } else {
-      alert('navigator.geolocation is empty');
+      console.warn('Navigator.geolocation is not supported.');
     }
   }
 
@@ -93,6 +90,17 @@ export class HomeComponent implements OnInit {
       },
       err => {
         this.snackBar.open(err, 'Error', { duration: 5000 });
+      }
+    );
+  }
+
+  getNearbyBusStops() {
+    this.busArrivalService.getNearbyBusStops(this.coordinates).subscribe(
+      data => {
+        console.log(data);
+      },
+      err => {
+        console.log(err);
       }
     );
   }

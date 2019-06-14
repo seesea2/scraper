@@ -82,4 +82,8 @@ export class BusArrivalService {
     }
     return false;
   }
+
+  getNearbyBusStops(coordinate: Coordinates) {
+    return this.httpClient.get('/api/lta/bus/busStops');
+  }
 }

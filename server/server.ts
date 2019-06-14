@@ -12,7 +12,8 @@ import apiRouter from './api-router';
 // Express server
 const app = express();
 const HOST = 'localhost';
-const PORT = 80;
+const HTTP_PORT = 80;
+const HTTPS_PORT = 443;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -50,15 +51,16 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 // Start up the Node server
 // http
 app.set('domain', HOST);
-app.set('port', PORT);
+// app.set('port', HTTP_PORT);
 // app.listen(app.get('port'), () => {
-//   console.log(`Node server listening on http://${HOST}:${PORT}`);
-// });
+  //   console.log(`Node server listening on http://${HOST}:${PORT}`);
+  // });
 
-// https default port
+  // https default port
+  app.set('port', HTTPS_PORT);
 const httpsOptions = {
-  cert: fs.readFileSync(join(__dirname, '/cert/insg.key')),
-  key: fs.readFileSync(join(__dirname, '/cert/insg.crt'))
+  cert: fs.readFileSync(join(__dirname, '/cert/insg.crt')),
+  key: fs.readFileSync(join(__dirname, '/cert/insg.key'))
 };
 const server = https.createServer(httpsOptions, app);
 server.listen(443);
