@@ -5,14 +5,25 @@
     <mat-form-field>
       <mat-label>Bus Stop Code</mat-label>
       <input matInput #busStopCode type="text" />
-      <button mat-raised-button mat-stroked-button matSuffix color="primary"
-        (click)="getBusStopInfoAndBusArrivalTime(busStopCode.value)">
+      <button
+        mat-raised-button
+        mat-stroked-button
+        matSuffix
+        color="primary"
+        (click)="getBusArrival(busStopCode.value)"
+      >
         Get
       </button>
     </mat-form-field>
   </form>
   <div *ngIf="busTable.length > 0">
-    <table mat-table [dataSource]="busTable" width="100" class="mat-elevation-z8">
+    <h4>{{ busStopInfo.Description }}</h4>
+    <table
+      mat-table
+      [dataSource]="busTable"
+      width="100"
+      class="mat-elevation-z8"
+    >
       <ng-container matColumnDef="service">
         <th mat-header-cell *matHeaderCellDef>Service</th>
         <td mat-cell *matCellDef="let bus">{{ bus.service }}</td>
@@ -38,17 +49,26 @@
       <tr mat-row *matRowDef="let row; columns: busTableColumn"></tr>
     </table>
 
-    <button *ngIf="bShowAddToBookmark" mat-stroked-button color="primary" (click)="addBusStopHistory()" class="my-3">
+    <button
+      *ngIf="!bExistingBookmark"
+      mat-stroked-button
+      color="primary"
+      (click)="addBusStopBookmark()"
+      class="my-3"
+    >
       Bookmark this Bus Stop
     </button>
   </div>
 
-  <div *ngIf="busStopHistory" class="py-4">
-    <h3>Bus Stop History</h3>
-    <mat-action-list *ngFor="let busStop of busStopHistory" dense>
+  <div *ngIf="busStopBookmark" class="py-4">
+    <h3>Bus Stop Bookmark</h3>
+    <mat-action-list *ngFor="let busStop of busStopBookmark" dense>
       <div mat-list-item>
-        <button (click)="getBusStopInfoAndBusArrivalTime(busStop)">{{ busStop }}</button>
-        <button (click)="deleteBusStopHistory(busStop)">x</button>
+        <button (click)="getBusArrival(busStop.BusStopCode)">
+          {{ busStop.BusStopCode }} {{ busStop.Description }} @
+          {{ busStop.RoadName }}
+        </button>
+        <button (click)="deleteBusStopBookmark(busStop)">x</button>
       </div>
     </mat-action-list>
   </div>

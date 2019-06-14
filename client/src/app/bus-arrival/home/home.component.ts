@@ -2,7 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { BusArrivalService } from '../bus-arrival.service';
-import { BusStopInfo, BusTable, NextBusData } from '../bus-arrival-interface';
+import {
+  BusStopInfo,
+  BusTable,
+  NextBusData,
+  BusArrivalReturn
+} from '../bus-arrival-interface';
 
 @Component({
   selector: 'bus-arrival-home',
@@ -12,74 +17,62 @@ import { BusStopInfo, BusTable, NextBusData } from '../bus-arrival-interface';
 export class HomeComponent implements OnInit {
   busTable: BusTable[];
   busTableColumn: string[] = ['service', 'bus1', 'bus2', 'bus3', 'load'];
-  busStopHistory: string[];
-  validBusStopCode: string;
+  busStopBookmark: BusStopInfo[];
   busStopInfo: BusStopInfo;
-  bShowAddToBookmark: boolean;
+  bExistingBookmark: boolean;
+  coordinates: Coordinates;
 
   constructor(
     private busArrivalService: BusArrivalService,
     private snackBar: MatSnackBar
   ) {
     busArrivalService.busStopBookmark$.subscribe(data => {
-      this.busStopHistory = data;
+      this.busStopBookmark = data;
     });
   }
 
   ngOnInit() {
+    this.coordinates = undefined;
+    if (navigator && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(pos => {
+        if (pos && pos.coords) {
+          this.coordinates = pos.coords;
+        }
+      });
+    } else {
+      console.warn('Navigator.geolocation is not supported.');
+    }
+  }
+
+  addBusStopBookmark() {
+    this.bExistingBookmark = true;
+    this.busArrivalService.addBusStopBookmark(this.busStopInfo);
+  }
+
+  deleteBusStopBookmark(busStop: string) {
+    this.bExistingBookmark = false;
+    this.busArrivalService.deleteBusStopBookmark(this.busStopInfo);
+  }
+
+  getBusArrival(busStopCode: string) {
     this.busTable = [];
-    this.validBusStopCode = '';
-    this.bShowAddToBookmark = false;
-  }
-
-  addBusStopHistory() {
-    this.busArrivalService.addBusStopHistory(
-      this.validBusStopCode,
-      this.busStopInfo
-    );
-  }
-
-  deleteBusStopHistory(busStop: string) {
-    this.busArrivalService.deleteBusStopBookmark(busStop);
-  }
-
-  getBusStopInfoAndBusArrivalTime(busStopCode: string) {
-    this.busTable = [];
-    this.validBusStopCode = '';
-    this.bShowAddToBookmark = false;
+    this.bExistingBookmark = false;
 
     busStopCode = busStopCode.trim();
     if (!busStopCode) {
       this.snackBar.open('Invalid Bus Stop Code.', 'Error', { duration: 5000 });
       return;
     }
-
-    this.busArrivalService.getBusStopInfo(busStopCode).subscribe(
-      data => {
-        this.busStopInfo = data;
-        this.getBusArrival(busStopCode);
-      },
-      err => {
-        this.snackBar.open(err, 'Error', { duration: 5000 });
-      }
-    );
-  }
-
-  getBusArrival(busStopCode: string) {
     this.busArrivalService.getBusArrival(busStopCode).subscribe(
-      data => {
-        if (data.Services.length <= 0) {
-          this.snackBar.open(
-            'Bus service unavailable at the Bus Stop.',
-            'Error',
-            {
-              duration: 5000
-            }
-          );
+      (data: BusArrivalReturn) => {
+        if (data.busArrival.Services.length <= 0) {
+          this.snackBar.open('Bus service unavailable at the Bus Stop.', '', {
+            duration: 5000
+          });
           return;
         }
 
-        data.Services.forEach(service => {
+        data.busArrival.Services.forEach(service => {
           let busRow: BusTable = {
             service: service.ServiceNo,
             bus1: calculateArrivalTime(service.NextBus),
@@ -90,13 +83,24 @@ export class HomeComponent implements OnInit {
           this.busTable.push(busRow);
         });
 
-        this.validBusStopCode = data.BusStopCode;
-        this.bShowAddToBookmark = !this.busStopHistory.includes(
-          data.BusStopCode
+        this.busStopInfo = data.busStopInfo;
+        this.bExistingBookmark = this.busArrivalService.existingBookmark(
+          data.busStopInfo
         );
       },
       err => {
         this.snackBar.open(err, 'Error', { duration: 5000 });
+      }
+    );
+  }
+
+  getNearbyBusStops() {
+    this.busArrivalService.getNearbyBusStops(this.coordinates).subscribe(
+      data => {
+        console.log(data);
+      },
+      err => {
+        console.log(err);
       }
     );
   }
