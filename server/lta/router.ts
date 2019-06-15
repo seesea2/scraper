@@ -16,7 +16,6 @@ busRouter.get('/busStop/:busStopCode', (req: Request, res: Response) => {
 });
 
 busRouter.get('/nearbyBusStops', (req: Request, res: Response) => {
-  console.log(req.query);
   getNearbyBusStops(req.query.latitude, req.query.longitude, res);
 });
 

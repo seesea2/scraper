@@ -32,7 +32,6 @@ async function getAllBusStops() {
       busStops = temp.concat(newBusStops);
       skip += 500;
     } while (newBusStops.length === 500);
-    console.log('Total bus stops: ' + busStops.length);
   } catch (e) {
     busStops = [];
     getAllBusStops();

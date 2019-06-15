@@ -56,10 +56,10 @@
     </mat-action-list>
   </div>
 
-  <div *ngIf="this.coordinates">
-    <button mat-stroked-button color="primary" (click)="getNearbyBusStops()">Show nearby Bus Stops</button>
+  <div *ngIf="nearbyBusStops.length">
+    <button mat-stroked-button color="primary" (click)="toggleNearbyBusStops()">Toggle nearby Bus Stops</button>
   </div>
-  <div *ngIf="this.nearbyBusStops.length">
+  <div *ngIf="bShowNearbyBusStops && nearbyBusStops.length">
     <mat-action-list *ngFor="let nearby of nearbyBusStops" dense>
       <div mat-list-item>
         <button (click)="getBusArrival(nearby.BusStopCode)">({{nearby.BusStopCode}}) {{nearby.Description}} @

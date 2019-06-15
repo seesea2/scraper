@@ -20,8 +20,8 @@ export class HomeComponent implements OnInit {
   busStopBookmark: BusStopInfo[];
   busStopInfo: BusStopInfo;
   bExistingBookmark: boolean;
-  coordinates: Coordinates;
   nearbyBusStops: BusStopInfo[];
+  bShowNearbyBusStops: boolean;
 
   constructor(
     private busArrivalService: BusArrivalService,
@@ -36,13 +36,13 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.busTable = [];
     this.nearbyBusStops = [];
+    this.bShowNearbyBusStops = false;
     this.busStopInfo = undefined;
-    this.coordinates = undefined;
     this.bExistingBookmark = false;
     if (navigator && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(pos => {
         if (pos && pos.coords) {
-          this.coordinates = pos.coords;
+          this.getNearbyBusStops(pos.coords);
         }
       });
     } else {
@@ -100,8 +100,8 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  getNearbyBusStops() {
-    this.busArrivalService.getNearbyBusStops(this.coordinates).subscribe(
+  getNearbyBusStops(coordinates: Coordinates) {
+    this.busArrivalService.getNearbyBusStops(coordinates).subscribe(
       data => {
         this.nearbyBusStops = data;
       },
@@ -112,6 +112,9 @@ export class HomeComponent implements OnInit {
         });
       }
     );
+  }
+  toggleNearbyBusStops() {
+    this.bShowNearbyBusStops = !this.bShowNearbyBusStops;
   }
 }
 
