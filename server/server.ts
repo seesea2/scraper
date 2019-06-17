@@ -68,6 +68,8 @@ http
       });
       res.end();
     } catch (e) {
+      console.log(req.headers);
+      console.log(req.url);
       res.status(400).send(e);
     }
   })
