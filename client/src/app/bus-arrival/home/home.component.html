@@ -5,14 +5,24 @@
     <mat-form-field>
       <mat-label>Bus Stop Code</mat-label>
       <input matInput #busStopCode type="text" />
-      <button mat-raised-button matSuffix color="primary" (click)="getBusArrival(busStopCode.value)">
+      <button
+        mat-raised-button
+        matSuffix
+        color="primary"
+        (click)="getBusArrival(busStopCode.value)"
+      >
         Get
       </button>
     </mat-form-field>
   </form>
   <div *ngIf="busTable.length > 0">
     <h4>{{ busStopInfo.Description }}</h4>
-    <table mat-table [dataSource]="busTable" width="100" class="mat-elevation-z8">
+    <table
+      mat-table
+      [dataSource]="busTable"
+      width="100"
+      class="mat-elevation-z8"
+    >
       <ng-container matColumnDef="service">
         <th mat-header-cell *matHeaderCellDef>Service</th>
         <td mat-cell *matCellDef="let bus">{{ bus.service }}</td>
@@ -38,7 +48,13 @@
       <tr mat-row *matRowDef="let row; columns: busTableColumn"></tr>
     </table>
 
-    <button *ngIf="!bExistingBookmark" mat-stroked-button color="primary" (click)="addBusStopBookmark()" class="my-3">
+    <button
+      *ngIf="!bExistingBookmark"
+      mat-stroked-button
+      color="primary"
+      (click)="addBusStopBookmark()"
+      class="my-3"
+    >
       Bookmark this Bus Stop
     </button>
   </div>
@@ -48,8 +64,7 @@
     <mat-action-list *ngFor="let busStop of busStopBookmark" dense>
       <div mat-list-item>
         <button (click)="getBusArrival(busStop.BusStopCode)">
-          {{ busStop.BusStopCode }} {{ busStop.Description }} @
-          {{ busStop.RoadName }}
+          ({{ busStop.BusStopCode }}) {{ busStop.Description }}
         </button>
         <button (click)="deleteBusStopBookmark(busStop)">x</button>
       </div>
@@ -57,13 +72,17 @@
   </div>
 
   <div *ngIf="nearbyBusStops.length">
-    <button mat-stroked-button color="primary" (click)="toggleNearbyBusStops()">Toggle nearby Bus Stops</button>
+    <button mat-stroked-button color="primary" (click)="toggleNearbyBusStops()">
+      Toggle nearby Bus Stops
+    </button>
   </div>
   <div *ngIf="bShowNearbyBusStops && nearbyBusStops.length">
     <mat-action-list *ngFor="let nearby of nearbyBusStops" dense>
       <div mat-list-item>
-        <button (click)="getBusArrival(nearby.BusStopCode)">({{nearby.BusStopCode}}) {{nearby.Description}} @
-          {{nearby.RoadName}}</button>
+        <button (click)="getBusArrival(nearby.BusStopCode)">
+          ({{ nearby.BusStopCode }}) {{ nearby.Description }} @
+          {{ nearby.RoadName }}
+        </button>
       </div>
     </mat-action-list>
   </div>

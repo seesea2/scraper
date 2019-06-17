@@ -60,10 +60,15 @@ https_server.listen(443, () => {
 
 // redirect http request to https server
 http
-  .createServer((req, res) => {
-    res.writeHead(301, {
-      Location: 'https://' + req.headers['host'].replace('80', '443') + req.url
-    });
-    res.end();
+  .createServer((req: Request, res: Response) => {
+    try {
+      res.writeHead(301, {
+        Location:
+          'https://' + req.headers['host'].replace('80', '443') + req.url
+      });
+      res.end();
+    } catch (e) {
+      res.status(400).send(e);
+    }
   })
   .listen(80);
