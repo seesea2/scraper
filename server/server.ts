@@ -12,7 +12,7 @@ import apiRouter from './api-router';
 
 // Express server
 const app = express();
-const HOST = 'localhost';
+const HOST = 'insg.xyz' // 'localhost';
 
 app.use(cors());
 app.use(bodyParser.json());
