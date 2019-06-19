@@ -68,9 +68,11 @@ http
       });
       res.end();
     } catch (e) {
-      console.log(req.headers);
-      console.log(req.url);
-      res.status(400).send(e);
+      console.log(req);
+      console.log(res);
+      if (res) {
+        res.status(400).send(e);
+      }
     }
   })
   .listen(80);
