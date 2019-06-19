@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1560933592537,
+  "timestamp": 1560938787030,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -61,8 +61,9 @@
         "/3rdpartylicenses.txt",
         "/assets/.well-known/acme-challenge/AtQNxKpr-uLXyjZ5NxTqxIdwD-V6IraKUoQ5TOf3LP0",
         "/assets/cap001.jpg",
-        "/assets/cert/insg.crt",
-        "/assets/cert/insg.key",
+        "/assets/cert/ca_bundle.crt",
+        "/assets/cert/certificate.crt",
+        "/assets/cert/private.key",
         "/assets/desktop.jpg",
         "/assets/desktop2.jpg",
         "/assets/desktop3.jpg",
@@ -138,8 +139,9 @@
     "/9-es5.2df0dfbdd6523550c958.js": "83ec3b0eaa059ee4013ece5adb86501f78a43ffb",
     "/assets/.well-known/acme-challenge/AtQNxKpr-uLXyjZ5NxTqxIdwD-V6IraKUoQ5TOf3LP0": "30b613ae1da6a0751ffaf2479f74585f9af4858f",
     "/assets/cap001.jpg": "041b4304765e813614f21af60033549a752ee952",
-    "/assets/cert/insg.crt": "31168efb2114d4ed18a5f26410b22e7bd4d2c5aa",
-    "/assets/cert/insg.key": "3580d5b2a66c135c8d61229142c49559724b1449",
+    "/assets/cert/ca_bundle.crt": "384cf698e65fad1ff988a3e42bc10dca40fd28a1",
+    "/assets/cert/certificate.crt": "1419e355f32dc0ddd9720bb90320da9bb6d76a8c",
+    "/assets/cert/private.key": "a34f9ad009bebccd638e38ff14a3fb7cfead41af",
     "/assets/desktop.jpg": "60c9a5e6c1de36e1ed5d63ca7584bf46c6dee978",
     "/assets/desktop2.jpg": "58301e4089fe7ff0bd823a2eb88696502bd720d6",
     "/assets/desktop3.jpg": "3c57b560056231738ea04134c6e33067a540b6b8",
