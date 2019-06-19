@@ -63,8 +63,7 @@ http
   .createServer((req: Request, res: Response) => {
     try {
       res.writeHead(301, {
-        Location:
-          'https://' + req.headers['host'].replace('80', '443') + req.url
+        Location: 'https://localhost' + req.url
       });
       res.end();
     } catch (e) {
