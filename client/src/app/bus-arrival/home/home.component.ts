@@ -39,15 +39,6 @@ export class HomeComponent implements OnInit {
     this.bShowNearbyBusStops = false;
     this.busStopInfo = undefined;
     this.bExistingBookmark = false;
-    if (navigator && navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(pos => {
-        if (pos && pos.coords) {
-          this.getNearbyBusStops(pos.coords);
-        }
-      });
-    } else {
-      console.warn('Navigator.geolocation is not supported.');
-    }
   }
 
   addBusStopBookmark() {
@@ -66,15 +57,19 @@ export class HomeComponent implements OnInit {
 
     busStopCode = busStopCode.trim();
     if (!busStopCode) {
-      this.snackBar.open('Invalid Bus Stop Code.', '', { duration: 4000 });
+      this.snackBar.open('Invalid Bus Stop Code.', 'warn', { duration: 3000 });
       return;
     }
     this.busArrivalService.getBusArrival(busStopCode).subscribe(
       (data: BusArrivalReturn) => {
         if (data.busArrival.Services.length <= 0) {
-          this.snackBar.open('Bus service unavailable at the Bus Stop.', '', {
-            duration: 4000
-          });
+          this.snackBar.open(
+            'Bus service unavailable at the Bus Stop.',
+            'warn',
+            {
+              duration: 3000
+            }
+          );
           return;
         }
 
@@ -107,7 +102,7 @@ export class HomeComponent implements OnInit {
       },
       err => {
         this.nearbyBusStops = [];
-        this.snackBar.open('No Nearby Bus Stop.', '', {
+        this.snackBar.open('No Nearby Bus Stop.', 'warn', {
           duration: 3000
         });
       }
@@ -115,6 +110,20 @@ export class HomeComponent implements OnInit {
   }
   toggleNearbyBusStops() {
     this.bShowNearbyBusStops = !this.bShowNearbyBusStops;
+    if (!this.bShowNearbyBusStops) {
+      return;
+    }
+    if (navigator && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(pos => {
+        if (pos && pos.coords) {
+          this.getNearbyBusStops(pos.coords);
+        }
+      });
+    } else {
+      this.snackBar.open('Please enable the location access.', 'warn', {
+        duration: 3000
+      });
+    }
   }
 }
 

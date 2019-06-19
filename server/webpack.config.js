@@ -9,7 +9,7 @@ module.exports = {
     extensions: ['.ts']
   },
   target: 'node',
-  mode: 'development',
+  // mode: 'development',
   // this makes sure we include node_modules and other 3rd party libraries
   externals: [nodeExternals()],
   output: {

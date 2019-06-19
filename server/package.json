@@ -2,7 +2,8 @@
   "name": "server",
   "version": "0.0.1",
   "scripts": {
-    "build": "webpack --config webpack.config.js --progress --colors"
+    "debug": "webpack --config webpack.config.js --colors --mode=development --watch",
+    "build": "webpack --config webpack.config.js --progress --colors --mode=production"
   },
   "private": true,
   "dependencies": {

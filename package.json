@@ -1,10 +1,10 @@
 {
-  "name": "insg",
+  "name": "insg.xyz",
   "version": "1.0.0",
   "scripts": {
-    "start": "cd ./server/ && node ./dist/server.js",
     "build": "cd ./server/ && npm run build && cd ../client/ && npm run build",
-    "install": "cd ./server/ && npm i && cd ../client/ && npm i"
+    "install": "cd ./server/ && npm i",
+    "start": "pm2 start ./server/dist/server.sg"
   },
   "repository": {
     "type": "git",
