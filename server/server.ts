@@ -51,8 +51,9 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 // Start up the Node https server default port
 const httpsOptions = {
-  cert: fs.readFileSync(join(__dirname, '/cert/insg.crt')),
-  key: fs.readFileSync(join(__dirname, '/cert/insg.key'))
+  cert: fs.readFileSync(join(__dirname, '/client/assets/cert/certificate.crt')),
+  key: fs.readFileSync(join(__dirname, '/client/assets/cert/private.key')),
+  ca: fs.readFileSync(join(__dirname, '/client/assets/cert/ca_bundle.crt'))
 };
 // app.set('domain', HOST);
 const https_server = https.createServer(httpsOptions, app);
