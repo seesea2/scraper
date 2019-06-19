@@ -35,11 +35,9 @@ app.use('/api', apiRouter);
 app.get('/', (req: Request, res: Response) => {
   console.log('in root');
   console.log('req.baseUrl: ', req.baseUrl);
-  console.log('req.host: ', req.host);
   console.log('req.hostname: ', req.hostname);
   console.log('req.originalUrl: ', req.originalUrl);
   console.log('req.path: ', req.path);
-  console.log('req.app: ', req.app);
   console.log('req.url: ', req.url);
   return res.status(200).sendFile(join(__dirname, '/client/index.html'));
 });
@@ -72,7 +70,7 @@ http
   .createServer((req: Request, res: Response) => {
     try {
       res.writeHead(301, {
-        Location: `https://${req.host}:443${req.url}`
+        Location: `https://${req.hostname}:443${req.url}`
       });
       res.end();
     } catch (e) {
