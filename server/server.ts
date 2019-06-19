@@ -12,8 +12,6 @@ import apiRouter from './api-router';
 
 // Express server
 const app = express();
-// const HOST = 'localhost';
-// const HOST = 'insg.xyz';
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -64,13 +62,12 @@ http
   .createServer((req: Request, res: Response) => {
     try {
       let host = req.headers['host'].replace(':80', ':443');
-      console.log('req.hostname', req.hostname);
       res.writeHead(301, {
         Location: `https://${host}${req.url}`
       });
       res.end();
     } catch (e) {
-      console.log('issue to redirect: ', req.headers, req.rawHeaders, req.url);
+      console.log('Error to redirect: ', req.headers, req.rawHeaders, req.url);
       if (res) {
         res.sendStatus(400);
       }
