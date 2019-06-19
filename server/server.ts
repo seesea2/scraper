@@ -48,11 +48,11 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 // Start up the Node https server default port
-app.set('domain', HOST);
 const httpsOptions = {
   cert: fs.readFileSync(join(__dirname, '/cert/insg.crt')),
   key: fs.readFileSync(join(__dirname, '/cert/insg.key'))
 };
+app.set('domain', HOST);
 const https_server = https.createServer(httpsOptions, app);
 https_server.listen(443, () => {
   console.log(`Node server listening on https://${HOST}:443`);
@@ -63,7 +63,7 @@ http
   .createServer((req: Request, res: Response) => {
     try {
       res.writeHead(301, {
-        Location: 'https://localhost' + req.url
+        Location: `https://${HOST}:443${req.url}`
       });
       res.end();
     } catch (e) {
