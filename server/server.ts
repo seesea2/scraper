@@ -68,10 +68,9 @@ http
       });
       res.end();
     } catch (e) {
-      console.log(req);
-      console.log(res);
+      console.log('issue to redirect: ', req.headers, req.rawHeaders, req.url);
       if (res) {
-        res.status(400).send(e);
+        res.sendStatus(400);
       }
     }
   })
