@@ -35,7 +35,10 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 // Server static files from /client
-app.use(express.static(join(__dirname, '/client'), { dotfiles: 'allow' }));
+app.use(express.static(join(__dirname, '/client')));
+app.use(
+  express.static(join(__dirname, '/client/assets'), { dotfiles: 'allow' })
+);
 
 // error handling - 1
 app.all('/*', (req: Request, res: Response) => {
