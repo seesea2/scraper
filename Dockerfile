@@ -1,6 +1,11 @@
-FROM  node:lts
+FROM  node:10
+
+WORKDIR /root/insg
+
+COPY package*.json ./
+COPY server/dist ./
+
+RUN npm install
 
 EXPOSE 80
-
-RUN npm i -g pm2
-RUN pm2 start /root/insg/server/dist/server.js
+CMD ["node" "./dist/server.js"]
