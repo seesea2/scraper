@@ -4,7 +4,7 @@ RUN mkdir /root/insg
 WORKDIR /root/insg
 
 COPY package*.json ./
-COPY server/dist ./
+COPY dist/* ./
 
 RUN npm install
 
