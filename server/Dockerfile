@@ -8,5 +8,5 @@ COPY dist ./
 
 RUN npm install
 
-EXPOSE 80
+EXPOSE 80 443
 CMD [ "node", "server.js" ]
