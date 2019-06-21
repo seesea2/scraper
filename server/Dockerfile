@@ -6,7 +6,8 @@ WORKDIR /root/insg
 COPY package*.json ./
 COPY dist ./
 
-RUN npm install
+# RUN npm install
+RUN npm ci --only=production
 
 EXPOSE 80 443
 CMD [ "node", "server.js" ]
