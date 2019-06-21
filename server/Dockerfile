@@ -4,9 +4,9 @@ RUN mkdir /root/insg
 WORKDIR /root/insg
 
 COPY package*.json ./
-COPY dist/* ./
+COPY dist ./
 
 RUN npm install
 
 EXPOSE 80
-CMD ["node" "./server.js"]
+CMD ["npm" "start"]
