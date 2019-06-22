@@ -2,18 +2,45 @@
   "name": "insg.xyz",
   "version": "1.0.0",
   "scripts": {
-    "build": "cd ./server/ && npm run build && cd ../client/ && npm run build",
-    "install": "cd ./server/ && npm i",
-    "start": "pm2 start ./server/dist/server.sg"
+    "debug:client": "cd ./client && npm run debug",
+    "debug:server": "webpack --config ./server/webpack.config.js --colors --mode=development --watch",
+    "build:server": "webpack --config ./server/webpack.config.js --progress --colors --mode=production",
+    "publish": "npm run build:server && cd ./client/ && npm run build",
+    "start": "node ./dist/server.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/seesea2/insg.git"
   },
-  "author": "",
+  "author": "yc",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/seesea2/insg/issues"
   },
-  "homepage": "https://github.com/seesea2/insg#readme"
+  "homepage": "https://github.com/seesea2/insg#readme",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-session": "^1.16.2",
+    "mongodb": "^3.2.7",
+    "nodemailer": "^6.2.1",
+    "oxford-dictionary": "^1.4.1"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/cors": "^2.8.5",
+    "@types/express": "^4.17.0",
+    "@types/express-session": "^1.15.13",
+    "@types/mongodb": "^3.1.28",
+    "@types/node": "^12.0.10",
+    "ts-loader": "^6.0.4",
+    "ts-node": "^8.3.0",
+    "tslint": "^5.18.0",
+    "typescript": "^3.5.2",
+    "webpack": "^4.35.0",
+    "webpack-cli": "^3.3.4",
+    "webpack-node-externals": "^1.7.2"
+  }
 }

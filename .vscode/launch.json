@@ -10,7 +10,7 @@
       "request": "launch",
       "name": "Launch Program",
       "runtimeExecutable": "node",
-      "program": "${workspaceFolder}/server/dist/server.js",
+      "program": "${workspaceFolder}/debug/server.js",
       "restart": false
     }
   ]

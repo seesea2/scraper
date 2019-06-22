@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "../server/dist/client",
+            "outputPath": "../debug/client",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -28,6 +28,7 @@
           },
           "configurations": {
             "production": {
+              "outputPath": "../dist/client",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -58,8 +59,8 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "client:build",
-            "sslKey": "src/assets/cert/certificate.crt",
-            "sslCert": "src/assets/cert/private.key",
+            "sslKey": "../sslforfree/certificate.crt",
+            "sslCert": "../sslforfree/private.key",
             "ssl": true
           },
           "configurations": {
