@@ -1,19 +1,18 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 
-module.exports = {
+var config = {
   entry: {
-    server: './server.ts'
+    server: path.join(__dirname, './server.ts')
   },
   resolve: {
     extensions: ['.ts']
   },
   target: 'node',
-  // mode: 'development',
   // this makes sure we include node_modules and other 3rd party libraries
   externals: [nodeExternals()],
   output: {
-    path: path.join(__dirname, './dist'),
+    path: path.join(__dirname, '../debug'),
     filename: '[name].js'
   },
   devtool: 'inline-source-map',
@@ -29,4 +28,11 @@ module.exports = {
     __dirname: false
   },
   watch: false
+};
+
+module.exports = (env, argv) => {
+  if (argv.mode === 'production') {
+    config.output.path = path.join(__dirname, '../dist');
+  }
+  return config;
 };
