@@ -1,7 +1,7 @@
 FROM  node:10
 
 RUN mkdir /root/insg 
-RUN mkdir /root/dist
+RUN mkdir /root/insg/dist
 
 WORKDIR /root/insg
 COPY package*.json ./
