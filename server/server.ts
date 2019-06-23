@@ -85,3 +85,15 @@ http
     }
   })
   .listen(80);
+
+http
+  .createServer((req: Request, res: Response) => {
+    try {
+      console.log(req.headers['host'], req.url);
+      res.sendStatus(200);
+    } catch (e) {
+      console.log('in exception', e);
+      res.sendStatus(200);
+    }
+  })
+  .listen(81);
