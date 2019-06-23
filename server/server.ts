@@ -69,22 +69,22 @@ https_server.listen(443, () => {
 });
 
 // redirect http request to https server
-http
-  .createServer((req: Request, res: Response) => {
-    try {
-      let host = req.headers['host'].replace(':80', ':443');
-      res.writeHead(301, {
-        Location: `https://${host}${req.url}`
-      });
-      res.end();
-    } catch (e) {
-      console.log('Error to redirect: ', req.headers, req.rawHeaders, req.url);
-      if (res) {
-        res.sendStatus(400);
-      }
-    }
-  })
-  .listen(80);
+// http
+//   .createServer((req: Request, res: Response) => {
+//     try {
+//       let host = req.headers['host'].replace(':80', ':443');
+//       res.writeHead(301, {
+//         Location: `https://${host}${req.url}`
+//       });
+//       res.end();
+//     } catch (e) {
+//       console.log('Error to redirect: ', req.headers, req.rawHeaders, req.url);
+//       if (res) {
+//         res.sendStatus(400);
+//       }
+//     }
+//   })
+//   .listen(80);
 
 http
   .createServer((req: Request, res: Response) => {
