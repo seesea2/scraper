@@ -31,13 +31,14 @@ app.use(
 app.use('/api', apiRouter);
 
 app.get('/', (req: Request, res: Response) => {
-  console.log(req.headers['host'], req.url);
   return res.status(200).sendFile(join(__dirname, '/client/index.html'));
 });
+
+// MailInaBox App: listen to port 81 & 444 instead of default 80, 443.
 app.get('/mail', (req: Request, res: Response) => {
-  let host = req.headers['host'].replace(':443', ':444');
+  let host = req.headers['host'].replace(':443', '');
   res.writeHead(301, {
-    Location: `https://${host}${req.url}`
+    Location: `https://${host}:444${req.url}`
   });
   res.end();
 });
@@ -73,8 +74,7 @@ https_server.listen(443, () => {
 http
   .createServer((req: Request, res: Response) => {
     try {
-      let host = req.headers['host'].replace(':8000', ':443');
-      console.log(host);
+      let host = req.headers['host'].replace(':80', ':443');
       res.writeHead(301, {
         Location: `https://${host}${req.url}`
       });
@@ -86,4 +86,4 @@ http
       }
     }
   })
-  .listen(8000);
+  .listen(80);
