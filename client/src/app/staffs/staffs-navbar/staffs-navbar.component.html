@@ -1,0 +1,22 @@
+<mat-toolbar color="primary" class="shadow">
+  <span>
+    <button mat-button matTooltip="sidebar">
+      <i>sidebar-icon</i>
+    </button>
+  </span>
+  <span class="mr-auto">Tiptop Staffs</span>
+  <span class="text-white">
+    <button mat-button routerLink="/staffs/inventory">
+      Inventory
+    </button>
+    <button mat-button (click)="signOut()" matTooltip="User Info">
+      <i class="fa fa-fw fa-info"></i>
+    </button>
+    <button mat-button routerLink="/staffs/registerLogin/login" matTooltip="sign in">
+      <i class="fa fa-sign-in"></i>
+    </button>
+    <button mat-button (click)="signOut()" matTooltip="sign out">
+      <i class="fa fa-sign-out"></i>
+    </button>
+  </span>
+</mat-toolbar>

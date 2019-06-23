@@ -1,0 +1,36 @@
+################ Lunchfun & Dictionary
+http://localhost/api/gifts/users/cart
+###############
+
+POST http://localhost/api/gifts/users/cart HTTP/1.1
+content-type: application/json
+
+{
+    "productId": "1234",
+    "price": 2.5,
+    "qty": 100
+}
+
+###################
+
+DELETE http://localhost/api/gifts/users/cart
+
+###############
+DELETE http://localhost/api/gifts/users/cart/product
+Content-Type: application/json
+
+{
+    "productId": "1234",
+    "qty": 100
+}
+
+###############
+PUT http://localhost/api/gifts/users/cart HTTP/1.1
+content-type: application/json
+
+{
+    "productId": "1234",
+    "qty": 200
+}
+
+###################

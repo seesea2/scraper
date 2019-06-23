@@ -1,0 +1,49 @@
+<mat-drawer-container>
+  <mat-drawer mode="side" opened>
+    <categories-tree></categories-tree>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a routerLink="/gifts/browse">Home</a></li>
+          <li class="breadcrumb-item" *ngFor="let item of categoryBreadcrumb; let i = index" aria-current="page">
+            <a (click)="onBreadcrumb(i)">{{item}}</a>
+          </li>
+        </ol>
+      </nav>
+
+      <div class="py-5 px-3">
+        <h1>
+          Product Catalog
+        </h1>
+        <div class='p-4'>
+          <mat-spinner *ngIf="!products">Loading products.</mat-spinner>
+
+          <div class="card-group">
+            <mat-card *ngFor="let product of products; let ind = index" class="col-sm-6 col-md-4 col-lg-3">
+              <a [routerLink]="['/gifts/view', {_id: product._id}]">
+                <img *ngIf="product.img && product.img.length" mat-card-image src="/assets/{{product.img[0]}}" />
+              </a>
+              <mat-card-title>{{product.name}}</mat-card-title>
+              <mat-card-subtitle>
+                <div>{{product.price}}</div>
+              </mat-card-subtitle>
+              <mat-card-content>
+                <mat-form-field appearance="outline" class="w-100">
+                  <input matInput type="number" step="1" min="1" [(ngModel)]="productCurrentQty[ind]" />
+                </mat-form-field>
+                <button mat-raised-button color="primary" class="w-100" (click)="addToCart(ind)">Add</button>
+                <!-- <button mat-raised-button (click)="updateInCart(ind)">Update</button> -->
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom-right text-secondary">
+        <i (click)="ScrollToTop()" class='fa fa-chevron-circle-up fa-3x'></i>
+      </div>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
