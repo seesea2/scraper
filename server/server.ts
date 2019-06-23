@@ -33,6 +33,13 @@ app.use('/api', apiRouter);
 app.get('/', (req: Request, res: Response) => {
   return res.status(200).sendFile(join(__dirname, '/client/index.html'));
 });
+app.get('/mail', (req: Request, res: Response) => {
+  let host = req.headers['host'].replace(':443', ':444');
+  res.writeHead(301, {
+    Location: `https://${host}${req.url}`
+  });
+  res.end();
+});
 
 // Server static files from /client
 app.use(express.static(join(__dirname, '/client')));
