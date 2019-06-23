@@ -31,6 +31,7 @@ app.use(
 app.use('/api', apiRouter);
 
 app.get('/', (req: Request, res: Response) => {
+  console.log(req.headers['host'], req.url);
   return res.status(200).sendFile(join(__dirname, '/client/index.html'));
 });
 app.get('/mail', (req: Request, res: Response) => {
@@ -69,31 +70,20 @@ https_server.listen(443, () => {
 });
 
 // redirect http request to https server
-// http
-//   .createServer((req: Request, res: Response) => {
-//     try {
-//       let host = req.headers['host'].replace(':80', ':443');
-//       res.writeHead(301, {
-//         Location: `https://${host}${req.url}`
-//       });
-//       res.end();
-//     } catch (e) {
-//       console.log('Error to redirect: ', req.headers, req.rawHeaders, req.url);
-//       if (res) {
-//         res.sendStatus(400);
-//       }
-//     }
-//   })
-//   .listen(80);
-
 http
   .createServer((req: Request, res: Response) => {
     try {
-      console.log(req.headers['host'], req.url);
-      res.sendStatus(200);
+      let host = req.headers['host'].replace(':8000', ':443');
+      console.log(host);
+      res.writeHead(301, {
+        Location: `https://${host}${req.url}`
+      });
+      res.end();
     } catch (e) {
-      console.log('in exception', e);
-      res.sendStatus(200);
+      console.log('Error to redirect: ', req.headers, req.rawHeaders, req.url);
+      if (res) {
+        res.sendStatus(400);
+      }
     }
   })
   .listen(8000);
