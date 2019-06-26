@@ -43,6 +43,15 @@ app.get('/mail', (req: Request, res: Response) => {
   res.end();
 });
 
+// PostfixAdmin: listen to port 81 & 444 instead of default 80, 443.
+app.get('/postfix', (req: Request, res: Response) => {
+  let host = req.headers['host'].replace(':443', '');
+  res.writeHead(301, {
+    Location: `http://${host}:81/pfa`
+  });
+  res.end();
+});
+
 // Server static files from /client
 app.use(express.static(join(__dirname, '/client')));
 app.use(
