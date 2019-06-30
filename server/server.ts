@@ -31,25 +31,20 @@ app.use(
 app.use('/api', apiRouter);
 
 app.get('/', (req: Request, res: Response) => {
+  let host = req.headers['host'].replace(':443', '');
+  if (host.startsWith('mail')) {
+    res.writeHead(301, {
+      Location: `https://${host}:444${req.url}`
+    });
+    return res.end();
+  } else if (host.startsWith('postfixAdmin')) {
+    res.writeHead(301, {
+      Location: `https://${host}:445${req.url}`
+    });
+    return res.end();
+  }
+
   return res.status(200).sendFile(join(__dirname, '/client/index.html'));
-});
-
-// MailInaBox App: listen to port 81 & 444 instead of default 80, 443.
-app.get('/mail', (req: Request, res: Response) => {
-  let host = req.headers['host'].replace(':443', '');
-  res.writeHead(301, {
-    Location: `https://${host}:444${req.url}`
-  });
-  res.end();
-});
-
-// PostfixAdmin: listen to port 81 & 444 instead of default 80, 443.
-app.get('/postfix', (req: Request, res: Response) => {
-  let host = req.headers['host'].replace(':443', '');
-  res.writeHead(301, {
-    Location: `http://${host}:81/pfa`
-  });
-  res.end();
 });
 
 // Server static files from /client
@@ -69,9 +64,9 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 // Start up the Node https server default port
 const httpsOptions = {
-  cert: fs.readFileSync(join(__dirname, './sslforfree/certificate.crt')),
-  key: fs.readFileSync(join(__dirname, './sslforfree/private.key')),
-  ca: fs.readFileSync(join(__dirname, './sslforfree/ca_bundle.crt'))
+  cert: fs.readFileSync(join(__dirname, './sslforfree/cert.pem')),
+  key: fs.readFileSync(join(__dirname, './sslforfree/privkey.pem')),
+  ca: fs.readFileSync(join(__dirname, './sslforfree/chain.pem')),
 };
 // app.set('domain', HOST);
 const https_server = https.createServer(httpsOptions, app);
@@ -83,15 +78,25 @@ https_server.listen(443, () => {
 http
   .createServer((req: Request, res: Response) => {
     try {
-      let host = req.headers['host'].replace(':80', ':443');
-      res.writeHead(301, {
-        Location: `https://${host}${req.url}`
-      });
-      res.end();
+      let host = req.headers['host'].replace(':80', '');
+      if (host.startsWith('mail')) {
+        res.writeHead(301, {
+          Location: `https://${host}:444${req.url}`
+        });
+      } else if (host.startsWith('postfixAdmin')) {
+        res.writeHead(301, {
+          Location: `https://${host}:445${req.url}`
+        });
+      } else {
+        res.writeHead(301, {
+          Location: `https://${host}${req.url}`
+        });
+      }
+      return res.end();
     } catch (e) {
       console.log('Error to redirect: ', req.headers, req.rawHeaders, req.url);
       if (res) {
-        res.sendStatus(400);
+        return res.sendStatus(400);
       }
     }
   })
