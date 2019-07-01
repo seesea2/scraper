@@ -1,7 +1,6 @@
 import * as express from 'express';
 import * as session from 'express-session';
 import * as https from 'https';
-import * as http from 'http';
 import * as fs from 'fs';
 import { join } from 'path';
 import * as cors from 'cors';
@@ -31,19 +30,6 @@ app.use(
 app.use('/api', apiRouter);
 
 app.get('/', (req: Request, res: Response) => {
-  let host = req.headers['host'].replace(':443', '');
-  if (host.startsWith('mail')) {
-    res.writeHead(301, {
-      Location: `https://${host}:444${req.url}`
-    });
-    return res.end();
-  } else if (host.startsWith('postfixAdmin')) {
-    res.writeHead(301, {
-      Location: `https://${host}:445${req.url}`
-    });
-    return res.end();
-  }
-
   return res.status(200).sendFile(join(__dirname, '/client/index.html'));
 });
 
@@ -66,38 +52,9 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 const httpsOptions = {
   cert: fs.readFileSync(join(__dirname, './sslforfree/cert.pem')),
   key: fs.readFileSync(join(__dirname, './sslforfree/privkey.pem')),
-  ca: fs.readFileSync(join(__dirname, './sslforfree/chain.pem')),
+  ca: fs.readFileSync(join(__dirname, './sslforfree/chain.pem'))
 };
-// app.set('domain', HOST);
 const https_server = https.createServer(httpsOptions, app);
-https_server.listen(443, () => {
-  console.log(`Node server listening on https port 443`);
+https_server.listen(444, () => {
+  console.log(`Node server listening on https port 444`);
 });
-
-// redirect http request to https server
-http
-  .createServer((req: Request, res: Response) => {
-    try {
-      let host = req.headers['host'].replace(':80', '');
-      if (host.startsWith('mail')) {
-        res.writeHead(301, {
-          Location: `https://${host}:444${req.url}`
-        });
-      } else if (host.startsWith('postfixAdmin')) {
-        res.writeHead(301, {
-          Location: `https://${host}:445${req.url}`
-        });
-      } else {
-        res.writeHead(301, {
-          Location: `https://${host}${req.url}`
-        });
-      }
-      return res.end();
-    } catch (e) {
-      console.log('Error to redirect: ', req.headers, req.rawHeaders, req.url);
-      if (res) {
-        return res.sendStatus(400);
-      }
-    }
-  })
-  .listen(80);
