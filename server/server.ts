@@ -1,6 +1,6 @@
 import * as express from 'express';
 import * as session from 'express-session';
-import * as https from 'https';
+// import * as https from 'https';
 import * as fs from 'fs';
 import { join } from 'path';
 import * as cors from 'cors';
@@ -48,13 +48,17 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   return res.status(500).send('Issue happened. Please retry later!');
 });
 
-// Start up the Node https server default port
-const httpsOptions = {
-  cert: fs.readFileSync(join(__dirname, './sslforfree/cert.pem')),
-  key: fs.readFileSync(join(__dirname, './sslforfree/privkey.pem')),
-  ca: fs.readFileSync(join(__dirname, './sslforfree/chain.pem'))
-};
-const https_server = https.createServer(httpsOptions, app);
-https_server.listen(3000, '0.0.0.0', () => {
-  console.log(`Node server listening on https port 3000`);
+app.listen(8080, () => {
+  console.log('app listening on port 8080.');
 });
+
+// Start up the Node https server
+// const httpsOptions = {
+//   cert: fs.readFileSync(join(__dirname, './sslforfree/cert.pem')),
+//   key: fs.readFileSync(join(__dirname, './sslforfree/privkey.pem')),
+//   ca: fs.readFileSync(join(__dirname, './sslforfree/chain.pem'))
+// };
+// const https_server = https.createServer(httpsOptions, app);
+// https_server.listen(3000, '0.0.0.0', () => {
+//   console.log(`Node server listening on https port 3000`);
+// });
