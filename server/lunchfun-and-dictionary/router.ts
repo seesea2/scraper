@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import { Request, Response } from '../interface';
-import CheckOxfordDictionary from './dictionary';
+import CheckOxfordEntries from './dictionary';
 import { AddPal, DeletePal, GetPals, GetPalsAttendance } from './lunchfun-pals';
 import { AddRecord, DeleteRecord, GetRecords } from './lunchfun-records';
 
@@ -9,7 +9,7 @@ const dictionaryRouter = Router();
 const lunchfunRouter = Router();
 
 dictionaryRouter.get('/oxford/:word', (req: Request, res: Response) => {
-  CheckOxfordDictionary(req.params.word, res);
+  CheckOxfordEntries(req.params.word, res);
 });
 
 lunchfunRouter.get('/pals', (req: Request, res: Response) => {

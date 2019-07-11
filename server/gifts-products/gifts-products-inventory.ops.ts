@@ -7,7 +7,7 @@ async function GetInventory(res: Response) {
     const inventory = await dbInventory.find().toArray();
     return res.status(200).send(inventory);
   } catch (e) {
-    return res.status(500).send(e);
+    return res.status(500).send(e.message);
   }
 }
 

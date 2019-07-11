@@ -1,3 +1,16 @@
+interface OdPronunciation {
+  audioFile: string;
+  dialects: [string];
+  phoneticNotation: string;
+  phoneticSpelling: string;
+  regions: [
+    {
+      id: string;
+      text: string;
+    }
+  ];
+}
+
 interface OxfordLemmas {
   metadata: {
     provider: string;
@@ -116,20 +129,7 @@ interface OxfordEntries {
                   type: string;
                 }
               ];
-              pronunciations: [
-                {
-                  audioFile: string;
-                  dialects: [string];
-                  phoneticNotation: string;
-                  phoneticSpelling: string;
-                  regions: [
-                    {
-                      id: string;
-                      text: string;
-                    }
-                  ];
-                }
-              ];
+              pronunciations: [OdPronunciation];
               senses: [
                 {
                   crossReferenceMarkers: [string];
@@ -187,20 +187,7 @@ interface OxfordEntries {
                       type: string;
                     }
                   ];
-                  pronunciations: [
-                    {
-                      audioFile: string;
-                      dialects: [string];
-                      phoneticNotation: string;
-                      phoneticSpelling: string;
-                      regions: [
-                        {
-                          id: string;
-                          text: string;
-                        }
-                      ];
-                    }
-                  ];
+                  pronunciations: [OdPronunciation];
                   regions: [
                     {
                       id: string;
@@ -236,20 +223,7 @@ interface OxfordEntries {
                           type: string;
                         }
                       ];
-                      pronunciations: [
-                        {
-                          audioFile: string;
-                          dialects: [string];
-                          phoneticNotation: string;
-                          phoneticSpelling: string;
-                          regions: [
-                            {
-                              id: string;
-                              text: string;
-                            }
-                          ];
-                        }
-                      ];
+                      pronunciations: [OdPronunciation];
                       regions: [
                         {
                           id: string;
@@ -282,20 +256,7 @@ interface OxfordEntries {
                       type: string;
                     }
                   ];
-                  pronunciations: [
-                    {
-                      audioFile: string;
-                      dialects: [string];
-                      phoneticNotation: string;
-                      phoneticSpelling: string;
-                      regions: [
-                        {
-                          id: string;
-                          text: string;
-                        }
-                      ];
-                    }
-                  ];
+                  pronunciations: [OdPronunciation];
                   regions: [
                     {
                       id: string;
@@ -332,20 +293,7 @@ interface OxfordEntries {
               type: string;
             }
           ];
-          pronunciations: [
-            {
-              audioFile: string;
-              dialects: [string];
-              phoneticNotation: string;
-              phoneticSpelling: string;
-              regions: [
-                {
-                  id: string;
-                  text: string;
-                }
-              ];
-            }
-          ];
+          pronunciations: [OdPronunciation];
           text: string;
           variantForms: [
             {
@@ -362,20 +310,7 @@ interface OxfordEntries {
                   type: string;
                 }
               ];
-              pronunciations: [
-                {
-                  audioFile: string;
-                  dialects: [string];
-                  phoneticNotation: string;
-                  phoneticSpelling: string;
-                  regions: [
-                    {
-                      id: string;
-                      text: string;
-                    }
-                  ];
-                }
-              ];
+              pronunciations: [OdPronunciation];
               regions: [
                 {
                   id: string;
@@ -393,20 +328,7 @@ interface OxfordEntries {
           ];
         }
       ];
-      pronunciations: [
-        {
-          audioFile: string;
-          dialects: [string];
-          phoneticNotation: string;
-          phoneticSpelling: string;
-          regions: [
-            {
-              id: string;
-              text: string;
-            }
-          ];
-        }
-      ];
+      pronunciations: [OdPronunciation];
       type: string;
       word: string;
     }
@@ -421,8 +343,11 @@ interface OxfordResponseCode {
 }
 
 interface CheckEntriesResult {
-  entries: string[];
-  pronunciations: { audioFile: string; phoneticSpelling: string }[];
+  lexicalEntries: {
+    entries: string[];
+    lexicalCategory: string;
+    pronunciations: { audioFile: string; phoneticSpelling: string }[];
+  }[];
 }
 
 export { CheckEntriesResult, OxfordEntries, OxfordLemmas, OxfordResponseCode };

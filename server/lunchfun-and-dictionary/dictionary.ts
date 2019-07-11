@@ -19,6 +19,7 @@ async function CheckOxfordEntries(word: string, res: Response) {
   if (!word || !word.trim()) {
     return res.status(400).send('Invalid word.');
   }
+  word = word.trim().toLowerCase();
 
   const url =
     'https://od-api.oxforddictionaries.com/api/v2/entries/en-gb/' +
@@ -28,42 +29,44 @@ async function CheckOxfordEntries(word: string, res: Response) {
   try {
     let resp = await Axios(url, config);
     let entries: OxfordEntries = resp.data;
-    let return_result: CheckEntriesResult = { entries: [], pronunciations: [] };
-    entries.results.forEach(result => {
-      if (!result.lexicalEntries) return;
-      result.lexicalEntries.forEach(lexicalEntry => {
-        lexicalEntry.entries.forEach(entry => {
-          if (!entry.senses) return;
-          entry.senses.forEach(sense => {
-            if (sense.definitions) {
-              sense.definitions.forEach(definition => {
-                return_result.entries.push(definition);
-              });
+    let return_result: CheckEntriesResult = { lexicalEntries: [] };
+    for (let result of entries.results) {
+      for (let lexicalEntry of result.lexicalEntries) {
+        let new_lexicalEntry = {
+          entries: [],
+          lexicalCategory: '',
+          pronunciations: []
+        };
+        return_result.lexicalEntries.push(new_lexicalEntry);
+
+        if (lexicalEntry.lexicalCategory) {
+          new_lexicalEntry.lexicalCategory = lexicalEntry.lexicalCategory.text;
+        }
+        for (let entry of lexicalEntry.entries) {
+          for (let sense of entry.senses) {
+            for (let definition of sense.definitions) {
+              new_lexicalEntry.entries.push(definition);
             }
-            if (sense.subsenses) {
-              sense.subsenses.forEach(subsense => {
-                subsense.definitions.forEach(definition => {
-                  return_result.entries.push(definition);
-                });
-              });
+
+            for (let subsense of sense.subsenses || []) {
+              for (let definition of subsense.definitions) {
+                new_lexicalEntry.entries.push(definition);
+              }
             }
-          });
-        });
-        if (lexicalEntry.pronunciations) {
-          lexicalEntry.pronunciations.forEach(pronunciation => {
-            return_result.pronunciations.push({
-              audioFile: pronunciation.audioFile,
-              phoneticSpelling: pronunciation.phoneticSpelling
-            });
+          }
+        }
+
+        for (let pronunciation of lexicalEntry.pronunciations) {
+          new_lexicalEntry.pronunciations.push({
+            audioFile: pronunciation.audioFile,
+            phoneticSpelling: pronunciation.phoneticSpelling
           });
         }
-      });
-    });
-    console.log(return_result);
-    return return_result;
+      }
+    }
+    return res.status(200).send(return_result);
   } catch (e) {
-    console.log(e.message);
-    return e.message;
+    return res.status(400).send(e.message);
   }
 }
 
@@ -85,15 +88,10 @@ async function CheckOxfordLemmas(word: string) {
         });
       });
     });
-    console.log(return_result);
     return return_result;
   } catch (e) {
-    console.log(e.message);
     return e.message;
   }
 }
-
-CheckOxfordLemmas('monkeys');
-CheckOxfordEntries('monkey', null);
 
 export default CheckOxfordEntries;

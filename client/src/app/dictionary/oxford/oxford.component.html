@@ -1,14 +1,23 @@
 <section class="container py-4">
   <mat-card>
     <mat-card-title class="my-4">
-      <h2>Oxford Dictionary</h2>
+      <h2>Oxford Dictionaries</h2>
     </mat-card-title>
     <mat-card-content>
       <div class="mb-4">
         <mat-form-field>
-          <input matInput placeholder="Word to check" #oxfordInput type="text"
-            (keyup.enter)="getOxfordDefinition(oxfordInput.value)" />
-          <i matSuffix class="fa fa-search" (click)="getOxfordDefinition(oxfordInput.value)"></i>
+          <input
+            matInput
+            placeholder="Word to check"
+            #oxfordInput
+            type="text"
+            (keyup.enter)="getOxfordDefinition(oxfordInput.value)"
+          />
+          <i
+            matSuffix
+            class="fa fa-search"
+            (click)="getOxfordDefinition(oxfordInput.value)"
+          ></i>
         </mat-form-field>
         <!-- <button mat-raised-button color="primary" (click)="getOxfordDefinition(oxfordInput.value)">
           <i class="fa fa-search"></i>
@@ -18,15 +27,19 @@
         <mat-spinner></mat-spinner>
       </div>
       <div *ngIf="!bChecking">
-        <div *ngIf="definitionArray?.length>0">
+        <div *ngIf="checkEntriesResult.lexicalEntries?.length > 0">
           <p>Definitions</p>
-          <ol>
-            <li *ngFor="let item of definitionArray; let i = index">
-              {{item}}
-            </li>
-          </ol>
+          <div *ngFor="let lexicalEntry of checkEntriesResult.lexicalEntries">
+            <b>{{ lexicalEntry?.lexicalCategory }}</b>
+            [<b>{{lexicalEntry?.pronunciations[0].phoneticSpelling}}</b>]
+            <ol>
+              <li *ngFor="let item of lexicalEntry.entries; let i = index">
+                {{ item }}
+              </li>
+            </ol>
+          </div>
         </div>
-        <mat-error *ngIf="errMsg">{{errMsg}}</mat-error>
+        <mat-error *ngIf="errMsg">{{ errMsg }}</mat-error>
       </div>
     </mat-card-content>
   </mat-card>
