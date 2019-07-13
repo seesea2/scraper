@@ -2,8 +2,9 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
-    "outDir": "./dist/out-tsc",
-    "module": "es2015",
+    "outDir": "./out-tsc",
+    "module": "commonjs",
+    "sourceMap": true,
     "moduleResolution": "node",
     "target": "es2015",
     "lib": ["es2018", "dom"]

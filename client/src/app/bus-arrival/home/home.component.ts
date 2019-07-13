@@ -22,6 +22,8 @@ export class HomeComponent implements OnInit {
   bExistingBookmark: boolean;
   nearbyBusStops: BusStopInfo[];
   bShowNearbyBusStops: boolean;
+  bSpinnerShowNearbyBusStops = false;
+  currentBusStopCode: string;
 
   constructor(
     private busArrivalService: BusArrivalService,
@@ -39,6 +41,8 @@ export class HomeComponent implements OnInit {
     this.bShowNearbyBusStops = false;
     this.busStopInfo = undefined;
     this.bExistingBookmark = false;
+    this.bSpinnerShowNearbyBusStops = false;
+    this.currentBusStopCode = '';
   }
 
   addBusStopBookmark() {
@@ -54,12 +58,14 @@ export class HomeComponent implements OnInit {
   getBusArrival(busStopCode: string) {
     this.busTable = [];
     this.bExistingBookmark = false;
+    this.bShowNearbyBusStops = false;
 
     busStopCode = busStopCode.trim();
     if (!busStopCode) {
-      this.snackBar.open('Invalid Bus Stop Code.', 'warn', { duration: 3000 });
+      this.snackBar.open('Invalid Bus Stop Code.', 'warn', { duration: 2000 });
       return;
     }
+    this.currentBusStopCode = busStopCode;
     this.busArrivalService.getBusArrival(busStopCode).subscribe(
       (data: BusArrivalReturn) => {
         if (data.busArrival.Services.length <= 0) {
@@ -67,7 +73,7 @@ export class HomeComponent implements OnInit {
             'Bus service unavailable at the Bus Stop.',
             'warn',
             {
-              duration: 3000
+              duration: 2000
             }
           );
           return;
@@ -99,29 +105,36 @@ export class HomeComponent implements OnInit {
     this.busArrivalService.getNearbyBusStops(coordinates).subscribe(
       data => {
         this.nearbyBusStops = data;
+        this.bSpinnerShowNearbyBusStops = false;
+        this.bShowNearbyBusStops = true;
       },
       err => {
         this.nearbyBusStops = [];
+        this.bSpinnerShowNearbyBusStops = false;
         this.snackBar.open('No Nearby Bus Stop.', 'warn', {
-          duration: 3000
+          duration: 2000
         });
       }
     );
   }
   toggleNearbyBusStops() {
-    this.bShowNearbyBusStops = !this.bShowNearbyBusStops;
-    if (!this.bShowNearbyBusStops) {
+    if (this.bShowNearbyBusStops) {
+      this.bShowNearbyBusStops = !this.bShowNearbyBusStops;
       return;
     }
+    this.bSpinnerShowNearbyBusStops = true;
     if (navigator && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(pos => {
         if (pos && pos.coords) {
           this.getNearbyBusStops(pos.coords);
+        } else {
+          this.bSpinnerShowNearbyBusStops = false;
         }
       });
     } else {
+      this.bSpinnerShowNearbyBusStops = false;
       this.snackBar.open('Please enable the location access.', 'warn', {
-        duration: 3000
+        duration: 2000
       });
     }
   }
