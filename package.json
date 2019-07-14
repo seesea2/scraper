@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "debug:client": "cd ./client && npm run debug",
-    "debug:server": "webpack --config ./server/webpack.config.js --colors --mode=development --watch",
+    "debug:server": "webpack --config ./server/webpack.config.js --colors --mode=development",
     "build:server": "webpack --config ./server/webpack.config.js --progress --colors --mode=production",
     "publish": "npm run build:server && cd ./client/ && npm run build",
     "start": "node ./dist/server.js"

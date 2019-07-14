@@ -2,12 +2,12 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
-    "outDir": "./out-tsc",
-    "sourceMap": true,
     "declaration": false,
+    "lib": ["es2018", "dom"],
     "module": "commonjs",
     "moduleResolution": "node",
-    "target": "es5",
-    "lib": ["es2018", "dom"]
+    "outDir": "./out-tsc",
+    "sourceMap": true,
+    "target": "es5"
   }
 }
