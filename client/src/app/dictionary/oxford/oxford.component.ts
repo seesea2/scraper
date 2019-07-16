@@ -41,4 +41,11 @@ export class OxfordComponent implements OnInit {
         }
       );
   }
+
+  playAudio(audioFile: string) {
+    let audio = new Audio();
+    audio.src = audioFile;
+    audio.load();
+    audio.play();
+  }
 }

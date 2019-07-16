@@ -94,4 +94,7 @@ async function CheckOxfordLemmas(word: string) {
   }
 }
 
+
+CheckOxfordLemmas('shops');
+
 export default CheckOxfordEntries;
