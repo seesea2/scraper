@@ -15,7 +15,7 @@ var config = {
     path: path.join(__dirname, '../debug'),
     filename: '[name].js'
   },
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   module: {
     rules: [
       {
