@@ -17,11 +17,6 @@ const routes: Routes = [
       import('./dictionary/dictionary.module').then(m => m.DictionaryModule)
   },
   {
-    path: 'http',
-    loadChildren: () =>
-      import('./send-http/send-http.module').then(m => m.SendHttpModule)
-  },
-  {
     path: 'lunch',
     loadChildren: () =>
       import('./lunchfun/lunchfun.module').then(m => m.LunchfunModule)
