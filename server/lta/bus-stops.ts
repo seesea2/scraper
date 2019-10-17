@@ -81,7 +81,7 @@ function getNearbyBusStops(latitude: number, longitude: number, res: Response) {
         Math.sin(dLong / 2);
     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     let dist = R * c;
-    if (Math.abs(dist) < 400) {
+    if (Math.abs(dist) < 280) {
       nearbyStops.push(busStops[i]);
     }
   }

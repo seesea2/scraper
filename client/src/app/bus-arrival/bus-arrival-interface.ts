@@ -31,17 +31,17 @@ interface NextBusData {
   Type: VehicleType;
 }
 
-const enum LoadType {
+enum LoadType {
   SEA = 0, // seats available
   SDA, // standing available
   LSD // limited standing
 }
 
-const enum FeatureType {
+enum FeatureType {
   WAB = 0 // wheel-chair accessible
 }
 
-const enum VehicleType {
+enum VehicleType {
   SD, // single deck
   DD, // double deck
   BD // bendy
