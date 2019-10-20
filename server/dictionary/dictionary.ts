@@ -94,6 +94,4 @@ async function CheckOxfordLemmas(word: string) {
   }
 }
 
-CheckOxfordEntries('check', undefined);
-
 export default CheckOxfordEntries;
