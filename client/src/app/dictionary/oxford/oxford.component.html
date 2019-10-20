@@ -21,7 +21,7 @@
           <mat-spinner></mat-spinner>
         </div>
         <div *ngIf="!bChecking">
-          <div *ngIf="checkEntriesResult.lexicalEntries?.length > 0">
+          <div *ngIf="checkEntriesResult?.lexicalEntries?.length">
             <p>Definitions:</p>
             <div *ngFor="let lexicalEntry of checkEntriesResult.lexicalEntries">
               <b>{{ lexicalEntry?.lexicalCategory }}</b>

@@ -6,7 +6,7 @@
     "lib": ["es2018", "dom"],
     "module": "commonjs",
     "moduleResolution": "node",
-    "outDir": "./out-tsc",
+    "outDir": "../debug",
     "sourceMap": true,
     "target": "es5"
   }

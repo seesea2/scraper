@@ -44,7 +44,7 @@ async function CheckOxfordEntries(word: string, res: Response) {
         }
         for (let entry of lexicalEntry.entries) {
           for (let sense of entry.senses) {
-            for (let definition of sense.definitions) {
+            for (let definition of sense.definitions || []) {
               new_lexicalEntry.entries.push(definition);
             }
 
@@ -94,7 +94,6 @@ async function CheckOxfordLemmas(word: string) {
   }
 }
 
-
-CheckOxfordLemmas('shops');
+CheckOxfordEntries('check', undefined);
 
 export default CheckOxfordEntries;
