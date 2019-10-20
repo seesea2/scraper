@@ -17,7 +17,7 @@ apiRouter.use('/dictionary', dictionaryRouter);
 apiRouter.use('/http', httpRouter);
 apiRouter.use('/lunchfun', lunchfunRouter);
 apiRouter.use('/lta/bus', busRouter);
-apiRouter.use('/gifts', giftsRouter);
+// apiRouter.use('/gifts', giftsRouter);
 
 // msg from users; forward it via nodemailer.
 apiRouter.post('/msg', (req: Request, res: Response) => {
