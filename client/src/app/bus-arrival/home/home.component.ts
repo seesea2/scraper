@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
   busStopInfo: BusStopInfo;
   bExistingBookmark: boolean;
   nearbyBusStops: BusStopInfo[];
-  bShowNearbyBusStops: boolean;
+  // bShowNearbyBusStops: boolean;
   bSpinnerShowNearbyBusStops = false;
   currentBusStopCode: string;
 
@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.busTable = [];
     this.nearbyBusStops = [];
-    this.bShowNearbyBusStops = false;
+    // this.bShowNearbyBusStops = false;
     this.busStopInfo = undefined;
     this.bExistingBookmark = false;
     this.bSpinnerShowNearbyBusStops = false;
@@ -58,7 +58,8 @@ export class HomeComponent implements OnInit {
   getBusArrival(busStopCode: string) {
     this.busTable = [];
     this.bExistingBookmark = false;
-    this.bShowNearbyBusStops = false;
+    // this.bShowNearbyBusStops = false;
+    this.nearbyBusStops = [];
 
     busStopCode = busStopCode.trim();
     if (!busStopCode) {
@@ -106,7 +107,7 @@ export class HomeComponent implements OnInit {
       data => {
         this.nearbyBusStops = data;
         this.bSpinnerShowNearbyBusStops = false;
-        this.bShowNearbyBusStops = true;
+        // this.bShowNearbyBusStops = true;
       },
       err => {
         this.nearbyBusStops = [];
@@ -118,9 +119,9 @@ export class HomeComponent implements OnInit {
     );
   }
   toggleNearbyBusStops() {
-    if (this.bShowNearbyBusStops) {
-      this.bShowNearbyBusStops = !this.bShowNearbyBusStops;
-      return;
+    if (this.nearbyBusStops.length) {
+      // this.bShowNearbyBusStops = !this.bShowNearbyBusStops;
+      return (this.nearbyBusStops = []);
     }
     this.bSpinnerShowNearbyBusStops = true;
     if (navigator && navigator.geolocation) {

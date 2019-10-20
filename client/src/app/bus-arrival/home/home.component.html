@@ -67,10 +67,10 @@
   </div>
 
   <button mat-stroked-button color="primary" (click)="toggleNearbyBusStops()">
-    <b>Toggle nearby Bus Stops</b>
+    <b>Toggle Nearby Bus Stops</b>
   </button>
   <mat-spinner *ngIf="bSpinnerShowNearbyBusStops" class="small"></mat-spinner>
-  <div *ngIf="bShowNearbyBusStops && nearbyBusStops.length">
+  <div *ngIf="nearbyBusStops.length">
     <mat-action-list *ngFor="let nearby of nearbyBusStops" dense>
       <div mat-list-item>
         <button (click)="getBusArrival(nearby.BusStopCode)">
