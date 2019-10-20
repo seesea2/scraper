@@ -8,6 +8,6 @@ import { TrackOrderComponent } from './track-order.component';
 const TrackOrderRouter: Routes = [{ path: '', component: TrackOrderComponent }];
 @NgModule({
   declarations: [TrackOrderComponent],
-  imports: [ SharedModule, RouterModule.forChild(TrackOrderRouter)]
+  imports: [SharedModule, RouterModule.forChild(TrackOrderRouter)]
 })
 export class GiftsTrackOrderModule {}
