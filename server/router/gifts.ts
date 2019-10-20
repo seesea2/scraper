@@ -1,9 +1,9 @@
 import { Router } from 'express';
 
-import giftsProductsRouter from './gifts-products/gifts-products-router';
-import giftsOrdersRouter from './gifts-orders/gifts-orders-router';
-import giftsUsersRouter from './gifts-users/gifts-users-router';
-import giftsStaffsRouter from './gifts-staffs/gifts-staffs-router';
+import giftsProductsRouter from './gifts-products';
+import giftsOrdersRouter from './gifts-orders';
+import giftsUsersRouter from './gifts-users';
+import giftsStaffsRouter from './gifts-staffs';
 
 const giftsRouter = Router();
 

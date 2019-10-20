@@ -1,4 +1,3 @@
-// import * as express from 'express';
 import { Request, Response, NextFunction } from 'express';
 
 interface RequestInterface extends Request {

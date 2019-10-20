@@ -1,8 +1,8 @@
 import { Router } from 'express';
 
 import { Request, Response } from '../interface';
-import getBusArrival from './bus-arrival';
-import { getBusStopInfo, getNearbyBusStops } from './bus-stops';
+import getBusArrival from '../lta/bus-arrival';
+import { getBusStopInfo, getNearbyBusStops } from '../lta/bus-stops';
 
 // url: /api/lta/bus
 const busRouter = Router();

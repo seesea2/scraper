@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import { Request, Response } from '../interface';
-import { Delete, Get, Post, Put } from './http-request';
+import { Delete, Get, Post, Put } from '../http-request/http-request';
 
 const httpRouter = Router();
 

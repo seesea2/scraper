@@ -31,6 +31,7 @@ var config = {
 };
 
 module.exports = (env, argv) => {
+  // change output directory for production
   if (argv.mode === 'production') {
     config.output.path = path.join(__dirname, '../dist');
   }

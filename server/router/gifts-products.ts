@@ -6,15 +6,18 @@ import {
   DeleteCategory,
   GetCategories,
   GetSamplesOfCategories
-} from './gifts-products-categories.ops';
+} from '../gifts-products/gifts-products-categories.ops';
 import {
   AddProduct,
   DeleteProduct,
   GetProduct,
   GetProductsByCategory,
   UpdateProduct
-} from './gifts-products.ops';
-import { AdjustInventory, GetInventory } from './gifts-products-inventory.ops';
+} from '../gifts-products/gifts-products.ops';
+import {
+  AdjustInventory,
+  GetInventory
+} from '../gifts-products/gifts-products-inventory.ops';
 
 const giftsProductsRouter = Router();
 

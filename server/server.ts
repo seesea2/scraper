@@ -5,7 +5,8 @@ import * as cors from 'cors';
 import * as bodyParser from 'body-parser';
 
 import { Request, Response, NextFunction } from './interface';
-import apiRouter from './api-router';
+import apiRouter from './router/api-router';
+import { randomString } from './string-ops/random';
 
 // Express server
 const app = express();
@@ -16,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(
   session({
-    secret: 'insg-yc-ly-17',
+    secret: randomString(20),
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -47,5 +48,5 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 app.listen(8080, () => {
-  console.log('app listening on port 8080.');
+  console.log('App listening on port 8080.');
 });

@@ -7,7 +7,7 @@ import {
   Register,
   DeleteUser,
   UserInfo
-} from './gifts-users.ops';
+} from '../gifts-users/gifts-users.ops';
 import {
   AddToCart,
   CartCheckout,
@@ -15,7 +15,7 @@ import {
   DeleteInCart,
   GetCart,
   UpdateCartQty
-} from './gifts-carts.ops';
+} from '../gifts-users/gifts-carts.ops';
 
 const giftsUsersRouter = Router();
 

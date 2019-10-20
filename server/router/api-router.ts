@@ -1,23 +1,19 @@
 import { Router } from 'express';
-import { Request, Response } from './interface';
+import { Request, Response } from '../interface';
 
-import { busRouter } from './lta/router';
-import httpRouter from './http-request/router';
-import {
-  dictionaryRouter,
-  lunchfunRouter
-} from './lunchfun-and-dictionary/router';
-import giftsRouter from './api-gifts-router';
-import SendEmail from './email/email.ops';
+import { busRouter } from './lta';
+import dictionaryRouter from './dictionary';
+import giftsRouter from './gifts';
+import httpRouter from './http-request';
+import SendEmail from '../email/email.ops';
 
 const apiRouter = Router();
 
 // url: /api
-apiRouter.use('/dictionary', dictionaryRouter);
-apiRouter.use('/http', httpRouter);
-apiRouter.use('/lunchfun', lunchfunRouter);
 apiRouter.use('/lta/bus', busRouter);
-// apiRouter.use('/gifts', giftsRouter);
+apiRouter.use('/dictionary', dictionaryRouter);
+apiRouter.use('/gifts', giftsRouter);
+apiRouter.use('/http', httpRouter);
 
 // msg from users; forward it via nodemailer.
 apiRouter.post('/msg', (req: Request, res: Response) => {
