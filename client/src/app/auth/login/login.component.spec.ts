@@ -1,6 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { LoginComponent } from './login.component';
 
@@ -10,9 +8,9 @@ describe('LoginComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [LoginComponent],
-      imports: [MatCardModule, MatFormFieldModule]
-    }).compileComponents();
+      declarations: [ LoginComponent ]
+    })
+    .compileComponents();
   }));
 
   beforeEach(() => {

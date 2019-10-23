@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsersService } from '../../core/services/users.service';
 
 @Component({
-  selector: 'registerlogin-register',
+  selector: 'auth-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
@@ -31,6 +31,7 @@ export class RegisterComponent implements OnInit {
       pwd: ['', [Validators.required, Validators.minLength(2)]]
     });
   }
+
   get fg() {
     return this.registerForm.controls;
   }

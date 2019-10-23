@@ -19,10 +19,10 @@
     <a routerLink="/gifts/trackOrder" matTooltip="Track Order">
       <button mat-button class="text-white">Order</button>
     </a>
-    <a routerLink="/gifts/registerLogin/register" matTooltip="Contact us">
+    <a routerLink="/gifts/auth/register" matTooltip="Contact us">
       <button mat-button class="text-white">Support</button>
     </a>
-    <a *ngIf="!bLoginStatus" routerLink="/gifts/registerLogin/login">
+    <a *ngIf="!bLoginStatus" routerLink="/gifts/auth/login">
       <button mat-button class="text-white">Login</button>
     </a>
     <a *ngIf="bLoginStatus">

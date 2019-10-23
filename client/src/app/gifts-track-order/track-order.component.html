@@ -3,8 +3,16 @@
   <form>
     <mat-form-field>
       <mat-label>Order No.</mat-label>
-      <input matInput #orderNo required />
-      <i matSuffix class="fa fa-search" (click)="ShowOrderStatus(orderNo.value)"></i>
+      <div class="input-group">
+        <input type="text" class="form-control" #orderNo required />
+        <div class="input-group-append">
+          <button
+            class="btn btn-primary fa fa-search"
+            type="button"
+            (click)="ShowOrderStatus(orderNo.value)"
+          ></button>
+        </div>
+      </div>
     </mat-form-field>
     <!-- <button mat-raised-button color="primary" (click)="ShowOrderStatus(orderNo.value)">
       Check

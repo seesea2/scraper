@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UsersService } from '../../core/services/users.service';
 
 @Component({
-  selector: 'registerlogin-login',
+  selector: 'auth-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
     this.pwd = '';
     this.errMsg = '';
 
-    this.bStaffLogin = this.router.url.includes('/staffs/registerLogin/');
+    this.bStaffLogin = this.router.url.includes('/staffs/auth/');
   }
 
   login(uid: string, pwd: string) {
