@@ -30,6 +30,7 @@ export class BrowseComponent implements OnInit {
     this.activatedRoute.params.subscribe(p => {
       this.refresh(p.category);
     });
+    
   }
 
   getProducts(category: string) {

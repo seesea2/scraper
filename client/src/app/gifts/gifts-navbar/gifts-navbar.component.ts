@@ -15,7 +15,12 @@ export class GiftsNavbarComponent implements OnInit {
   constructor(
     private usersService: UsersService,
     private cartApiService: CartApiService
-  ) {
+  ) {}
+
+  ngOnInit() {}
+
+  // liyc
+  ngAfterViewChecked() {
     this.usersService.bLogin$.subscribe(data => {
       this.bLoginStatus = data;
     });
@@ -23,8 +28,6 @@ export class GiftsNavbarComponent implements OnInit {
       this.cartItemCount = data;
     });
   }
-
-  ngOnInit() {}
 
   logout() {
     this.usersService.logout(false);

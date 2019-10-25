@@ -15,8 +15,8 @@
     <mat-label>Message</mat-label>
     <textarea matInput formControlName='message' required></textarea>
   </mat-form-field>
-  <div>
-    <button mat-raised-button color="primary" (click)="sendMessage()">
+  <div class="col-12 text-center">
+    <button mat-raised-button color="primary" (click)="sendMessage()" class="col-12">
       <i class="fa fa-paper-plane"></i> Send Message
     </button>
     <mat-error>{{msgRslt}}</mat-error>

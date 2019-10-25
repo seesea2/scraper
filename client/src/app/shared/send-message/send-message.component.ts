@@ -30,8 +30,10 @@ export class SendMessageComponent implements OnInit {
       email: this.sendMessageFormGroup.controls.email.value,
       message: this.sendMessageFormGroup.controls.message.value
     };
+    alert('send')
     this.usersService.sendMessage(params).subscribe(data => {
       this.msgRslt = 'Message sent.';
+      alert('ok');
     });
   }
 }

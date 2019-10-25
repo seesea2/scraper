@@ -32,4 +32,7 @@ body {
   height: auto;
 }
 
+h1,h2,h3 {
+  font-weight: bold;
+}
 /* *{border: solid red 1px;} */

@@ -9,11 +9,6 @@ const giftsRoutes: Routes = [
     component: GiftsRootComponent,
     children: [
       {
-        path: '',
-        loadChildren: () =>
-          import('../gifts-home/gifts-home.module').then(m => m.GiftsHomeModule)
-      },
-      {
         path: 'browse',
         loadChildren: () =>
           import('../gifts-browse/gifts-browse.module').then(
@@ -43,6 +38,11 @@ const giftsRoutes: Routes = [
         path: 'auth',
         loadChildren: () =>
           import('../auth/auth.module').then(m => m.AuthModule)
+      },
+      {
+        path: '',
+        loadChildren: () =>
+          import('../gifts-home/gifts-home.module').then(m => m.GiftsHomeModule)
       }
     ]
   }

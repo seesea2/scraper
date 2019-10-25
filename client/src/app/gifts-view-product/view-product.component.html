@@ -4,8 +4,8 @@
   <mat-spinner *ngIf='!currentProduct'></mat-spinner>
   <div class='card-group my-4' *ngIf='currentProduct'>
     <mat-card class='col-sm-12 col-md-4'>
-      <img mat-card-image *ngIf="currentProduct.img && currentProduct.img.length>0" src="/assets/{{currentProduct.img[0]}}"
-        class="p-2">
+      <img mat-card-image *ngIf="currentProduct.img && currentProduct.img.length>0"
+        src="/assets/{{currentProduct.img[0]}}" class="p-2">
     </mat-card>
     <mat-card class='col-sm-12 col-md-8'>
       <fieldset class='p-3'>

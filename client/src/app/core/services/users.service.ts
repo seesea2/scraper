@@ -59,10 +59,6 @@ export class UsersService {
   }
 
   sendMessage(params: any) {
-    return this.httpClient.post(
-      '/api/gifts/users/message',
-      params,
-      httpOptions
-    );
+    return this.httpClient.post('/api/gifts/msg', params, httpOptions);
   }
 }

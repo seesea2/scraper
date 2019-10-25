@@ -25,9 +25,9 @@ import { SendMessageComponent } from './send-message/send-message.component';
     CommonModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule,
-    NgBootstrapModule,
     MaterialModule,
+    NgBootstrapModule,
+    ReactiveFormsModule,
     CategoriesTreeComponent,
     SendMessageComponent
   ]

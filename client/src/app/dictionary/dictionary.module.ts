@@ -1,14 +1,12 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
 
 import { SharedModule } from '../shared/shared.module';
+import { DictionaryRoutingModule } from './dictionary-routing.module';
 
 import { OxfordComponent } from './oxford/oxford.component';
 
-const routes: Routes = [{ path: '', component: OxfordComponent }];
-
 @NgModule({
   declarations: [OxfordComponent],
-  imports: [SharedModule, RouterModule.forChild(routes)]
+  imports: [SharedModule, DictionaryRoutingModule]
 })
 export class DictionaryModule {}

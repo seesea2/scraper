@@ -26,7 +26,9 @@ export class HomeCategoriesComponent implements OnInit {
         this.samplesOfCategories = samples;
         this.loading = false;
       },
-      err => {}
+      err => {
+        this.loading = false;
+      }
     );
   }
 
