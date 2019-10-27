@@ -28,11 +28,11 @@ export class UsersService {
 
   register(formGroup: FormGroup): Observable<any> {
     let user = {
-      uid: formGroup.controls.uid.value,
+      // uid: formGroup.controls.uid.value,
       email: formGroup.controls.email.value.trim(),
       pwd: formGroup.controls.pwd.value,
-      firstName: formGroup.controls.firstName.value.trim(),
-      lastName: formGroup.controls.lastName.value.trim()
+      // firstName: formGroup.controls.firstName.value.trim(),
+      // lastName: formGroup.controls.lastName.value.trim()
     };
     console.log(user);
     return this.httpClient.post('/api/gifts/users/register', user, httpOptions);

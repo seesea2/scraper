@@ -1,27 +1,26 @@
-import { DbCollection, MongoDb, ObjectID } from '../mongodb-ops';
+// import { DbCollection, MongoDb, ObjectID } from '../mongodb-ops';
+import { SqliteGet, SqliteAll, SqliteRun } from '../db-ops/sqlite-ops';
+
 import { Request, Response } from '../interface';
 import { encrypt } from '../string-ops';
-
-(async () => {
-  const db = await DbCollection('gifts-users');
-  db.createIndex('uid', { unique: true });
-})();
 
 async function Login(req: Request, res: Response) {
   if (req.session && req.session.user) {
     return res.status(200).send({ uid: req.session.user.uid });
   }
   try {
-    let dbUsers = await DbCollection('gifts-users');
-    req.session.user = await dbUsers.findOne({
-      uid: req.body.uid,
-      pwd: encrypt(req.body.pwd)
-    });
+    const uid = req.body.uid;
+    const pwd = encrypt(req.body.pwd);
+    req.session.user = await SqliteGet(
+      // `select * from giftsStaffs where id=${uid} and pwd=${}`
+      `select * from giftsStaffs where id='${uid}' and pwd='i'`
+    );
     if (!req.session.user) {
       return res.status(403).send('Incorrect username or password');
     }
     return res.status(200).send({ uid: req.session.user.uid });
   } catch (e) {
+    console.log(e);
     return res.status(500).send('server error.');
   }
 }
@@ -44,22 +43,17 @@ async function Register(req: Request, res: Response) {
     return res.status(400).send('Invalid input.');
   }
   try {
-    let dbUsers = await DbCollection('gifts-users');
-    let rslt = await dbUsers.insertOne({
-      uid: req.body.uid,
-      pwd: encrypt(req.body.pwd),
-      email: req.body.email,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      createdOn: new Date()
-    });
-    if (rslt.insertedCount === 1) {
-      return res.status(200).send(rslt.ops[0]);
+    let rslt = await SqliteRun(
+      `insert into giftsStaffs (id, pwd) value(${req.body.uid}, ${encrypt(
+        req.body.pwd
+      )}, ${req.body.email}      ${new Date()}`
+    );
+    if (rslt) {
+      return res.status(200).send({ result: 'ok' });
     } else {
       return res.status(500).send('Register failed. Please try again later.');
     }
   } catch (e) {
-    // console.log(e);
     return res.status(500).send('Register failed. Please try again later.');
   }
 }
@@ -69,10 +63,7 @@ async function DeleteUser(session: any, res: Response) {
     return res.status(403).send('Login is required.');
   }
   try {
-    let db = await MongoDb();
-    db.collection('gifts-users').deleteOne({
-      _id: session.user._id
-    });
+    SqliteRun(`delete from giftsStaffs where id=${session.user.id}`);
     session.user = null;
     return res.status(200).send({ result: 'User deleted.' });
   } catch (e) {
@@ -80,9 +71,9 @@ async function DeleteUser(session: any, res: Response) {
   }
 }
 
-function UserInfo(session: any, res) {
+function UserInfo(session: any, res: Response) {
   if (!bLogin(session)) {
-    return res.status(403).send('User Not login.');
+    return res.status(403).send('User not login.');
   }
   return res.status(200).send({
     _id: session.user._id,

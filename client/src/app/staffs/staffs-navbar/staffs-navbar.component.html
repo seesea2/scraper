@@ -1,7 +1,7 @@
 <mat-toolbar color="primary" class="shadow">
   <span>
     <button mat-button matTooltip="sidebar">
-      <i>sidebar-icon</i>
+      <i class="fa fa-files">sidebar-icon</i>
     </button>
   </span>
   <span class="mr-auto">Tiptop Staffs</span>
@@ -10,12 +10,12 @@
       Inventory
     </button>
     <button mat-button (click)="signOut()" matTooltip="User Info">
-      <i class="fa fa-fw fa-info"></i>
+      <i class="fa fa-info"></i>
     </button>
-    <button mat-button routerLink="/staffs/auth/login" matTooltip="sign in">
+    <button mat-button routerLink="/staffs/auth/login" matTooltip="Sign in">
       <i class="fa fa-sign-in"></i>
     </button>
-    <button mat-button (click)="signOut()" matTooltip="sign out">
+    <button mat-button (click)="signOut()" matTooltip="Sign out">
       <i class="fa fa-sign-out"></i>
     </button>
   </span>

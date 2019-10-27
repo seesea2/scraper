@@ -9,13 +9,6 @@ const routes: Routes = [
     component: HomeComponent,
     children: [
       {
-        path: '',
-        loadChildren: () =>
-          import('../staffs-inventory/staffs-inventory.module').then(
-            m => m.StaffsInventoryModule
-          )
-      },
-      {
         path: 'inventory',
         loadChildren: () =>
           import('../staffs-inventory/staffs-inventory.module').then(
@@ -26,6 +19,20 @@ const routes: Routes = [
         path: 'auth',
         loadChildren: () =>
           import('../auth/auth.module').then(m => m.AuthModule)
+      },
+      {
+        path: 'new-staff',
+        loadChildren: () =>
+          import('../staffs-new-staff/staffs-new-staff.module').then(
+            m => m.StaffsNewStaffModule
+          )
+      },
+      {
+        path: '',
+        loadChildren: () =>
+          import('../staffs-inventory/staffs-inventory.module').then(
+            m => m.StaffsInventoryModule
+          )
       }
     ]
   }

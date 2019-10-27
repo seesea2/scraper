@@ -2,14 +2,14 @@
   <h1 class="pt-5">View Product</h1>
 
   <mat-spinner *ngIf='!currentProduct'></mat-spinner>
-  <div class='card-group my-4' *ngIf='currentProduct'>
+  <div class='card-group my-4 bg-light' *ngIf='currentProduct'>
     <mat-card class='col-sm-12 col-md-4'>
       <img mat-card-image *ngIf="currentProduct.img && currentProduct.img.length>0"
         src="/assets/{{currentProduct.img[0]}}" class="p-2">
     </mat-card>
     <mat-card class='col-sm-12 col-md-8'>
       <fieldset class='p-3'>
-        <legend class='px-2'>
+        <legend class="text-center">
           <h3>Product Descriptions</h3>
         </legend>
         <p *ngIf="currentProduct">
@@ -25,7 +25,7 @@
           </mat-form-field>
         </div>
       </fieldset>
-      <div>
+      <div class="px-3">
         <button mat-raised-button color="primary" (click)='addToCart()'>Add to cart</button>
         <mat-error>{{rslt}}</mat-error>
       </div>

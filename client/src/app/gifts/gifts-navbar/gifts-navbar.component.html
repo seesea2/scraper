@@ -4,32 +4,32 @@
       <button mat-button class="text-white font-weight-bold">GIFTS</button>
     </a>
   </span>
-  <span class="ml-auto">
+  <span class="ml-auto d-none d-lg-block d-xl-block">
     <a routerLink="/gifts/browse">
       <button mat-button class="text-white font-weight-bold">HotSales</button>
     </a>
-    <a routerLink="/gifts/browse" matTooltip="Browse Products">
+    <a routerLink="/gifts/browse">
       <button mat-button class="text-white font-weight-bold">Products</button>
     </a>
-    <a routerLink="/gifts/cart" matTooltip="View Cart">
+    <a routerLink="/gifts/cart">
       <button *ngIf="cartItemCount<=0" mat-button class="text-white font-weight-bold">Cart</button>
-      <button *ngIf="cartItemCount>0" mat-button class="text-white font-weight-bold" matBadge="{{cartItemCount}}"
-        matBadgeColor="accent">Cart</button>
+      <!-- liych <button *ngIf="cartItemCount>0" mat-button class="text-white font-weight-bold" matBadge="{{cartItemCount}}"
+        matBadgeColor="accent">Cart</button> -->
     </a>
-    <a routerLink="/gifts/trackOrder" matTooltip="Track Order">
+    <a routerLink="/gifts/trackOrder">
       <button mat-button class="text-white font-weight-bold">Order</button>
     </a>
-    <a routerLink="/gifts/auth/register" matTooltip="Contact us">
+    <a routerLink="/gifts/auth/register">
       <button mat-button class="text-white font-weight-bold">Support</button>
     </a>
     <a *ngIf="!bLoginStatus" routerLink="/gifts/auth/login">
-      <button mat-button class="text-white font-weight-bold">Login</button>
+      <button mat-button class="text-white font-weight-bold"><i class="fa fa-sign-in"></i></button>
     </a>
     <a *ngIf="bLoginStatus">
       <button mat-button (click)="logout()" class="text-white font-weight-bold">Logout</button>
     </a>
   </span>
-  <span class="ml-auto">
+  <span class="ml-auto d-lg-none d-xl-none">
     <button mat-icon-button [matMenuTriggerFor]="giftsNav">
       <i class="fa fa-align-justify"></i>
     </button>
@@ -39,7 +39,7 @@
       <a mat-menu-item routerLink="/gifts/cart">Cart</a>
       <a mat-menu-item routerLink="/gifts/trackOrder">Order</a>
       <a mat-menu-item routerLink="/gifts/auth/register">Support</a>
-      <a mat-menu-item routerLink="/gifts/auth/login"><i class="fa fa-sign-in"></i></a>
+      <a mat-menu-item routerLink="/gifts/auth/login" matTooltip="Sign in"><i class="fa fa-sign-in"></i></a>
     </mat-menu>
   </span>
 </mat-toolbar>

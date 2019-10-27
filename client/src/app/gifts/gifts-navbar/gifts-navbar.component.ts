@@ -9,8 +9,8 @@ import { CartApiService } from '../../core/services/cart-api.service';
   styleUrls: ['./gifts-navbar.component.css']
 })
 export class GiftsNavbarComponent implements OnInit {
-  bLoginStatus: boolean;
-  cartItemCount: number;
+  bLoginStatus: boolean = false;
+  cartItemCount: number = 0;
 
   constructor(
     private usersService: UsersService,
@@ -20,7 +20,7 @@ export class GiftsNavbarComponent implements OnInit {
   ngOnInit() {}
 
   // liyc
-  ngAfterViewChecked() {
+  ngAfterContentInit() {
     this.usersService.bLogin$.subscribe(data => {
       this.bLoginStatus = data;
     });
