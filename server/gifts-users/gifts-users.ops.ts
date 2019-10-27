@@ -2,7 +2,7 @@
 import { SqliteGet, SqliteAll, SqliteRun } from '../db-ops/sqlite-ops';
 
 import { Request, Response } from '../interface';
-import { encrypt } from '../string-ops';
+import { encrypt } from '../string-ops/crypto';
 
 async function Login(req: Request, res: Response) {
   if (req.session && req.session.user) {
@@ -13,7 +13,7 @@ async function Login(req: Request, res: Response) {
     const pwd = encrypt(req.body.pwd);
     req.session.user = await SqliteGet(
       // `select * from giftsStaffs where id=${uid} and pwd=${}`
-      `select * from giftsStaffs where id='${uid}' and pwd='i'`
+      `select * from giftsStaffs where uid="${uid}" and pwd="${pwd}"`
     );
     if (!req.session.user) {
       return res.status(403).send('Incorrect username or password');

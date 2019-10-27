@@ -1,6 +1,6 @@
 import { DbCollection, MongoDb, ObjectID } from '../mongodb-ops';
 import { Request, Response } from '../interface';
-import { randomString } from '../string-ops';
+import { randomString } from '../string-ops/random';
 
 import { bLogin } from './gifts-users.ops';
 import { CartItem } from './users-interface';
