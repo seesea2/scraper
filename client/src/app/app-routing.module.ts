@@ -3,11 +3,6 @@ import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'bus',
-    pathMatch: 'full'
-  },
-  {
     path: 'gifts',
     loadChildren: () => import('./gifts/gifts.module').then(m => m.GiftsModule)
   },
@@ -16,11 +11,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./dictionary/dictionary.module').then(m => m.DictionaryModule)
   },
-  {
-    path: 'lunch',
-    loadChildren: () =>
-      import('./lunchfun/lunchfun.module').then(m => m.LunchfunModule)
-  },
+  // {
+  //   path: 'lunch',
+  //   loadChildren: () =>
+  //     import('./lunchfun/lunchfun.module').then(m => m.LunchfunModule)
+  // },
   {
     path: 'bus',
     loadChildren: () =>
@@ -31,10 +26,15 @@ const routes: Routes = [
     loadChildren: () =>
       import('./staffs/staffs.module').then(m => m.StaffsModule)
   },
+  // {
+  //   path: 'webdev',
+  //   loadChildren: () =>
+  //     import('./web-dev/web-dev.module').then(m => m.WebDevModule)
+  // },
   {
-    path: 'webdev',
-    loadChildren: () =>
-      import('./web-dev/web-dev.module').then(m => m.WebDevModule)
+    path: '',
+    redirectTo: 'bus',
+    pathMatch: 'full'
   }
 ];
 
