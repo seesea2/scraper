@@ -5,20 +5,29 @@ import { Request, Response } from '../interface';
 import { encrypt } from '../string-ops/crypto';
 
 async function Login(req: Request, res: Response) {
+  if (req.session && req.session.staff) {
+    return res.status(200).send({ uid: req.session.staff.uid });
+  }
   if (req.session && req.session.user) {
     return res.status(200).send({ uid: req.session.user.uid });
   }
   try {
     const uid = req.body.uid;
     const pwd = encrypt(req.body.pwd);
-    req.session.user = await SqliteGet(
-      // `select * from giftsStaffs where id=${uid} and pwd=${}`
+    req.session.staff = await SqliteGet(
       `select * from giftsStaffs where uid="${uid}" and pwd="${pwd}"`
     );
-    if (!req.session.user) {
-      return res.status(403).send('Incorrect username or password');
+    if (req.session.staff) {
+      return res.status(200).send({ uid: req.session.staff.uid });
     }
-    return res.status(200).send({ uid: req.session.user.uid });
+
+    req.session.user = await SqliteGet(
+      `select * from giftsUsers where uid="${uid}" and pwd="${pwd}"`
+    );
+    if (req.session.user) {
+      return res.status(200).send({ uid: req.session.user.uid });
+    }
+    return res.status(403).send('Incorrect username or password');
   } catch (e) {
     console.log(e);
     return res.status(500).send('server error.');
@@ -26,6 +35,9 @@ async function Login(req: Request, res: Response) {
 }
 
 function Logout(req: Request, res: Response) {
+  if (req.session && req.session.staff) {
+    req.session.staff = null;
+  }
   if (req.session && req.session.user) {
     req.session.user = null;
   }
@@ -63,7 +75,7 @@ async function DeleteUser(session: any, res: Response) {
     return res.status(403).send('Login is required.');
   }
   try {
-    SqliteRun(`delete from giftsStaffs where id=${session.user.id}`);
+    SqliteRun(`delete from giftsUsers where uid="${session.user.uid}"`);
     session.user = null;
     return res.status(200).send({ result: 'User deleted.' });
   } catch (e) {
@@ -76,17 +88,21 @@ function UserInfo(session: any, res: Response) {
     return res.status(403).send('User not login.');
   }
   return res.status(200).send({
-    _id: session.user._id,
     uid: session.user.uid,
     email: session.user.email
   });
 }
 
 function bLogin(session: any) {
-  if (!session || !session.user) {
-    return false;
+  if (session) {
+    if (session.staff) {
+      return true;
+    }
+    if (session.user) {
+      return true;
+    }
   }
-  return true;
+  return false;
 }
 
 export { bLogin, Login, Logout, Register, DeleteUser, UserInfo };

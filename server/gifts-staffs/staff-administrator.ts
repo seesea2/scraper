@@ -45,4 +45,31 @@ async function newStaff(req: Request, res: Response) {
   }
 }
 
+async function disableStaff(req: Request, res: Response) {
+  if (!req.session || !req.session.staff) {
+    // return res.status(401).send({ result: 'Unauthorized.' });
+  }
+  // if (req.session.staff.class != 'administrator') {
+  // return res.status(403).send({ result: 'Operation not allowed.' });
+  // }
+
+  try {
+    if (!req.body.uid) {
+      return res.status(400).send({ result: 'uid is empty.' });
+    }
+    let uidString = '"' + req.body.uid + '"';
+
+    const sql = `update giftsStaffs set inactive=1 where uid=${uidString}`;
+    let result = await SqliteRun(sql);
+    if (result === true) {
+      res.status(200).send({ result: 'ok' });
+    } else {
+      res.status(200).send({ result: 'failed' });
+    }
+  } catch (e) {
+    console.log(e);
+    res.status(500).send(e);
+  }
+}
+
 export { newStaff };

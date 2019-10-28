@@ -12,9 +12,10 @@
       <button mat-button class="text-white font-weight-bold">Products</button>
     </a>
     <a routerLink="/gifts/cart">
-      <button *ngIf="cartItemCount<=0" mat-button class="text-white font-weight-bold">Cart</button>
-      <!-- liych <button *ngIf="cartItemCount>0" mat-button class="text-white font-weight-bold" matBadge="{{cartItemCount}}"
-        matBadgeColor="accent">Cart</button> -->
+      <button *ngIf="cartItemCount<=0" mat-button class="text-white font-weight-bold"><i
+          calss="fa fa-shopping-cart"></i></button>
+      <button *ngIf="cartItemCount>0" mat-button class="text-white font-weight-bold" matBadge="{{cartItemCount}}"
+        matBadgeColor="accent"><i calss="fa fa-shopping-cart"></i></button>
     </a>
     <a routerLink="/gifts/trackOrder">
       <button mat-button class="text-white font-weight-bold">Order</button>
@@ -36,7 +37,7 @@
     <mat-menu #giftsNav="matMenu">
       <a mat-menu-item routerLink="/gifts/browse">HotSales</a>
       <a mat-menu-item routerLink="/gifts/browse">Products</a>
-      <a mat-menu-item routerLink="/gifts/cart">Cart</a>
+      <a mat-menu-item routerLink="/gifts/cart" matTooltip="Cart"><i calss="fa fa-shopping-cart"></i></a>
       <a mat-menu-item routerLink="/gifts/trackOrder">Order</a>
       <a mat-menu-item routerLink="/gifts/auth/register">Support</a>
       <a mat-menu-item routerLink="/gifts/auth/login" matTooltip="Sign in"><i class="fa fa-sign-in"></i></a>

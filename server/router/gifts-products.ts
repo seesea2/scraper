@@ -5,7 +5,8 @@ import {
   AddCategory,
   DeleteCategory,
   GetCategories,
-  GetSamplesOfCategories
+  GetSamplesOfCategories,
+  UpdateCategory
 } from '../gifts-products/gifts-products-categories.ops';
 import {
   AddProduct,
@@ -18,6 +19,7 @@ import {
   AdjustInventory,
   GetInventory
 } from '../gifts-products/gifts-products-inventory.ops';
+import { bStaff } from '../gifts-staffs/gifts-staffs.ops';
 
 const giftsProductsRouter = Router();
 
@@ -32,7 +34,14 @@ giftsProductsRouter.get('/categories', (req: Request, res: Response) => {
   GetCategories(res);
 });
 giftsProductsRouter.post('/category', (req: Request, res: Response) => {
+  // liych
+  // if (!bStaff(req.session)) {
+  //   return res.status(403).send({ result: 'forbiddent' });
+  // }
   AddCategory(req.body, res);
+});
+giftsProductsRouter.put('/category', (req: Request, res: Response) => {
+  UpdateCategory(req.body, res);
 });
 giftsProductsRouter.delete('/category', (req: Request, res: Response) => {
   DeleteCategory(req.query, res);
@@ -42,7 +51,7 @@ giftsProductsRouter.get('/samples', (req: Request, res: Response) => {
   GetSamplesOfCategories(res);
 });
 giftsProductsRouter.get('', (req: Request, res: Response) => {
-  GetProductsByCategory(req, res);
+  GetProductsByCategory(req.query, res);
 });
 giftsProductsRouter.get('/product', (req: Request, res: Response) => {
   GetProduct(req.query, res);

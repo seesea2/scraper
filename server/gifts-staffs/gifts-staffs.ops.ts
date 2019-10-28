@@ -1,8 +1,8 @@
-import session = require('express-session');
-
 function bStaff(session: any) {
-  if (!session || !session.staff || session.staff.length <= 0) {
+  if (!session || !session.staff) {
     return false;
   }
   return true;
 }
+
+export { bStaff };

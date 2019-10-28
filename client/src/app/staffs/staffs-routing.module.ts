@@ -28,6 +28,20 @@ const routes: Routes = [
           )
       },
       {
+        path: 'products',
+        loadChildren: () =>
+          import('../staffs-products/staffs-products.module').then(
+            m => m.StaffsProductsModule
+          )
+      },
+      {
+        path: 'orders',
+        loadChildren: () =>
+          import('../staffs-orders/staffs-orders.module').then(
+            m => m.StaffsOrdersModule
+          )
+      },
+      {
         path: '',
         loadChildren: () =>
           import('../staffs-inventory/staffs-inventory.module').then(

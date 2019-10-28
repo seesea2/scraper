@@ -1,16 +1,16 @@
 ################ Get product
-http://localhost/api/gifts/products
+http://localhost:8080/api/gifts/products/product?id=2
 
 ############### Add product
 
-POST http://localhost/api/gifts/products HTTP/1.1
+POST http://localhost:8080/api/gifts/products/product HTTP/1.1
 content-type: application/json
 
 {
-    "name": "Bag",
+    "name": "Bag3",
     "category": "/Bags",
-    "price": 100,
-    "packaging": "N.A.",
+    "price": 5.9,
+    "packaging": "NA.",
     "material": "Nilon",
     "size": "35x28x15 cm",
     "note": "no note."
@@ -18,15 +18,15 @@ content-type: application/json
 
 ############################# Edit product
 
-PUT http://localhost/api/gifts/products HTTP/1.1
+PUT http://localhost:8080/api/gifts/products/product HTTP/1.1
 content-type: application/json
 
 {
-    "_id": "5c28a5fa9f69f23264e0375a",
+    "id": 2,
     "img": ["electronics1.jpg"],
     "name": "IT",
     "category": "/IT",
-    "price": 100,
+    "price": 5.50,
     "packaging": "metal",
     "material": "Copper",
     "size": "100x50x50 cm",
@@ -36,7 +36,7 @@ content-type: application/json
 
 ################### Delete product
 
-DELETE http://localhost/api/gifts/products?_id=5c28a5ed9f69f23264e03759
+DELETE http://localhost:8080/api/gifts/products/product?id=1
 
 ################### Get Inventory
 
@@ -57,5 +57,35 @@ content-type: application/json
 
 ################### Get catalog
 http://localhost/api/gifts/products/samples
-################### Get catalog
-http://localhost/api/gifts/products/categories
+
+
+################### Get products by category
+http://localhost:8080/api/gifts/products?category=/Bags
+
+################### Get categories
+http://localhost:8080/api/gifts/products/categories
+
+############### Add category
+
+POST http://localhost:8080/api/gifts/products/category HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Pencil",
+    "parent": "/stationary"
+}
+############### Edit category
+
+PUT http://localhost:8080/api/gifts/products/category HTTP/1.1
+content-type: application/json
+
+{
+    "org":{
+        "name": "Pen-New",
+        "category":"undefined/Pen-New"
+    },
+    "newName": "Pen"
+}
+############### delete category
+
+DELETE  http://localhost:8080/api/gifts/products/category?category=[object Object]/Pencil

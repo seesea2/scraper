@@ -1,13 +1,18 @@
 import { Response } from '../interface';
 import { ObjectID, DbCollection } from '../mongodb-ops';
+import { SqliteAll, SqliteRun } from '../db-ops/sqlite-ops';
 
 let globalCategories = [];
 let globalSamplesOfCategories = [];
 
 async function GetCategories(res: Response) {
+  if (globalCategories.length > 0) {
+    return res.status(200).send(globalCategories);
+  }
   try {
-    const categories = await GetCategoriesByLevel(0);
-    return res.status(200).send(categories);
+    const sql = `select * from giftsProductsCategories;`;
+    globalCategories = await SqliteAll(sql);
+    return res.status(200).send(globalCategories);
   } catch (e) {
     return res.status(500).send(e);
   }
@@ -18,7 +23,7 @@ async function GetSamplesOfCategories(res: Response) {
     return res.status(200).send(globalSamplesOfCategories);
   }
   try {
-    globalSamplesOfCategories = await GetSamples();
+    globalSamplesOfCategories = await SqliteAll('');
     return res.status(200).send(globalSamplesOfCategories);
   } catch (e) {
     return res.status(500).send(e);
@@ -26,32 +31,77 @@ async function GetSamplesOfCategories(res: Response) {
 }
 
 async function AddCategory(body: any, res: Response) {
-  if (!body.name || !body.category) {
+  if (!body.name) {
     return res.status(400).send('Invalid input.');
   }
 
   try {
-    const dbCollection = await DbCollection('gifts-products-catalog');
-    await dbCollection.insertOne({ name: body.name, category: body.category });
-    globalCategories = [];
-    globalSamplesOfCategories = [];
-    return res.status(200).send({ result: 'ok' });
+    let fields = 'name,parent,category';
+    let values = '"' + body.name + '"';
+    if (body.parent) {
+      values += ',"' + body.parent + '"';
+      values += ',"' + body.parent + '/' + body.name + '"';
+    } else {
+      values += ',""';
+      values += ',"/' + body.name + '"';
+    }
+    const sql = `insert into giftsProductsCategories (${fields}) values (${values})`;
+    let result = await SqliteRun(sql);
+    if (result) {
+      globalCategories = [];
+      globalSamplesOfCategories = [];
+      return res.status(200).send({ result: 'ok' });
+    }
+    return res.status(200).send({ result: 'failed' });
   } catch (e) {
     return res.status(500).send(e);
   }
 }
 
 async function DeleteCategory(query: any, res: Response) {
-  if (!query._id) {
+  if (!query.category) {
     return res.status(400).send('Invalid input.');
   }
 
   try {
-    const dbCollection = await DbCollection('gifts-products-catalog');
-    await dbCollection.deleteOne({ _id: new ObjectID(query._id) });
-    globalCategories = [];
-    globalSamplesOfCategories = [];
-    return res.status(200).send({ result: 'ok' });
+    const sql = `delete from giftsProductsCategories where category='${query.category}';`;
+    let result = await SqliteRun(sql);
+    if (result) {
+      globalCategories = [];
+      globalSamplesOfCategories = [];
+      return res.status(200).send({ result: 'ok' });
+    }
+    return res.status(500).send({ result: 'failed' });
+  } catch (e) {
+    return res.status(500).send(e);
+  }
+}
+
+async function UpdateCategory(body: any, res: Response) {
+  if (!body.org || !body.newName) {
+    return res.status(400).send('Invalid input.');
+  }
+
+  try {
+    // liych rename for children
+    const sql1 = `select * from giftsProductsCategories where parent='${body.org.category}';`;
+    let children = await SqliteAll(sql1);
+    if (children) {
+      children.forEach(child => {});
+    }
+
+    const sql = `update giftsProductsCategories set name='${
+      body.newName
+    }',category='${(body.org.parent || '') +
+      '/' +
+      body.newName}' where category='${body.org.category}';`;
+    let result = await SqliteRun(sql);
+    if (result) {
+      globalCategories = [];
+      globalSamplesOfCategories = [];
+      return res.status(200).send({ result: 'ok' });
+    }
+    return res.status(500).send({ result: 'failed' });
   } catch (e) {
     return res.status(500).send(e);
   }
@@ -59,16 +109,18 @@ async function DeleteCategory(query: any, res: Response) {
 
 // @level:
 // 0 - all;  1 - 1st level;  2 - 2nd and above levels
-async function GetCategoriesByLevel(level: number) {
+async function GetCategoriesByLevel(level: number | null) {
   if (globalCategories.length <= 0) {
     try {
-      globalCategories = await GetCategoriesFromDb();
+      globalCategories = await SqliteAll(
+        'select * from giftsProductsCategories;'
+      );
     } catch (e) {
       throw e;
     }
   }
 
-  if (level === 0) {
+  if (!level) {
     return globalCategories;
   }
   const returnCategories = [];
@@ -80,57 +132,12 @@ async function GetCategoriesByLevel(level: number) {
   });
   return returnCategories;
 }
+GetCategoriesByLevel(0);
 
-async function GetCategoriesFromDb() {
-  try {
-    const dbCollection = await DbCollection('gifts-products-catalog');
-    globalCategories = await dbCollection
-      .find()
-      .sort('category', 1)
-      .toArray();
-    return globalCategories;
-  } catch (e) {
-    throw { errMsg: 'Get categories from database failed.' };
-  }
-}
-
-async function GetSamples() {
-  try {
-    const dbCollection = await DbCollection('gifts-products');
-    let docs = null;
-    docs = await dbCollection
-      .aggregate([
-        { $sort: { _id: -1 } },
-        {
-          $group: {
-            _id: { category: '$category' },
-            products: {
-              $push: {
-                _id: '$_id',
-                category: '$category',
-                img: '$img'
-              }
-            }
-          }
-        },
-        {
-          $project: {
-            _id: '$_id',
-            products: {
-              $slice: [
-                '$products',
-                4 // max number of elements returned from the start of the array
-              ]
-            }
-          }
-        }
-      ])
-      .toArray();
-    return docs;
-  } catch (e) {
-    console.log(e);
-    return { errMsg: 'Get products failed.' };
-  }
-}
-
-export { AddCategory, DeleteCategory, GetCategories, GetSamplesOfCategories };
+export {
+  AddCategory,
+  DeleteCategory,
+  GetCategories,
+  GetSamplesOfCategories,
+  UpdateCategory
+};

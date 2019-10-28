@@ -9,6 +9,7 @@ import {
   InventoryItem,
   Product
 } from '../products-interface';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -57,5 +58,10 @@ export class ProductsApiService {
       { _id: _id, qty: qty },
       httpOptions
     );
+  }
+
+  newProduct(product: FormGroup) {
+    let param = {};
+    return this.http.post('/api/gifts/staffs/products/', param, httpOptions);
   }
 }
