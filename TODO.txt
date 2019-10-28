@@ -5,3 +5,5 @@ Backend Todo:
  user add/update/delete address
 # Shopping Cart Service
 # Product Detail Page Service
+# login use either uid or email.
+# 
