@@ -23,7 +23,7 @@
     <a routerLink="/gifts/auth/register">
       <button mat-button class="text-white font-weight-bold">Support</button>
     </a>
-    <a *ngIf="!bLoginStatus" routerLink="/gifts/auth/login">
+    <a *ngIf="!bLoginStatus" routerLink="/gifts/auth">
       <button mat-button class="text-white font-weight-bold"><i class="fa fa-sign-in"></i></button>
     </a>
     <a *ngIf="bLoginStatus">
@@ -40,7 +40,7 @@
       <a mat-menu-item routerLink="/gifts/cart" matTooltip="Cart"><i calss="fa fa-shopping-cart"></i></a>
       <a mat-menu-item routerLink="/gifts/trackOrder">Order</a>
       <a mat-menu-item routerLink="/gifts/auth/register">Support</a>
-      <a mat-menu-item routerLink="/gifts/auth/login" matTooltip="Sign in"><i class="fa fa-sign-in"></i></a>
+      <a mat-menu-item routerLink="/gifts/auth" matTooltip="Sign in"><i class="fa fa-sign-in"></i></a>
     </mat-menu>
   </span>
 </mat-toolbar>

@@ -19,22 +19,19 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.bStaffLogin = false;
     this.uid = '';
     this.pwd = '';
     this.errMsg = '';
-
-    this.bStaffLogin = this.router.url.includes('/staffs/auth/');
   }
 
   login(uid: string, pwd: string) {
-    this.usersService.login(this.bStaffLogin, uid, pwd).subscribe(
+    this.usersService.login(uid, pwd).subscribe(
       data => {
         this.errMsg = '';
         console.log('login succeed: ', data);
 
         this.usersService.sendLoginStatus(true);
-        if (this.bStaffLogin) {
+        if (data.bStaff) {
           this.router.navigate(['/staffs']);
         } else {
           this.router.navigate(['/gifts']);

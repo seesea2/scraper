@@ -9,13 +9,13 @@
     <button mat-button routerLink="/staffs/inventory">
       Inventory
     </button>
-    <button mat-button (click)="signOut()" matTooltip="User Info">
+    <button mat-button (click)="logout()" matTooltip="User Info">
       <i class="fa fa-info"></i>
     </button>
-    <button mat-button routerLink="/staffs/auth/login" matTooltip="Sign in">
+    <button *ngIf="!bLogin" mat-button routerLink="/staffs/auth" matTooltip="Sign in">
       <i class="fa fa-sign-in"></i>
     </button>
-    <button mat-button (click)="signOut()" matTooltip="Sign out">
+    <button *ngIf="bLogin" mat-button (click)="logout()" matTooltip="Sign out">
       <i class="fa fa-sign-out"></i>
     </button>
   </span>

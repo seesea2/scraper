@@ -30,7 +30,7 @@ export class UsersService {
     let user = {
       // uid: formGroup.controls.uid.value,
       email: formGroup.controls.email.value.trim(),
-      pwd: formGroup.controls.pwd.value,
+      pwd: formGroup.controls.pwd.value
       // firstName: formGroup.controls.firstName.value.trim(),
       // lastName: formGroup.controls.lastName.value.trim()
     };
@@ -38,23 +38,21 @@ export class UsersService {
     return this.httpClient.post('/api/gifts/users/register', user, httpOptions);
   }
 
-  login(bStaff: boolean, uid: string, pwd: string) {
+  login(uid: string, pwd: string): any {
     if (!(uid || '').trim() || !pwd) {
       return throwError('Username and password are required.');
     }
     return this.httpClient.post(
-      bStaff ? '/api/gifts/staffs/login' : '/api/gifts/users/login',
+      '/api/gifts/users/login',
       { uid: uid, pwd: pwd },
       httpOptions
     );
   }
 
-  logout(bStaff: boolean) {
-    this.httpClient
-      .get(bStaff ? '/api/gifts/staffs/logout' : '/api/gifts/users/logout')
-      .subscribe(r => {
-        console.log(r);
-      });
+  logout() {
+    this.httpClient.get('/api/gifts/users/logout').subscribe(r => {
+      console.log(r);
+    });
     this.loginStatusSubject.next(false);
   }
 

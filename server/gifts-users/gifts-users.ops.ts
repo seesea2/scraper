@@ -6,7 +6,7 @@ import { encrypt } from '../string-ops/crypto';
 
 async function Login(req: Request, res: Response) {
   if (req.session && req.session.staff) {
-    return res.status(200).send({ uid: req.session.staff.uid });
+    return res.status(200).send({ uid: req.session.staff.uid, bStaff: true });
   }
   if (req.session && req.session.user) {
     return res.status(200).send({ uid: req.session.user.uid });
@@ -18,7 +18,7 @@ async function Login(req: Request, res: Response) {
       `select * from giftsStaffs where uid="${uid}" and pwd="${pwd}"`
     );
     if (req.session.staff) {
-      return res.status(200).send({ uid: req.session.staff.uid });
+      return res.status(200).send({ uid: req.session.staff.uid, bStaff: true });
     }
 
     req.session.user = await SqliteGet(
@@ -44,27 +44,20 @@ function Logout(req: Request, res: Response) {
   return res.status(200).send({ result: 'ok' });
 }
 
-async function Register(req: Request, res: Response) {
-  if (
-    !req.body.uid ||
-    !req.body.pwd ||
-    !req.body.email ||
-    !req.body.firstName ||
-    !req.body.lastName
-  ) {
+async function Register(body: any, res: Response) {
+  if (!body.email || !body.pwd) {
     return res.status(400).send('Invalid input.');
   }
   try {
+    let fields = 'email,pwd,createdOn';
+    let values = `"${body.email}","` + encrypt(body.pwd) + '",' + Date.now();
     let rslt = await SqliteRun(
-      `insert into giftsStaffs (id, pwd) value(${req.body.uid}, ${encrypt(
-        req.body.pwd
-      )}, ${req.body.email}      ${new Date()}`
+      `insert into giftsUsers (${fields}) values (${values})`
     );
     if (rslt) {
       return res.status(200).send({ result: 'ok' });
-    } else {
-      return res.status(500).send('Register failed. Please try again later.');
     }
+    return res.status(500).send('Register failed. Please try again later.');
   } catch (e) {
     return res.status(500).send('Register failed. Please try again later.');
   }

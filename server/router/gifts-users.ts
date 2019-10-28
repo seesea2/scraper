@@ -30,7 +30,7 @@ giftsUsersRouter.get('/logout', (req: Request, res: Response) => {
   Logout(req, res);
 });
 giftsUsersRouter.post('/register', (req: Request, res: Response) => {
-  Register(req, res);
+  Register(req.body, res);
 });
 giftsUsersRouter.delete('/deleteuser', (req: Request, res: Response) => {
   DeleteUser(req.session, res);

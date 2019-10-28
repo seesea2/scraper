@@ -30,6 +30,6 @@ export class GiftsNavbarComponent implements OnInit {
   }
 
   logout() {
-    this.usersService.logout(false);
+    this.usersService.logout();
   }
 }
