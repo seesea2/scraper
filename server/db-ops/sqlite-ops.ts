@@ -1,6 +1,8 @@
+import { join } from 'path';
 import { Database, OPEN_READONLY, OPEN_READWRITE, verbose } from 'sqlite3';
 
-const DB = './info.xyz';
+// const DB = './info.xyz';
+const DB = join(__dirname, '/info.xyz');
 
 let sqlite3 = verbose();
 let db_r = undefined;
