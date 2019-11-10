@@ -1,9 +1,9 @@
-<div class="container d-flex py-5">
-  <mat-card class="container col-sm-12 col-md-6 col-lg-4">
+<div class="d-flex py-5 justify-content-center">
+  <mat-card class="col-sm-12 col-md-6 col-lg-4">
     <mat-card-title class="text-center">
-      <h2>Welcome! Please login.</h2>
+      <h2>Welcome!</h2>
     </mat-card-title>
-    <mat-card-content class="row no-gutters container">
+    <mat-card-content class="container pt-4">
       <mat-form-field class="col-12">
         <mat-label>Username</mat-label>
         <input #uid matInput id="uid" required />
@@ -14,9 +14,15 @@
         <input #pwd matInput id="pwd" type="password" required />
         <span matSuffix><i class="fa fa-key m-2"></i></span>
       </mat-form-field>
-      <mat-error>{{errMsg}}</mat-error>
-      <span *ngIf="!bStaffLogin" class="small"><a>New memober Register</a></span>
-      <button mat-raised-button color="primary" (click)='login(uid.value, pwd.value)'>Login</button>
+      <mat-error class="text-center">{{errMsg}}</mat-error>
+      <div class="text-center py-3">
+        <button mat-raised-button color="primary" (click)='login(uid.value, pwd.value)'>
+          Login
+        </button>
+      </div>
+      <span class="ml-auto">
+        <a color="primary" routerLink="./register">Register</a>
+      </span>
     </mat-card-content>
   </mat-card>
 </div>
