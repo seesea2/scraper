@@ -1,9 +1,9 @@
 import { Request, Response } from '../interface';
 import { DbCollection, ObjectID } from '../mongodb-ops';
 import { bLogin } from '../gifts-users/gifts-users.ops';
-import { CartItem } from '../gifts-users/users-interface';
+import { CartItem, Customer } from '../gifts-users/users-interface';
 
-async function NewOrder(customer, cartItems: CartItem[]) {
+async function NewOrder(customer: Customer, cartItems: CartItem[]) {
   try {
     const dbOrders = await DbCollection('gifts-orders');
     let insertRslt = dbOrders.insertOne({

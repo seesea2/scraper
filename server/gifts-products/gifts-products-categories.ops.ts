@@ -2,8 +2,8 @@ import { Response } from '../interface';
 import { ObjectID, DbCollection } from '../mongodb-ops';
 import { SqliteAll, SqliteRun } from '../db-ops/sqlite-ops';
 
-let globalCategories = [];
-let globalSamplesOfCategories = [];
+let globalCategories: any = [];
+let globalSamplesOfCategories: any = [];
 
 async function GetCategories(res: Response) {
   if (globalCategories.length > 0) {
@@ -123,8 +123,8 @@ async function GetCategoriesByLevel(level: number | null) {
   if (!level) {
     return globalCategories;
   }
-  const returnCategories = [];
-  globalCategories.forEach(cat => {
+  const returnCategories: any = [];
+  globalCategories.forEach((cat: any) => {
     console.log(cat.category.match(new RegExp('/', 'g')));
     if (cat.category.match(new RegExp('/', 'g')).length <= level) {
       returnCategories.push(cat);

@@ -1,51 +1,101 @@
-interface OdPronunciation {
+interface IdText {
+  id: string;
+  text: string;
+}
+
+interface IdTextType extends IdText {
+  type: string;
+}
+
+interface DomainRegionRegister extends IdText {
+  domains: IdText[];
+  regions: IdText[];
+  registers: IdText[];
+}
+
+interface OdDerivative extends DomainRegionRegister {
+  language: string;
+}
+
+interface OdVariantForm extends DomainRegionRegister {
+  notes: IdTextType[];
+  pronunciations: OdPronunciation[];
+}
+
+interface OdExample extends DomainRegionRegister {
+  definitions: string[];
+  notes: IdTextType[];
+  senseIds: string[];
+}
+
+interface OdConstruction extends DomainRegionRegister {
+  examples: OdExample[];
+  notes: IdTextType[];
+}
+
+interface OdPronunciation extends DomainRegionRegister {
   audioFile: string;
-  dialects: [string];
+  dialects: string[];
   phoneticNotation: string;
   phoneticSpelling: string;
-  regions: [
-    {
-      id: string;
-      text: string;
-    }
-  ];
+}
+
+interface OdSense extends OdConstruction, OdVariantForm {
+  constructions: OdConstruction[];
+  crossReferenceMarkers: string[];
+  crossReferences: IdTextType[];
+  definitions: string[];
+
+  etymologies: string[];
+  examples: OdExample[];
+  shortDefinitions: string[];
+  subsenses: OdSense[];
+  thesaurusLinks: {
+    entry_id: 'string';
+    sense_id: 'string';
+  }[];
+  variantForms: OdVariantForm[];
+}
+
+interface OdEntry {
+  etymologies: string[];
+  grammaticalFeatures: IdTextType[];
+  homographNumber: string;
+  notes: IdTextType[];
+  pronunciations: OdPronunciation[];
+  senses: OdSense[];
+  variantForms: OdVariantForm[];
+}
+
+interface OdLexicalEntry {
+  // for Entries
+  derivativeOf: OdDerivative[];
+  derivatives: OdDerivative[];
+  language: string;
+  entries: OdEntry[];
+  grammaticalFeatures: IdTextType[];
+  lexicalCategory: IdText;
+  notes: IdTextType[];
+  pronunciations: OdPronunciation[];
+  text: string;
+  variantForms: OdVariantForm[];
+
+  // for Lemmas
+  inflectionOf: IdText[];
 }
 
 interface OxfordLemmas {
   metadata: {
     provider: string;
   };
-  results: [
-    {
-      id: string;
-      language: string;
-      lexicalEntries: [
-        {
-          grammaticalFeatures: [
-            {
-              id: string;
-              text: string;
-              type: string;
-            }
-          ];
-          inflectionOf: [
-            {
-              id: string;
-              text: string;
-            }
-          ];
-          language: string;
-          lexicalCategory: {
-            id: string;
-            text: string;
-          };
-          text: string;
-        }
-      ];
-      type: string;
-      word: string;
-    }
-  ];
+  results: {
+    id: string;
+    language: string;
+    lexicalEntries: OdLexicalEntry[];
+
+    type: string;
+    word: string;
+  }[];
 }
 
 interface OxfordEntries {
@@ -55,284 +105,14 @@ interface OxfordEntries {
     provider: string;
     schema: string;
   };
-  results: [
-    {
-      id: string;
-      language: string;
-      lexicalEntries: [
-        {
-          derivativeOf: [
-            {
-              domains: [
-                {
-                  id: string;
-                  text: string;
-                }
-              ];
-              id: string;
-              language: string;
-              regions: [
-                {
-                  id: string;
-                  text: string;
-                }
-              ];
-              registers: [
-                {
-                  id: string;
-                  text: string;
-                }
-              ];
-              text: string;
-            }
-          ];
-          derivatives: [
-            {
-              domains: [
-                {
-                  id: string;
-                  text: string;
-                }
-              ];
-              id: string;
-              language: string;
-              regions: [
-                {
-                  id: string;
-                  text: string;
-                }
-              ];
-              registers: [
-                {
-                  id: string;
-                  text: string;
-                }
-              ];
-              text: string;
-            }
-          ];
-          entries: [
-            {
-              etymologies: [string];
-              grammaticalFeatures: [
-                {
-                  id: string;
-                  text: string;
-                  type: string;
-                }
-              ];
-              homographNumber: string;
-              notes: [
-                {
-                  id: string;
-                  text: string;
-                  type: string;
-                }
-              ];
-              pronunciations: [OdPronunciation];
-              senses: [
-                {
-                  crossReferenceMarkers: [string];
-                  crossReferences: [
-                    {
-                      id: string;
-                      text: string;
-                      type: string;
-                    }
-                  ];
-                  definitions: [string];
-                  domains: [
-                    {
-                      id: string;
-                      text: string;
-                    }
-                  ];
-                  examples: [
-                    {
-                      definitions: [string];
-                      domains: [
-                        {
-                          id: string;
-                          text: string;
-                        }
-                      ];
-                      notes: [
-                        {
-                          id: string;
-                          text: string;
-                          type: string;
-                        }
-                      ];
-                      regions: [
-                        {
-                          id: string;
-                          text: string;
-                        }
-                      ];
-                      registers: [
-                        {
-                          id: string;
-                          text: string;
-                        }
-                      ];
-                      senseIds: [string];
-                      text: string;
-                    }
-                  ];
-                  id: string;
-                  notes: [
-                    {
-                      id: string;
-                      text: string;
-                      type: string;
-                    }
-                  ];
-                  pronunciations: [OdPronunciation];
-                  regions: [
-                    {
-                      id: string;
-                      text: string;
-                    }
-                  ];
-                  registers: [
-                    {
-                      id: string;
-                      text: string;
-                    }
-                  ];
-                  shortDefinitions: [string];
-                  subsenses: [{ definitions: [string]; id: string }];
-                  thesaurusLinks: [
-                    {
-                      entry_id: string;
-                      sense_id: string;
-                    }
-                  ];
-                  variantForms: [
-                    {
-                      domains: [
-                        {
-                          id: string;
-                          text: string;
-                        }
-                      ];
-                      notes: [
-                        {
-                          id: string;
-                          text: string;
-                          type: string;
-                        }
-                      ];
-                      pronunciations: [OdPronunciation];
-                      regions: [
-                        {
-                          id: string;
-                          text: string;
-                        }
-                      ];
-                      registers: [
-                        {
-                          id: string;
-                          text: string;
-                        }
-                      ];
-                      text: string;
-                    }
-                  ];
-                }
-              ];
-              variantForms: [
-                {
-                  domains: [
-                    {
-                      id: string;
-                      text: string;
-                    }
-                  ];
-                  notes: [
-                    {
-                      id: string;
-                      text: string;
-                      type: string;
-                    }
-                  ];
-                  pronunciations: [OdPronunciation];
-                  regions: [
-                    {
-                      id: string;
-                      text: string;
-                    }
-                  ];
-                  registers: [
-                    {
-                      id: string;
-                      text: string;
-                    }
-                  ];
-                  text: string;
-                }
-              ];
-            }
-          ];
-          grammaticalFeatures: [
-            {
-              id: string;
-              text: string;
-              type: string;
-            }
-          ];
-          language: string;
-          lexicalCategory: {
-            id: string;
-            text: string;
-          };
-          notes: [
-            {
-              id: string;
-              text: string;
-              type: string;
-            }
-          ];
-          pronunciations: [OdPronunciation];
-          text: string;
-          variantForms: [
-            {
-              domains: [
-                {
-                  id: string;
-                  text: string;
-                }
-              ];
-              notes: [
-                {
-                  id: string;
-                  text: string;
-                  type: string;
-                }
-              ];
-              pronunciations: [OdPronunciation];
-              regions: [
-                {
-                  id: string;
-                  text: string;
-                }
-              ];
-              registers: [
-                {
-                  id: string;
-                  text: string;
-                }
-              ];
-              text: string;
-            }
-          ];
-        }
-      ];
-      pronunciations: [OdPronunciation];
-      type: string;
-      word: string;
-    }
-  ];
+  results: {
+    id: string;
+    language: string;
+    lexicalEntries: OdLexicalEntry[];
+    pronunciations: OdPronunciation[];
+    type: string;
+    word: string;
+  }[];
 }
 
 interface OxfordResponseCode {
@@ -342,12 +122,21 @@ interface OxfordResponseCode {
   500: `Internal Error. An error occurred during processing.`;
 }
 
+interface YcLexicalEntry {
+  entries: string[];
+  lexicalCategory: string;
+  pronunciations: { audioFile: string; phoneticSpelling: string }[];
+}
 interface CheckEntriesResult {
-  lexicalEntries: {
-    entries: string[];
-    lexicalCategory: string;
-    pronunciations: { audioFile: string; phoneticSpelling: string }[];
-  }[];
+  lexicalEntries: YcLexicalEntry[];
 }
 
-export { CheckEntriesResult, OxfordEntries, OxfordLemmas, OxfordResponseCode };
+export {
+  IdText,
+  CheckEntriesResult,
+  OxfordEntries,
+  OxfordLemmas,
+  OxfordResponseCode,
+  OdPronunciation,
+  YcLexicalEntry
+};

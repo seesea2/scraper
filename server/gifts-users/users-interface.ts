@@ -5,6 +5,15 @@ interface CartItem {
   qty: number;
 }
 
+interface Customer {
+  name: string;
+  fname: string;
+  lname: string;
+  mobile: number;
+  address: string;
+  message: string;
+}
+
 interface Cart {
   customer: {
     name: string;
@@ -15,4 +24,4 @@ interface Cart {
   total: number;
 }
 
-export { Cart, CartItem };
+export { Cart, CartItem, Customer };

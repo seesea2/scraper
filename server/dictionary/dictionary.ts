@@ -3,7 +3,9 @@ import { Response } from '../interface';
 import {
   CheckEntriesResult,
   OxfordEntries,
-  OxfordLemmas
+  OxfordLemmas,
+  IdText,
+  YcLexicalEntry
 } from './oxford-interface';
 
 const app_id: string = '0314e9e2';
@@ -32,7 +34,7 @@ async function CheckOxfordEntries(word: string, res: Response) {
     let return_result: CheckEntriesResult = { lexicalEntries: [] };
     for (let result of entries.results) {
       for (let lexicalEntry of result.lexicalEntries) {
-        let new_lexicalEntry = {
+        let new_lexicalEntry: YcLexicalEntry = {
           entries: [],
           lexicalCategory: '',
           pronunciations: []
@@ -80,7 +82,7 @@ async function CheckOxfordLemmas(word: string) {
   try {
     let resp = await Axios(url, config);
     const lemmas: OxfordLemmas = resp.data;
-    let return_result = [];
+    let return_result: IdText[] = [];
     lemmas.results.forEach(result => {
       result.lexicalEntries.forEach(lexicalEntry => {
         lexicalEntry.inflectionOf.forEach(inflection => {
