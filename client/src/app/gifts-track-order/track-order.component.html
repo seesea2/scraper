@@ -4,9 +4,21 @@
     <div>
       <mat-label>Order No.</mat-label>
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Order No." #orderNo required />
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Order No."
+          #orderNo
+          required
+        />
         <div class="input-group-append">
-          <button class="btn btn-primary fa fa-search" type="button" (click)="ShowOrderStatus(orderNo.value)"></button>
+          <button
+            class="btn btn-primary"
+            type="button"
+            (click)="ShowOrderStatus(orderNo.value)"
+          >
+            <fa-icon icon="search"></fa-icon>
+          </button>
         </div>
       </div>
     </div>

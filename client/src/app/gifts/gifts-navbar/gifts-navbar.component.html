@@ -17,7 +17,7 @@
         mat-button
         class="text-white font-weight-bold"
       >
-        <i calss="fa fa-shopping-cart">cart</i>
+        <fa-icon icon="shopping-cart">cart</fa-icon>
       </button>
       <button
         *ngIf="cartItemCount > 0"
@@ -26,7 +26,7 @@
         matBadge="{{ cartItemCount }}"
         matBadgeColor="accent"
       >
-        <i calss="fa fa-shopping-cart">cart</i>
+        <fa-icon icon="shopping-cart"></fa-icon>
       </button>
     </a>
     <a routerLink="/gifts/trackOrder">
@@ -48,14 +48,14 @@
   </span>
   <span class="ml-auto d-lg-none d-xl-none">
     <button mat-icon-button [matMenuTriggerFor]="giftsNav">
-      <i class="fa fa-align-justify"></i>
+      <fa-icon icon="align-justify"></fa-icon>
     </button>
     <mat-menu #giftsNav="matMenu">
       <a mat-menu-item routerLink="/gifts/browse">HotSales</a>
       <a mat-menu-item routerLink="/gifts/browse">Products</a>
-      <a mat-menu-item routerLink="/gifts/cart" matTooltip="Cart"
-        ><i calss="fa fa-shopping-cart"></i
-      ></a>
+      <a mat-menu-item routerLink="/gifts/cart" matTooltip="Cart">
+        <fa-icon icon="shopping-cart"></fa-icon>
+      </a>
       <a mat-menu-item routerLink="/gifts/trackOrder">Order</a>
       <a mat-menu-item routerLink="/gifts/auth/register">Support</a>
       <a mat-menu-item routerLink="/gifts/auth" matTooltip="Sign in"

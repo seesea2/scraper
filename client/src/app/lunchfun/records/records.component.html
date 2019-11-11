@@ -1,9 +1,12 @@
 <section class="mt-5">
   <h2>Lunch Records</h2>
   <div class="mt-4">
-    <mat-error *ngIf="lunchRecordErr">{{lunchRecordErr}}</mat-error>
+    <mat-error *ngIf="lunchRecordErr">{{ lunchRecordErr }}</mat-error>
     <div *ngIf="!lunchRecordErr" class="card-group">
-      <mat-card *ngFor="let record of lunchRecords; trackBy: trackById" class="col-sm-12 col-md-4 mb-3">
+      <mat-card
+        *ngFor="let record of lunchRecords; trackBy: trackById"
+        class="col-sm-12 col-md-4 mb-3"
+      >
         <mat-card-title>{{ getLocalDate(record) }}</mat-card-title>
         <mat-card-content>
           <div><b>Attendees:</b> {{ record.attendees }}</div>
@@ -11,7 +14,7 @@
         </mat-card-content>
         <mat-card-actions align="end">
           <button mat-button (click)="deleteRecord(record)">
-            <i class="fa fa-trash"></i>
+            <fa-icon icon="trash"></fa-icon>
           </button>
         </mat-card-actions>
       </mat-card>

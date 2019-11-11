@@ -26,7 +26,15 @@ import {
   faCheck,
   faChevronCircleUp,
   faPhone,
-  faEnvelope
+  faEnvelope,
+  faMapMarker,
+  faAlignJustify,
+  faInfo,
+  faIdCard,
+  faIdCardAlt,
+  faEnvelopeOpen,
+  faMobileAlt,
+  faDesktop
 } from '@fortawesome/free-solid-svg-icons';
 
 import { NgBootstrapModule } from './ng-bootstrap.module';
@@ -81,5 +89,12 @@ export class SharedModule {
     library.addIcons(faCheck);
     library.addIcons(faPhone);
     library.addIcons(faEnvelope);
+    library.addIcons(faMapMarker);
+    library.addIcons(faAlignJustify);
+    library.addIcons(faInfo);
+    library.addIcons(faIdCardAlt);
+    library.addIcons(faEnvelopeOpen);
+    library.addIcons(faMobileAlt);
+    library.addIcons(faDesktop);
   }
 }
