@@ -1,31 +1,39 @@
 <div class="container my-4">
   <mat-horizontal-stepper labelPosition="bottom" linear #stepper>
     <ng-template matStepperIcon="edit">
-      <i class="fa fa-check"></i>
+      <fa-icon icon="check"></fa-icon>
     </ng-template>
     <ng-template matStepperIcon="done">
-      <i class="fa fa-check"></i>
+      <fa-icon icon="check"></fa-icon>
     </ng-template>
-    <mat-step [stepControl]="firstFormGroup" label="Shipping Info" class="my-4 py-4">
+    <mat-step
+      [stepControl]="firstFormGroup"
+      label="Shipping Info"
+      class="my-4 py-4"
+    >
       <form [formGroup]="firstFormGroup">
         <mat-form-field class="col-6">
           <mat-label>Name</mat-label>
-          <input matInput formControlName="name" type="text" required>
+          <input matInput formControlName="name" type="text" required />
         </mat-form-field>
         <mat-form-field class="col-6">
           <mat-label>Mobile</mat-label>
-          <input matInput formControlName="mobile" type="tel" required>
+          <input matInput formControlName="mobile" type="tel" required />
         </mat-form-field>
         <mat-form-field class="col-12">
           <mat-label>Address</mat-label>
-          <input matInput formControlName="address" type="text" required>
+          <input matInput formControlName="address" type="text" required />
         </mat-form-field>
         <div>
           <button matStepperNext mat-raised-button color="primary">Next</button>
         </div>
       </form>
     </mat-step>
-    <mat-step [stepControl]="secondFormGroup" label="Review Purchase" class="my-4 py-4">
+    <mat-step
+      [stepControl]="secondFormGroup"
+      label="Review Purchase"
+      class="my-4 py-4"
+    >
       <form [formGroup]="secondFormGroup">
         <mat-form-field class="col-12">
           <mat-label>Message for order</mat-label>
@@ -39,10 +47,17 @@
     </mat-step>
     <mat-step label="Done" class="my-4 py-4">
       <ng-template matStepLabel>Done</ng-template>
-      <div>{{submitMsg}}</div>
+      <div>{{ submitMsg }}</div>
       <div *ngIf="!submitDone">
         <button mat-raised-button matStepperPrevious>Back</button>
-        <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="processing">Submit</button>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="onSubmit()"
+          [disabled]="processing"
+        >
+          Submit
+        </button>
       </div>
     </mat-step>
   </mat-horizontal-stepper>
