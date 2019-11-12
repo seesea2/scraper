@@ -14,14 +14,14 @@
     <a routerLink="/gifts/cart">
       <button
         *ngIf="cartItemCount <= 0"
-        mat-button
+        mat-icon-button
         class="text-white font-weight-bold"
       >
         <fa-icon icon="shopping-cart">cart</fa-icon>
       </button>
       <button
         *ngIf="cartItemCount > 0"
-        mat-button
+        mat-icon-button
         class="text-white font-weight-bold"
         matBadge="{{ cartItemCount }}"
         matBadgeColor="accent"
@@ -36,7 +36,7 @@
       <button mat-button class="text-white font-weight-bold">Support</button>
     </a>
     <a *ngIf="!bLoginStatus" routerLink="/gifts/auth">
-      <button mat-button class="text-white font-weight-bold">
+      <button mat-icon-button class="text-white font-weight-bold">
         <fa-icon icon="sign-in-alt"></fa-icon>
       </button>
     </a>

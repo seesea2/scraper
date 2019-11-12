@@ -27,4 +27,6 @@ function decrypt(text: string): string {
   }
 }
 
+console.log(encrypt('aa'));
+
 export { encrypt, decrypt };

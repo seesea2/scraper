@@ -12,8 +12,13 @@ async function Login(req: Request, res: Response) {
     return res.status(200).send({ uid: req.session.user.uid });
   }
   try {
-    const uid = req.body.uid;
+    const uid = (req.body.uid || '').trim();
     const pwd = encrypt(req.body.pwd);
+    if (!uid || !pwd) {
+      return res
+        .status(400)
+        .send({ result: 'username and password required.' });
+    }
     req.session.staff = await SqliteGet(
       `select * from giftsStaffs where uid="${uid}" and pwd="${pwd}"`
     );

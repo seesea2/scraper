@@ -2,10 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 import {
   FontAwesomeModule,
   FaIconLibrary
-
 } from '@fortawesome/angular-fontawesome';
 import {
   faLeaf,
@@ -36,6 +37,13 @@ import {
   faMobileAlt,
   faDesktop
 } from '@fortawesome/free-solid-svg-icons';
+import {
+  faWhatsapp,
+  faFacebook,
+  faTwitter,
+  faLinkedin,
+  faWeixin
+} from '@fortawesome/free-brands-svg-icons';
 
 import { NgBootstrapModule } from './ng-bootstrap.module';
 import { MaterialModule } from './material.module';
@@ -60,6 +68,7 @@ import { SendMessageComponent } from './send-message/send-message.component';
     CommonModule,
     FormsModule,
     HttpClientModule,
+    FlexLayoutModule,
     FontAwesomeModule,
     NgBootstrapModule,
     MaterialModule,
@@ -70,31 +79,34 @@ import { SendMessageComponent } from './send-message/send-message.component';
 })
 export class SharedModule {
   constructor(library: FaIconLibrary) {
-    library.addIcons(faAnchor);
-    library.addIcons(faChevronCircleUp);
-    library.addIcons(faChevronDown);
-    library.addIcons(faChevronRight);
-    library.addIcons(faLeaf);
-    library.addIcons(faKey);
-    library.addIcons(faPaperPlane);
-    library.addIcons(faShoppingCart);
-    library.addIcons(faSignInAlt);
-    library.addIcons(faSignOutAlt);
-    library.addIcons(faTrash)
-    library.addIcons(faUser);
-    library.addIcons(faFileWord);
-    library.addIcons(faHeart);
-    library.addIcons(faSearch);
-    library.addIcons(faPlay);
-    library.addIcons(faCheck);
-    library.addIcons(faPhone);
-    library.addIcons(faEnvelope);
-    library.addIcons(faMapMarker);
-    library.addIcons(faAlignJustify);
-    library.addIcons(faInfo);
-    library.addIcons(faIdCardAlt);
-    library.addIcons(faEnvelopeOpen);
-    library.addIcons(faMobileAlt);
-    library.addIcons(faDesktop);
+    library.addIcons(
+      faAlignJustify,
+      faAnchor,
+      faCheck,
+      faChevronCircleUp,
+      faChevronDown,
+      faChevronRight,
+      faDesktop,
+      faEnvelope,
+      faEnvelopeOpen,
+      faFileWord,
+      faHeart,
+      faIdCardAlt,
+      faLeaf,
+      faMapMarker,
+      faMobileAlt,
+      faKey,
+      faPaperPlane,
+      faPhone,
+      faPlay,
+      faSearch,
+      faShoppingCart,
+      faSignInAlt,
+      faSignOutAlt,
+      faTrash,
+      faUser,
+      faInfo
+    );
+    library.addIcons(faFacebook, faTwitter, faWhatsapp, faLinkedin, faWeixin);
   }
 }

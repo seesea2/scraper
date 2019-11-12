@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { UsersService } from '../../core/services/users.service';
 
@@ -9,13 +10,12 @@ import { UsersService } from '../../core/services/users.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  bStaffLogin: boolean;
   uid: string;
   pwd: string;
   errMsg: string;
 
-  constructor(private usersService: UsersService, private router: Router) {
-    console.log('routes.url : ', router);
+  constructor(private usersService: UsersService, private location: Location) {
+    // console.log('routes.url : ', router);
   }
 
   ngOnInit() {
@@ -28,14 +28,15 @@ export class LoginComponent implements OnInit {
     this.usersService.login(uid, pwd).subscribe(
       data => {
         this.errMsg = '';
-        console.log('login succeed: ', data);
+        // console.log('login succeed: ', data);
 
         this.usersService.sendLoginStatus(true);
         if (data.bStaff) {
-          this.router.navigate(['/staffs']);
+          // this.router.navigate(['/staffs']);
         } else {
-          this.router.navigate(['/gifts']);
+          // this.router.navigate(['/gifts']);
         }
+        this.location.back();
       },
       err => {
         this.errMsg = err;
