@@ -28,14 +28,8 @@ export class LoginComponent implements OnInit {
     this.usersService.login(uid, pwd).subscribe(
       data => {
         this.errMsg = '';
-        // console.log('login succeed: ', data);
 
         this.usersService.sendLoginStatus(true);
-        if (data.bStaff) {
-          // this.router.navigate(['/staffs']);
-        } else {
-          // this.router.navigate(['/gifts']);
-        }
         this.location.back();
       },
       err => {

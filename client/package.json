@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "scripts": {
     "ng": "ng",
-    "debug": "ng build",
+    "debug": "ng build --watch",
     "build": "ng build --prod"
   },
   "private": true,

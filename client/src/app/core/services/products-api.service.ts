@@ -61,7 +61,20 @@ export class ProductsApiService {
   }
 
   newProduct(product: FormGroup) {
-    let param = {};
-    return this.http.post('/api/gifts/staffs/products/', param, httpOptions);
+    let name: string = (product.controls.name.value || '').trim();
+    let price = product.controls.price.value;
+    let qty = product.controls.qty.value;
+    let category = product.controls.category.value;
+    let img = (product.controls.img.value || '').trim();
+    let note = (product.controls.note.value || '').trim();
+    let param = {
+      name: name,
+      price: price,
+      qty: qty,
+      category: category,
+      img: img,
+      note: note
+    };
+    return this.http.post('/api/gifts/products/product/', param, httpOptions);
   }
 }

@@ -43,15 +43,19 @@ async function AddProduct(body: any, res: Response) {
   try {
     let fields = '';
     let values = '';
-    if (!body.name) {
-    }
     fields = 'name';
     values = '"' + body.name + '"';
-    if ((body.price | 0) <= 0) {
+    console.log(typeof body.price);
+    if ((body.price || 0) <= 0) {
       body.price = 0;
     }
     fields += ',price';
     values += ',' + body.price;
+    if ((body.qty || 0) <= 0) {
+      body.qty = 0;
+    }
+    fields += ',qty';
+    values += ',' + body.qty;
     if (!body.colour) {
       body.colour = '';
     }
@@ -88,7 +92,8 @@ async function AddProduct(body: any, res: Response) {
     fields += ',retailer';
     values += ',"' + body.retailer + '"';
     fields += ',createdOn';
-    values += ',' + new Date().getTime();
+    // values += ',' + new Date().getTime();
+    values += ',' + Date.now();
 
     const sql = `insert into giftsProducts (${fields}) values (${values});`;
     let result = await SqliteRun(sql);

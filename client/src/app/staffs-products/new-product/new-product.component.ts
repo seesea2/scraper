@@ -9,6 +9,7 @@ import { ProductsApiService } from 'src/app/core/services/products-api.service';
 })
 export class NewProductComponent implements OnInit {
   productForm: FormGroup;
+  result: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -16,6 +17,7 @@ export class NewProductComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.result = '';
     this.productForm = this.formBuilder.group({
       name: [''],
       price: 0,
@@ -30,8 +32,10 @@ export class NewProductComponent implements OnInit {
     this.productApi.newProduct(this.productForm).subscribe(
       data => {
         console.log(data);
+        this.result = 'Add product successfully.';
       },
       err => {
+        this.result = `Failed: ${err}.`;
         console.log(err);
       }
     );
