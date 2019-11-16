@@ -16,6 +16,16 @@ async function GetProduct(params: any, res: Response) {
   }
 }
 
+async function GetProducts(params: any, res: Response) {
+  try {
+    const sql = `select * from giftsProducts where (inactive is null or inactive<>1) limit 50;`;
+    const products = await SqliteAll(sql);
+    return res.status(200).send(products);
+  } catch (e) {
+    return res.status(500).send(e);
+  }
+}
+
 async function GetProductsByCategory(query: any, res: Response) {
   if (!query.category) {
     return res.status(400).send({ result: 'Invalid category.' });
@@ -155,7 +165,7 @@ async function UpdateProduct(body: any, res: Response) {
 
 async function DeleteProduct(query: any, res: Response) {
   if (!query.id) {
-    return res.status(400).send('Invalid input.');
+    return res.status(400).send('Invalid product id.');
   }
 
   try {
@@ -175,5 +185,6 @@ export {
   DeleteProduct,
   GetProductsByCategory,
   GetProduct,
+  GetProducts,
   UpdateProduct
 };

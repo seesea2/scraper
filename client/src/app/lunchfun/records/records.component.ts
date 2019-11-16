@@ -34,7 +34,7 @@ export class RecordsComponent implements OnInit, OnDestroy {
         this.lunchRecords = data;
       },
       err => {
-        this.lunchRecordErr = err;
+        this.lunchRecordErr = err.result;
       }
     );
   }
@@ -47,7 +47,7 @@ export class RecordsComponent implements OnInit, OnDestroy {
         this.lunchfunService.startRefresh();
       },
       err => {
-        this.lunchRecordErr = err;
+        this.lunchRecordErr = err.result;
       }
     );
   }

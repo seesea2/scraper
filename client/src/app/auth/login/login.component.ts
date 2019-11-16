@@ -33,8 +33,7 @@ export class LoginComponent implements OnInit {
         this.location.back();
       },
       err => {
-        this.errMsg = err;
-        console.error('login failed, ', err);
+        this.errMsg = err.result;
         this.usersService.sendLoginStatus(false);
       }
     );

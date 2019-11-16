@@ -36,7 +36,7 @@ export class OxfordComponent implements OnInit {
         },
         err => {
           this.checkEntriesResult = { lexicalEntries: [] };
-          this.errMsg = err;
+          this.errMsg = err.result;
           this.bChecking = false;
         }
       );

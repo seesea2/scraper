@@ -12,6 +12,7 @@ import {
   AddProduct,
   DeleteProduct,
   GetProduct,
+  GetProducts,
   GetProductsByCategory,
   UpdateProduct
 } from '../gifts-products/gifts-products.ops';
@@ -51,7 +52,8 @@ giftsProductsRouter.get('/samples', (req: Request, res: Response) => {
   GetSamplesOfCategories(res);
 });
 giftsProductsRouter.get('', (req: Request, res: Response) => {
-  GetProductsByCategory(req.query, res);
+  // GetProductsByCategory(req.query, res);
+  GetProducts(null, res);
 });
 giftsProductsRouter.get('/product', (req: Request, res: Response) => {
   GetProduct(req.query, res);

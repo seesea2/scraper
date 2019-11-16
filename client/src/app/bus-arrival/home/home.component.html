@@ -1,11 +1,13 @@
-<div class="container py-4">
-  <h1>Bus Arrival Time</h1>
-  <h6>Get bus arrival time by bus stop code.</h6>
-  <form class="py-4">
+<div class="container py-4 text-center">
+  <div class="text-center">
+    <h1>Bus Arrival Time</h1>
+    <h6>Get bus arrival time by bus stop code.</h6>
+  </div>
+  <form class="py-4 text-center" (ngsubmit)="getBusArrival(busStopCode.value)">
     <mat-form-field>
       <mat-label>Bus Stop Code</mat-label>
       <input matInput #busStopCode type="text" />
-      <button mat-raised-button matSuffix color="primary" (click)="getBusArrival(busStopCode.value)">
+      <button mat-flat-button matSuffix color="primary" type="submit">
         Get
       </button>
     </mat-form-field>
@@ -46,19 +48,21 @@
       </ul>
     </div>
 
-    <button *ngIf="!bExistingBookmark" mat-stroked-button color="primary" (click)="addBusStopBookmark()" class="my-3">
-      Bookmark this Bus Stop
-    </button>
-    <button mat-stroked-button color="primary" (click)="getBusArrival(currentBusStopCode)" class="my-3">
+    <div class="text-center">
+      <button *ngIf="!bExistingBookmark" mat-flat-button color="primary" (click)="addBusStopBookmark()" class="my-3">
+        Bookmark this Bus Stop
+      </button>
+    </div>
+    <button mat-flat-button color="primary" (click)="getBusArrival(currentBusStopCode)" class="my-3">
       Refresh
     </button>
   </div>
 
-  <div *ngIf="busStopBookmark.length" class="py-4">
+  <div *ngIf="busStopBookmark.length" class="py-4 text-center">
     <h3>Bus Stop Bookmark</h3>
     <mat-action-list *ngFor="let busStop of busStopBookmark" dense>
       <div mat-list-item>
-        <button mat-stroked-button (click)="getBusArrival(busStop.BusStopCode)">
+        <button mat-flat-button (click)="getBusArrival(busStop.BusStopCode)">
           ({{ busStop.BusStopCode }}) {{ busStop.Description }}
         </button>
         <button (click)="deleteBusStopBookmark(busStop)">x</button>
@@ -66,7 +70,7 @@
     </mat-action-list>
   </div>
 
-  <button mat-stroked-button color="primary" (click)="toggleNearbyBusStops()">
+  <button mat-flat-button color="primary" (click)="toggleNearbyBusStops()">
     <b>Toggle Nearby Bus Stops</b>
   </button>
   <mat-spinner *ngIf="bSpinnerShowNearbyBusStops" class="small"></mat-spinner>

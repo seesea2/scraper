@@ -43,7 +43,7 @@ export class PalsComponent implements OnInit {
         });
       },
       err => {
-        this.lunchPalsErr = err.error;
+        this.lunchPalsErr = err.result;
       }
     );
   }
@@ -79,7 +79,7 @@ export class PalsComponent implements OnInit {
         }, 1500);
       },
       err => {
-        this.addRecordErr = err;
+        this.addRecordErr = err.result;
         this.bAddingRecord = false;
       }
     );

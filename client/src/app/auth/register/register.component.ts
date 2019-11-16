@@ -52,10 +52,9 @@ export class RegisterComponent implements OnInit {
         console.log('Register successfully.', data);
         this.loading = false;
       },
-      error => {
-        console.log('Register failed.', error);
+      err => {
         this.loading = false;
-        this.errMsg = error;
+        this.errMsg = err.result;
       }
     );
   }

@@ -76,7 +76,7 @@ export class CategoriesTreeComponent implements OnInit {
         this.buildCategoriesTree();
       },
       err => {
-        this.categoriesErr = err.error;
+        this.categoriesErr = err.result;
       }
     );
   }

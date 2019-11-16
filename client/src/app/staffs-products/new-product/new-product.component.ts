@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Location } from '@angular/common';
+import { switchMap } from 'rxjs/operators';
+
 import { ProductsApiService } from 'src/app/core/services/products-api.service';
 
 @Component({
@@ -12,6 +16,8 @@ export class NewProductComponent implements OnInit {
   result: string;
 
   constructor(
+    private route: ActivatedRoute,
+    private location: Location,
     private formBuilder: FormBuilder,
     private productApi: ProductsApiService
   ) {}
@@ -19,12 +25,12 @@ export class NewProductComponent implements OnInit {
   ngOnInit() {
     this.result = '';
     this.productForm = this.formBuilder.group({
-      name: [''],
-      price: 0,
-      qty: 0,
-      category: [''],
-      img: [''],
-      note: ['']
+      name: [this.route.snapshot.paramMap.get('name') || ''],
+      price: this.route.snapshot.paramMap.get('price') || 0,
+      qty: this.route.snapshot.paramMap.get('qty') || 0,
+      category: [this.route.snapshot.paramMap.get('category') || ''],
+      img: [this.route.snapshot.paramMap.get('img') || ''],
+      note: [this.route.snapshot.paramMap.get('note') || '']
     });
   }
 
@@ -33,11 +39,28 @@ export class NewProductComponent implements OnInit {
       data => {
         console.log(data);
         this.result = 'Add product successfully.';
+        this.location.back();
       },
       err => {
         this.result = `Failed: ${err}.`;
-        console.log(err);
+        console.log(err.result);
       }
     );
+  }
+  delete() {
+    this.productApi
+      .deleteOneProduct(this.route.snapshot.paramMap.get('id'))
+      .subscribe(
+        data => {
+          this.location.back();
+        },
+        err => {
+          this.result = err.result;
+        }
+      );
+  }
+
+  cancel() {
+    this.location.back();
   }
 }

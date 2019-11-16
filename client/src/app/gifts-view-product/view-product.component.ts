@@ -32,7 +32,7 @@ export class ViewProductComponent implements OnInit {
           this.currentProduct = product;
         },
         err => {
-          this.rslt = err.ycMsg;
+          this.rslt = err.result;
         }
       );
     });

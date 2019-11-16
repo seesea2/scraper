@@ -10,6 +10,7 @@ export interface CategoryWithSamples {
 }
 
 export interface Product {
+  id: number;
   _id: any;
   name: string;
   price: number;

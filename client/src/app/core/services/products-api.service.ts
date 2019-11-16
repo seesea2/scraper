@@ -48,6 +48,17 @@ export class ProductsApiService {
     });
   }
 
+  deleteOneProduct(id: string) {
+    if (!id) {
+      return;
+    }
+    const params = new HttpParams().set('id', id);
+    return this.http.delete<Product>('/api/gifts/products/product', {
+      headers: new HttpHeaders().set('Content-Type', 'application/json'),
+      params: params
+    });
+  }
+
   getInventory() {
     return this.http.get<InventoryItem[]>('/api/gifts/products/inventory');
   }

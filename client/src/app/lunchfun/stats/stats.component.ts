@@ -34,7 +34,7 @@ export class StatsComponent implements OnInit, OnDestroy {
         this.lunchStats = data;
       },
       err => {
-        this.lunchStatsErr = err;
+        this.lunchStatsErr = err.result;
       }
     );
   }

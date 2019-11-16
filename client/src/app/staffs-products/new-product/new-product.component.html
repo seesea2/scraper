@@ -1,6 +1,6 @@
 <div class="container">
-  <h2>New Product</h2>
-  <form [formGroup]="productForm" class="row" (ngSubmit)="submit()">
+  <h2 class="py-5">New Product</h2>
+  <form [formGroup]="productForm" class="row">
     <mat-form-field class="col-4">
       <mat-label>Name</mat-label>
       <input matInput type="text" formControlName="name" required />
@@ -26,9 +26,12 @@
       <input matInput type="text" formControlName="note" />
     </mat-form-field>
 
-    <span class="col-12 text-center">{{ result }}</span>
-    <div class="col-12 text-center">
-      <button mat-button color="primary" type="submit">Submit</button>
+    <span class="col-12 text-center pt-4">{{ result }}</span>
+    <div class="col-12 text-center pt-3">
+      <button mat-flat-button color="primary" (click)="submit()">Submit</button>
+      <button mat-raised-button color="primary" (click)="cancel()" class="ml-3">Cancel</button>
     </div>
+    <mat-divider></mat-divider>
+    <button mat-raised-button color="primary" (click)="delete()" class="ml-3">Delete</button>
   </form>
 </div>
