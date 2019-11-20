@@ -22,6 +22,8 @@ export class OxfordComponent implements OnInit {
   }
 
   getOxfordDefinition(word: string) {
+    this.errMsg = '';
+    this.checkEntriesResult = { lexicalEntries: [] };
     if (!(word || '').trim()) {
       return (this.errMsg = 'Please input a word.');
     }
@@ -31,7 +33,6 @@ export class OxfordComponent implements OnInit {
       .subscribe(
         definition => {
           this.checkEntriesResult = definition;
-          this.errMsg = '';
           this.bChecking = false;
         },
         err => {

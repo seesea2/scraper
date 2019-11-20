@@ -4,15 +4,14 @@
   <div *ngFor="let order of orders">
     <mat-card>
       <mat-card-title>
-        <h3>{{order.id}}</h3>
+        <h3>{{ order.id }}</h3>
       </mat-card-title>
       <mat-card-content>
         <div *ngFor="let product of order.productsList">
-          {{product.productId}}
-          {{product.price}}
+          {{ product.productId }}
+          {{ product.price }}
         </div>
       </mat-card-content>
     </mat-card>
   </div>
-
 </div>

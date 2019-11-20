@@ -142,9 +142,13 @@ function calculateArrivalTime(bus: NextBusData) {
   }
 
   const date = new Date(bus.EstimatedArrival);
+  if (date.valueOf() - Date.now() < 0) {
+    return 'Bus left';
+  }
+
   const diffMinutes = (date.valueOf() - Date.now()) / 1000 / 60;
   if (diffMinutes < 1) {
-    return 'Arriving';
+    return '1 min';
   } else {
     return diffMinutes.toFixed(0) + ' mins';
   }
