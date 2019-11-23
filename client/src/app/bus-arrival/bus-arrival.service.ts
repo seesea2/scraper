@@ -3,7 +3,7 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 
-import { httpOptions } from '../core/http-interface';
+// import { httpOptions } from '../core/http-interface';
 import { BusArrivalReturn, BusStopInfo } from './bus-arrival-interface';
 
 @Injectable({

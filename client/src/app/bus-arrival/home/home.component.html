@@ -14,12 +14,7 @@
   </form>
   <div *ngIf="busTable.length > 0">
     <h4 class="text-center">{{ busStopInfo.Description }}</h4>
-    <table
-      mat-table
-      [dataSource]="busTable"
-      width="100"
-      class="mat-elevation-z8"
-    >
+    <table mat-table [dataSource]="busTable" width="100" class="mat-elevation-z8">
       <ng-container matColumnDef="service">
         <th mat-header-cell *matHeaderCellDef>Service</th>
         <td mat-cell *matCellDef="let bus">{{ bus.service }}</td>
@@ -55,21 +50,10 @@
     </div>
 
     <div class="text-center">
-      <button
-        *ngIf="!bExistingBookmark"
-        mat-flat-button
-        color="primary"
-        (click)="addBusStopBookmark()"
-        class="my-3"
-      >
+      <button *ngIf="!bExistingBookmark" mat-flat-button color="primary" (click)="addBusStopBookmark()" class="my-3">
         Bookmark this Bus Stop
       </button>
-      <button
-        mat-flat-button
-        color="primary"
-        (click)="getBusArrival(currentBusStopCode)"
-        class="my-3"
-      >
+      <button mat-flat-button color="primary" (click)="getBusArrival(currentBusStopCode)" class="my-3">
         Refresh
       </button>
     </div>
@@ -79,11 +63,7 @@
     <h3>Bus Stop Bookmark</h3>
     <mat-action-list *ngFor="let busStop of busStopBookmark" dense>
       <div mat-list-item>
-        <button
-          mat-flat-button
-          color="primary"
-          (click)="getBusArrival(busStop.BusStopCode)"
-        >
+        <button mat-flat-button color="primary" (click)="getBusArrival(busStop.BusStopCode)">
           ({{ busStop.BusStopCode }}) {{ busStop.Description }}
         </button>
         <button (click)="deleteBusStopBookmark(busStop)">x</button>
@@ -95,10 +75,7 @@
     <button mat-stroked-button color="primary" (click)="toggleNearbyBusStops()">
       <b>Toggle Nearby Bus Stops</b>
     </button>
-    <mat-spinner
-      *ngIf="bSpinnerShowNearbyBusStops"
-      class="ml-auto mr-auto mt-3"
-    ></mat-spinner>
+    <mat-spinner *ngIf="bSpinnerShowNearbyBusStops" class="ml-auto mr-auto mt-3"></mat-spinner>
     <div *ngIf="nearbyBusStops.length">
       <mat-action-list *ngFor="let nearby of nearbyBusStops" dense>
         <div mat-list-item>

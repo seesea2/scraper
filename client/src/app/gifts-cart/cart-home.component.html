@@ -11,15 +11,17 @@
         <div matLine>
           <span class="mx-4">Name: {{productItem.product.name}}</span>
           <span class="mr-4">Price: {{productItem.product.price}} S$</span>
-          <span class="mr-auto">Qty: {{productItem.qty}}</span>
-          <span>Subtotal: {{productItem.qty * productItem.product.price}} S$</span>
+          <span class="mr-4">Qty: {{productItem.qty}}</span>
+          <span class="ml-auto">Subtotal: {{productItem.qty * productItem.product.price}} S$</span>
         </div>
-        <div matLine>
-          <button mat-button (click)="removeFromCart(productItem.product._id)">Remove</button>
+        <div matLine class="text-right">
+          <button mat-stroked-button color="accent" (click)="removeFromCart(productItem.product._id)">Remove</button>
         </div>
       </mat-list-item>
     </mat-list>
-    <button mat-button (click)="clearCart()">Empty Cart</button>
+    <div class="text-right">
+      <button mat-stroked-button color="warn" (click)="clearCart()">Clear Cart</button>
+    </div>
 
     <mat-card class="my-4">
       <mat-card-content>
@@ -27,7 +29,7 @@
         <mat-hint class="ml-4">Inclusive of 7% GST</mat-hint>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-raised-button color="primary" routerLink="/gifts/cart/checkout">
+        <button mat-flat-button color="primary" routerLink="/gifts/cart/checkout">
           Checkout
         </button>
       </mat-card-actions>
