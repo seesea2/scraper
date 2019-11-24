@@ -55,6 +55,8 @@ export class StatusComponent implements OnInit {
       this.snackBar.open('Invalid Bus Stop Code.', 'warn', { duration: 3000 });
       return;
     }
+
+    this.loading = true;
     this.busSvc.getBusArrival(this.busStopCode).subscribe(
       (data: BusArrivalReturn) => {
         this.loading = false;
