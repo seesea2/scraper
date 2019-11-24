@@ -13,7 +13,7 @@ const apiRouter = Router();
 apiRouter.use('/lta/bus', busRouter);
 apiRouter.use('/dictionary', dictionaryRouter);
 apiRouter.use('/gifts', giftsRouter);
-apiRouter.use('/http', httpRouter);
+// apiRouter.use('/http', httpRouter);
 
 // msg from users; forward it via nodemailer.
 apiRouter.post('/msg', (req: Request, res: Response) => {

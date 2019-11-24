@@ -11,9 +11,6 @@ content-type: application/json
     "qty": 100
 }
 
-###################
-
-DELETE http://localhost/api/gifts/users/cart
 
 ###############
 DELETE http://localhost/api/gifts/users/cart/product

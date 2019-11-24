@@ -37,7 +37,7 @@ async function newStaff(req: Request, res: Response) {
     if (result === true) {
       res.status(200).send({ result: 'ok' });
     } else {
-      res.status(200).send({ result: 'failed' });
+      res.status(200).send({ result: 'failed' + result });
     }
   } catch (e) {
     console.log(e);
@@ -47,19 +47,18 @@ async function newStaff(req: Request, res: Response) {
 
 async function disableStaff(req: Request, res: Response) {
   if (!req.session || !req.session.staff) {
-    // return res.status(401).send({ result: 'Unauthorized.' });
+    return res.status(401).send({ result: 'Unauthorized.' });
   }
   // if (req.session.staff.class != 'administrator') {
   // return res.status(403).send({ result: 'Operation not allowed.' });
   // }
 
   try {
-    if (!req.body.uid) {
-      return res.status(400).send({ result: 'uid is empty.' });
+    if (!req.body.staff_id) {
+      return res.status(400).send({ result: 'staff_id is empty.' });
     }
-    let uidString = '"' + req.body.uid + '"';
 
-    const sql = `update giftsStaffs set inactive=1 where uid=${uidString}`;
+    const sql = `update giftsStaffs set inactive=1 where uid='${req.body.staff_id}'`;
     let result = await SqliteRun(sql);
     if (result === true) {
       res.status(200).send({ result: 'ok' });
@@ -72,4 +71,30 @@ async function disableStaff(req: Request, res: Response) {
   }
 }
 
-export { newStaff };
+async function deleteStaff(req: Request, res: Response) {
+  if (!req.session || !req.session.staff) {
+    return res.status(401).send({ result: 'Unauthorized.' });
+  }
+  // if (req.session.staff.class != 'administrator') {
+  // return res.status(403).send({ result: 'Operation not allowed.' });
+  // }
+
+  try {
+    if (!req.body.staff_id) {
+      return res.status(400).send({ result: 'staff_id is empty.' });
+    }
+
+    const sql = `delete from giftsStaffs where uid='${req.body.staff_id}'`;
+    let result = await SqliteRun(sql);
+    if (result === true) {
+      res.status(200).send({ result: 'ok' });
+    } else {
+      res.status(200).send({ result: 'failed' });
+    }
+  } catch (e) {
+    console.log(e);
+    res.status(500).send(e);
+  }
+}
+
+export { disableStaff, deleteStaff, newStaff };

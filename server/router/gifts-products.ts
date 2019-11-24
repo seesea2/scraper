@@ -20,17 +20,16 @@ import {
   AdjustInventory,
   GetInventory
 } from '../gifts-products/gifts-products-inventory.ops';
-import { bStaff } from '../gifts-staffs/gifts-staffs.ops';
+// import { bStaff } from '../gifts-staffs/gifts-staffs.ops';
 
 const giftsProductsRouter = Router();
-
-giftsProductsRouter.get('/view/:product_no', (req, res) => {
-  GetProduct(req.params, res);
-});
 
 /*
  * inquiry: /api/gifts/products
  */
+// giftsProductsRouter.get('/view/:product_id', (req, res) => {
+//   GetProduct(req.params, res);
+// });
 giftsProductsRouter.get('/categories', (req: Request, res: Response) => {
   GetCategories(res);
 });
@@ -52,8 +51,7 @@ giftsProductsRouter.get('/samples', (req: Request, res: Response) => {
   GetSamplesOfCategories(res);
 });
 giftsProductsRouter.get('', (req: Request, res: Response) => {
-  // GetProductsByCategory(req.query, res);
-  GetProducts(null, res);
+  GetProducts(req.query, res);
 });
 giftsProductsRouter.get('/product', (req: Request, res: Response) => {
   GetProduct(req.query, res);

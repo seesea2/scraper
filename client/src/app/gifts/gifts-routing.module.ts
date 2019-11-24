@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { GiftsRootComponent } from './root.component';
+import { RouterOutletComponent } from './router-outlet/router-outlet.component';
 
 const giftsRoutes: Routes = [
   {
     path: '',
-    component: GiftsRootComponent,
+    component: RouterOutletComponent,
     children: [
       {
         path: 'browse',
