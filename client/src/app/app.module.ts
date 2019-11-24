@@ -14,7 +14,6 @@ import { AppComponent } from './app.component';
     BrowserModule,
     CoreModule,
     SharedModule,
-    // GiftsModule,
     BrowserAnimationsModule,
     AppRoutingModule
     // NgZorroAntdModule.forRoot()

@@ -39,9 +39,9 @@ app.use(
 );
 
 // error handling - 1
-// app.all('/*', (req: Request, res: Response) => {
-//   return res.status(200).sendFile(join(__dirname, '/client/index.html'));
-// });
+app.all('/*', (req: Request, res: Response) => {
+  return res.status(200).sendFile(join(__dirname, '/client/index.html'));
+});
 app.all('/*', (req: Request, res: Response) => {
   return res.status(404).send({ result: 'Page not found.' });
 });
