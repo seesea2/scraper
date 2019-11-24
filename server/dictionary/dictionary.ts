@@ -8,12 +8,12 @@ import {
   YcLexicalEntry
 } from './oxford-interface';
 
-const app_id: string = '0314e9e2';
-const app_key: string = '5a6c2589474a2f83ccd69f397bfec7a2';
+import { oxford_app_id, oxford_app_key } from '../../account-keys';
+
 const config = {
   headers: {
-    app_id: app_id,
-    app_key: app_key
+    app_id: oxford_app_id,
+    app_key: oxford_app_key
   }
 };
 

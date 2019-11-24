@@ -20,6 +20,7 @@ function Delete(body: any, res: Response) {
       res.status(400).send(e);
     });
 }
+
 function Post(req: Request, res: Response) {
   let headers = {};
 
@@ -40,11 +41,13 @@ function Post(req: Request, res: Response) {
     res.send(response.data);
   });
 }
+
 function Put(req: Request, res: Response) {
   Axios.put(req.body.url).then(response => {
     res.send(response.data);
   });
 }
+
 function Get(req: Request, res: Response) {
   Axios.post(req.body.url).then(response => {
     res.send(response.data);

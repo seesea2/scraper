@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 
-// import { httpOptions } from '../core/http-interface';
 import { BusArrivalReturn, BusStopInfo } from './bus-arrival-interface';
+
+const BusBookmarksCookieName: string = 'InSgBusStopBookmark';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class BusArrivalService {
   }
 
   getCookieBusStopBookmark() {
-    let cookie = this.cookieService.get('InSgBusStopBookmark');
+    let cookie = this.cookieService.get(BusBookmarksCookieName);
     if (cookie) {
       this.busStopBookmarkSubject.next(JSON.parse(cookie));
     }
@@ -50,7 +51,7 @@ export class BusArrivalService {
     this.busStopBookmark.push(busStopInfo);
     this.busStopBookmarkSubject.next(this.busStopBookmark);
     this.cookieService.set(
-      'InSgBusStopBookmark',
+      BusBookmarksCookieName,
       JSON.stringify(this.busStopBookmark),
       365 * 10,
       '/'
@@ -66,7 +67,7 @@ export class BusArrivalService {
     }
     this.busStopBookmarkSubject.next(this.busStopBookmark);
     this.cookieService.set(
-      'InSgBusStopBookmark',
+      BusBookmarksCookieName,
       JSON.stringify(this.busStopBookmark),
       365 * 10,
       '/'
