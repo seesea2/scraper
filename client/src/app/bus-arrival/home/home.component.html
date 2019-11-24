@@ -3,7 +3,7 @@
     <h1>Bus Arrival Time</h1>
     <h6>Get bus arrival time by bus stop code.</h6>
   </div>
-  <form class="py-4 text-center" (ngsubmit)="getBusArrival(busStopCode.value)">
+  <form class="pt-4 text-center" (ngSubmit)="submit(busStopCode.value)">
     <mat-form-field>
       <mat-label>Bus Stop Code</mat-label>
       <input matInput #busStopCode type="text" />
@@ -12,74 +12,29 @@
       </button>
     </mat-form-field>
   </form>
-  <div *ngIf="busTable.length > 0">
-    <h4 class="text-center">{{ busStopInfo.Description }}</h4>
-    <table mat-table [dataSource]="busTable" width="100" class="mat-elevation-z8">
-      <ng-container matColumnDef="service">
-        <th mat-header-cell *matHeaderCellDef>Service</th>
-        <td mat-cell *matCellDef="let bus">{{ bus.service }}</td>
-      </ng-container>
-      <ng-container matColumnDef="bus1">
-        <th mat-header-cell *matHeaderCellDef>1st-Bus</th>
-        <td mat-cell *matCellDef="let bus">{{ bus.bus1 }}</td>
-      </ng-container>
-      <ng-container matColumnDef="bus2">
-        <th mat-header-cell *matHeaderCellDef>2nd-Bus</th>
-        <td mat-cell *matCellDef="let bus">{{ bus.bus2 }}</td>
-      </ng-container>
-      <ng-container matColumnDef="bus3">
-        <th mat-header-cell *matHeaderCellDef>3rd-Bus</th>
-        <td mat-cell *matCellDef="let bus">{{ bus.bus3 }}</td>
-      </ng-container>
-      <ng-container matColumnDef="load">
-        <th mat-header-cell *matHeaderCellDef>Load</th>
-        <td mat-cell *matCellDef="let bus">{{ bus.load }}</td>
-      </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="busTableColumn"></tr>
-      <tr mat-row *matRowDef="let row; columns: busTableColumn"></tr>
-    </table>
-
-    <div class="small mt-1">
-      Bus Load
-      <ul>
-        <li>SEA: seats available</li>
-        <li>SDA: standing available</li>
-        <li>LSD: limited standing</li>
-      </ul>
-    </div>
-
-    <div class="text-center">
-      <button *ngIf="!bExistingBookmark" mat-flat-button color="primary" (click)="addBusStopBookmark()" class="my-3">
-        Bookmark this Bus Stop
-      </button>
-      <button mat-flat-button color="primary" (click)="getBusArrival(currentBusStopCode)" class="my-3">
-        Refresh
-      </button>
-    </div>
-  </div>
-
-  <div *ngIf="busStopBookmark.length" class="py-4 text-center">
+  <div *ngIf="busStopBookmark.length" class="pt-3 text-center">
     <h3>Bus Stop Bookmark</h3>
     <mat-action-list *ngFor="let busStop of busStopBookmark" dense>
       <div mat-list-item>
-        <button mat-flat-button color="primary" (click)="getBusArrival(busStop.BusStopCode)">
+        <a [routerLink]="['./', busStop.BusStopCode]">
           ({{ busStop.BusStopCode }}) {{ busStop.Description }}
-        </button>
-        <button (click)="deleteBusStopBookmark(busStop)">x</button>
+        </a>
+
+        <button matTooltip="delete" (click)="deleteBusStopBookmark(busStop)">x</button>
       </div>
     </mat-action-list>
   </div>
 
-  <div class="text-center">
-    <button mat-stroked-button color="primary" (click)="toggleNearbyBusStops()">
-      <b>Toggle Nearby Bus Stops</b>
+  <div class="text-center pt-3">
+    <button mat-flat-button color="primary" (click)="toggleNearbyBusStops()">
+      Toggle Nearby Bus Stops
     </button>
     <mat-spinner *ngIf="bSpinnerShowNearbyBusStops" class="ml-auto mr-auto mt-3"></mat-spinner>
     <div *ngIf="nearbyBusStops.length">
       <mat-action-list *ngFor="let nearby of nearbyBusStops" dense>
         <div mat-list-item>
-          <button (click)="getBusArrival(nearby.BusStopCode)">
+          <button [routerLink]="['./', nearby.BusStopCode]">
             {{ nearby.Description }} @ {{ nearby.RoadName }}
           </button>
         </div>
@@ -87,7 +42,7 @@
     </div>
   </div>
 
-  <div class="mt-5 small text-center">
+  <div class="mt-4 small text-center">
     Powered by <a href="https://data.gov.sg" target="_blank">Data.gov.sg</a>
   </div>
 </div>

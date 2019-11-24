@@ -17,12 +17,14 @@ import { MaterialModule } from './material.module';
 import { CategoriesTreeComponent } from './categories-tree/categories-tree.component';
 import { SendMessageComponent } from './send-message/send-message.component';
 import { TestingLinksComponent } from './testing-links/testing-links.component';
+import { GoBackButtonComponent } from './go-back-button/go-back-button.component';
 
 @NgModule({
   declarations: [
     CategoriesTreeComponent,
     SendMessageComponent,
-    TestingLinksComponent
+    TestingLinksComponent,
+    GoBackButtonComponent
   ],
   imports: [
     CommonModule,
@@ -45,6 +47,7 @@ import { TestingLinksComponent } from './testing-links/testing-links.component';
     ReactiveFormsModule,
     CategoriesTreeComponent,
     SendMessageComponent,
+    GoBackButtonComponent,
     TestingLinksComponent
   ]
 })
