@@ -1,5 +1,5 @@
 import { Response } from '../interface';
-import { DbCollection, ObjectID } from '../mongodb-ops';
+import { DbCollection, ObjectID } from '../obsolete/obsolete-mongodb-ops';
 
 async function GetInventory(res: Response) {
   try {

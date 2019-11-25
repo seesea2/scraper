@@ -1,4 +1,4 @@
-import { DbCollection, MongoDb, ObjectID } from '../mongodb-ops';
+import { DbCollection, MongoDb, ObjectID } from '../obsolete/obsolete-mongodb-ops';
 import { Request, Response } from '../interface';
 import { randomString } from '../string-ops/random';
 

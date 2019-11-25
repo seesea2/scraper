@@ -83,3 +83,6 @@ content-type: application/json
     "category_id": 3,
     "note": "Pen-2 update."
 }
+
+####  delete a product
+DELETE  http://localhost:8080/api/gifts/products/product?product_id=5 HTTP/1.1

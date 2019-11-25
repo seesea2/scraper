@@ -1,5 +1,5 @@
 import { Request, Response } from '../interface';
-import { DbCollection, ObjectID } from '../mongodb-ops';
+import { SqliteAll, SqliteGet, SqliteRun } from '../db-ops/sqlite-ops';
 import { bLogin } from '../gifts-users/gifts-users.ops';
 import { CartItem, Customer } from '../gifts-users/users-interface';
 

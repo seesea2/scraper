@@ -153,12 +153,12 @@ async function UpdateProduct(body: any, res: Response) {
 }
 
 async function DeleteProduct(query: any, res: Response) {
-  if (!query.id) {
+  if (!query.product_id) {
     return res.status(400).send('Invalid product id.');
   }
 
   try {
-    const sql = `update giftsProducts set inactive=1 where id=${query.id};`;
+    const sql = `update giftsProducts set inactive=1 where id=${query.product_id};`;
     const result = await SqliteRun(sql);
     if (result) {
       return res.status(200).send({ result: 'ok' });
