@@ -7,11 +7,12 @@ import { switchMap } from 'rxjs/operators';
 import { ProductsApiService } from 'src/app/core/services/products-api.service';
 
 @Component({
-  selector: 'app-new-product',
+  selector: 'staffs-new-product',
   templateUrl: './new-product.component.html',
   styleUrls: ['./new-product.component.css']
 })
 export class NewProductComponent implements OnInit {
+  header: string;
   productForm: FormGroup;
   result: string;
 
@@ -32,6 +33,11 @@ export class NewProductComponent implements OnInit {
       img: [this.route.snapshot.paramMap.get('img') || ''],
       note: [this.route.snapshot.paramMap.get('note') || '']
     });
+    if (this.productForm.controls.name.value) {
+      this.header = 'Edit Product';
+    } else {
+      this.header = 'New Product';
+    }
   }
 
   submit() {
@@ -60,7 +66,7 @@ export class NewProductComponent implements OnInit {
       );
   }
 
-  cancel() {
+  goBack() {
     this.location.back();
   }
 }

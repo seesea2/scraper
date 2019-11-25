@@ -1,3 +1,9 @@
+<!-- <button mat-icon-button (click)="goBack()" matTooltip="Go back" class="px-3">
+  <fa-icon icon="chevron-left"></fa-icon>
+</button> -->
+
+<app-go-back-button></app-go-back-button>
+
 <div class="container">
   <h2 class="py-5">New Product</h2>
   <form [formGroup]="productForm" class="row">
@@ -29,13 +35,10 @@
     <span class="col-12 text-center pt-4">{{ result }}</span>
     <div class="col-12 text-center pt-3">
       <button mat-flat-button color="primary" (click)="submit()">Submit</button>
-      <button mat-raised-button color="primary" (click)="cancel()" class="ml-3">
-        Cancel
-      </button>
     </div>
     <mat-divider></mat-divider>
-    <button mat-raised-button color="primary" (click)="delete()" class="ml-3">
-      Delete
-    </button>
+    <div class="w-100 text-right">
+      <button mat-flat-button color="warn" (click)="delete()" class="">Delete</button>
+    </div>
   </form>
 </div>

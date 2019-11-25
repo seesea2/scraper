@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -8,52 +9,23 @@ import {
   FontAwesomeModule,
   FaIconLibrary
 } from '@fortawesome/angular-fontawesome';
-import {
-  faLeaf,
-  faSignInAlt,
-  faSignOutAlt,
-  faUser,
-  faKey,
-  faAnchor,
-  faFileWord,
-  faPaperPlane,
-  faChevronDown,
-  faShoppingCart,
-  faChevronRight,
-  faTrash,
-  faHeart,
-  faSearch,
-  faPlay,
-  faCheck,
-  faChevronCircleUp,
-  faPhone,
-  faEnvelope,
-  faMapMarker,
-  faAlignJustify,
-  faInfo,
-  faIdCard,
-  faIdCardAlt,
-  faEnvelopeOpen,
-  faMobileAlt,
-  faDesktop
-} from '@fortawesome/free-solid-svg-icons';
-import {
-  faWhatsapp,
-  faFacebook,
-  faTwitter,
-  faLinkedin,
-  faWeixin
-} from '@fortawesome/free-brands-svg-icons';
 
 import { NgBootstrapModule } from './ng-bootstrap.module';
+import { fontawesomeIcons } from './ng-fontawesome-icons';
 import { MaterialModule } from './material.module';
-import { CookieService } from 'ngx-cookie-service';
 
 import { CategoriesTreeComponent } from './categories-tree/categories-tree.component';
 import { SendMessageComponent } from './send-message/send-message.component';
+import { TestingLinksComponent } from './testing-links/testing-links.component';
+import { GoBackButtonComponent } from './go-back-button/go-back-button.component';
 
 @NgModule({
-  declarations: [CategoriesTreeComponent, SendMessageComponent],
+  declarations: [
+    CategoriesTreeComponent,
+    SendMessageComponent,
+    TestingLinksComponent,
+    GoBackButtonComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -61,9 +33,9 @@ import { SendMessageComponent } from './send-message/send-message.component';
     ReactiveFormsModule,
     NgBootstrapModule,
     FontAwesomeModule,
-    MaterialModule
+    MaterialModule,
+    RouterModule
   ],
-  providers: [CookieService],
   exports: [
     CommonModule,
     FormsModule,
@@ -74,39 +46,15 @@ import { SendMessageComponent } from './send-message/send-message.component';
     MaterialModule,
     ReactiveFormsModule,
     CategoriesTreeComponent,
-    SendMessageComponent
+    SendMessageComponent,
+    GoBackButtonComponent,
+    TestingLinksComponent
   ]
 })
 export class SharedModule {
   constructor(library: FaIconLibrary) {
-    library.addIcons(
-      faAlignJustify,
-      faAnchor,
-      faCheck,
-      faChevronCircleUp,
-      faChevronDown,
-      faChevronRight,
-      faDesktop,
-      faEnvelope,
-      faEnvelopeOpen,
-      faFileWord,
-      faHeart,
-      faIdCardAlt,
-      faLeaf,
-      faMapMarker,
-      faMobileAlt,
-      faKey,
-      faPaperPlane,
-      faPhone,
-      faPlay,
-      faSearch,
-      faShoppingCart,
-      faSignInAlt,
-      faSignOutAlt,
-      faTrash,
-      faUser,
-      faInfo
-    );
-    library.addIcons(faFacebook, faTwitter, faWhatsapp, faLinkedin, faWeixin);
+    fontawesomeIcons.forEach(icon => {
+      library.addIcons(icon);
+    });
   }
 }

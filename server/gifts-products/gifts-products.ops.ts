@@ -1,14 +1,13 @@
 import { SqliteAll, SqliteGet, SqliteRun } from '../db-ops/sqlite-ops';
-import { DbCollection } from '../mongodb-ops';
-import { Request, Response } from '../interface';
+import { Response } from '../interface';
 
 async function GetProduct(params: any, res: Response) {
-  if (!params.id) {
-    return res.status(400).send('Invalid product no.');
+  if (!params.product_id) {
+    return res.status(400).send('Invalid product ID.');
   }
 
   try {
-    const sql = `select * from giftsProducts where id=${params.id};`;
+    const sql = `select * from giftsProducts where product_id=${params.product_id};`;
     const product = await SqliteGet(sql);
     return res.status(200).send(product);
   } catch (e) {
@@ -27,17 +26,11 @@ async function GetProducts(params: any, res: Response) {
 }
 
 async function GetProductsByCategory(query: any, res: Response) {
-  if (!query.category) {
+  if (!query.category_id) {
     return res.status(400).send({ result: 'Invalid category.' });
   }
   try {
-    let ind = query.category.lastIndexOf('/');
-    let name = query.category.substring(ind + 1, query.category.lenght);
-    let parent = null;
-    if (ind !== 0) {
-      parent = query.category.substring(0, ind);
-    }
-    let sql: string = `select * from giftsProducts where name='${name}' and parent='${parent}'`;
+    let sql = `select * from giftsProducts where category_id='${query.category_id}' limit 50`;
     let products = await SqliteAll(sql);
     return res.status(200).send(products);
   } catch (e) {
@@ -51,10 +44,8 @@ async function AddProduct(body: any, res: Response) {
   }
 
   try {
-    let fields = '';
-    let values = '';
-    fields = 'name';
-    values = '"' + body.name + '"';
+    let fields = 'name';
+    let values = '"' + body.name + '"';
     console.log(typeof body.price);
     if ((body.price || 0) <= 0) {
       body.price = 0;
@@ -71,11 +62,10 @@ async function AddProduct(body: any, res: Response) {
     }
     fields += ',colour';
     values += ',"' + body.colour + '"';
-    if (!body.category) {
-      body.category = '';
+    if (body.category_id) {
+      fields += ',category_id';
+      values += ',' + body.category_id;
     }
-    fields += ',category';
-    values += ',"' + body.category + '"';
     if (!body.img) {
       body.img = '';
     }
@@ -102,7 +92,6 @@ async function AddProduct(body: any, res: Response) {
     fields += ',retailer';
     values += ',"' + body.retailer + '"';
     fields += ',createdOn';
-    // values += ',' + new Date().getTime();
     values += ',' + Date.now();
 
     const sql = `insert into giftsProducts (${fields}) values (${values});`;
@@ -118,8 +107,8 @@ async function AddProduct(body: any, res: Response) {
 }
 
 async function UpdateProduct(body: any, res: Response) {
-  if (!body.id) {
-    return res.status(400).send('Invalid input.');
+  if (!body.product_id) {
+    return res.status(400).send('Invalid product_id.');
   }
 
   try {
@@ -130,8 +119,8 @@ async function UpdateProduct(body: any, res: Response) {
     if (body.price) {
       changes += `,price=${body.price}`;
     }
-    if (body.category) {
-      changes += `,category='${body.category}'`;
+    if (body.category_id) {
+      changes += `,category=${body.category_id}`;
     }
     if (body.colour) {
       changes += `,colour='${body.colour}'`;
@@ -151,8 +140,8 @@ async function UpdateProduct(body: any, res: Response) {
     if (body.retailer) {
       changes += `,retailer='${body.retailer}'`;
     }
-    changes += `,modifiedOn='${Date.now()}'`;
-    const sql = `update giftsProducts set ${changes} where id=${body.id}`;
+    changes += `,modifiedOn=${Date.now()}`;
+    const sql = `update giftsProducts set ${changes} where product_id=${body.product_id}`;
     let result = await SqliteRun(sql);
     if (result) {
       return res.status(200).send({ result: 'ok' });

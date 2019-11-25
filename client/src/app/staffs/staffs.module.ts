@@ -5,11 +5,11 @@ import { StaffsRoutingModule } from './staffs-routing.module';
 
 import { ProductsApiService } from '../core/services/products-api.service';
 
-import { HomeComponent } from './home/home.component';
 import { StaffsNavbarComponent } from './staffs-navbar/staffs-navbar.component';
+import { RouterOutletComponent } from './router-outlet/router-outlet.component';
 
 @NgModule({
-  declarations: [HomeComponent, StaffsNavbarComponent],
+  declarations: [StaffsNavbarComponent, RouterOutletComponent],
   imports: [SharedModule, StaffsRoutingModule],
   providers: [ProductsApiService]
 })

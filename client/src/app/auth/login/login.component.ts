@@ -14,9 +14,7 @@ export class LoginComponent implements OnInit {
   pwd: string;
   errMsg: string;
 
-  constructor(private usersService: UsersService, private location: Location) {
-    // console.log('routes.url : ', router);
-  }
+  constructor(private usersService: UsersService, private location: Location) {}
 
   ngOnInit() {
     this.uid = '';
@@ -37,5 +35,9 @@ export class LoginComponent implements OnInit {
         this.usersService.sendLoginStatus(false);
       }
     );
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

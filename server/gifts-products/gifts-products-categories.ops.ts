@@ -1,5 +1,4 @@
 import { Response } from '../interface';
-import { ObjectID, DbCollection } from '../mongodb-ops';
 import { SqliteAll, SqliteRun } from '../db-ops/sqlite-ops';
 
 let globalCategories: any = [];
@@ -32,18 +31,15 @@ async function GetSamplesOfCategories(res: Response) {
 
 async function AddCategory(body: any, res: Response) {
   if (!body.name) {
-    return res.status(400).send('Invalid input.');
+    return res.status(400).send('Invalid name.');
   }
 
   try {
-    let fields = 'name,parent,category';
+    let fields = 'name';
     let values = '"' + body.name + '"';
-    if (body.parent) {
-      values += ',"' + body.parent + '"';
-      values += ',"' + body.parent + '/' + body.name + '"';
-    } else {
-      values += ',""';
-      values += ',"/' + body.name + '"';
+    if (body.details) {
+      fields += ',details';
+      values += ',"' + body.details + '"';
     }
     const sql = `insert into giftsProductsCategories (${fields}) values (${values})`;
     let result = await SqliteRun(sql);
@@ -59,12 +55,17 @@ async function AddCategory(body: any, res: Response) {
 }
 
 async function DeleteCategory(query: any, res: Response) {
-  if (!query.category) {
+  if (!query.category_id) {
     return res.status(400).send('Invalid input.');
   }
 
   try {
-    const sql = `delete from giftsProductsCategories where category='${query.category}';`;
+    let sql = `select count(*) from giftsProducts where category_id='${query.category_id}';`;
+    let num = await SqliteAll(sql);
+    if (num && num[0] > 0) {
+      return res.status(403).send({ result: 'The category is not empty.' });
+    }
+    sql = `delete from giftsProductsCategories where category_id='${query.category_id}';`;
     let result = await SqliteRun(sql);
     if (result) {
       globalCategories = [];
@@ -78,23 +79,28 @@ async function DeleteCategory(query: any, res: Response) {
 }
 
 async function UpdateCategory(body: any, res: Response) {
-  if (!body.org || !body.newName) {
-    return res.status(400).send('Invalid input.');
+  if (!body.category_id) {
+    return res.status(400).send('Invalid category_id.');
+  }
+  if (!body.name) {
+    return res.status(400).send('Invalid category name.');
+  }
+
+  let update = `set name='${body.name}'`;
+  if (body.details) {
+    update += `,details='${body.details}'`;
   }
 
   try {
-    // liych rename for children
-    const sql1 = `select * from giftsProductsCategories where parent='${body.org.category}';`;
-    let children = await SqliteAll(sql1);
-    if (children) {
-      children.forEach(child => {});
+    let sql = `select count(*) cnt from giftsProductsCategories where name='${body.name}'`;
+    let num = await SqliteAll(sql);
+    if (num && num[0].cnt > 0) {
+      return res
+        .status(400)
+        .send({ result: 'The category name already exists.' });
     }
 
-    const sql = `update giftsProductsCategories set name='${
-      body.newName
-    }',category='${(body.org.parent || '') +
-      '/' +
-      body.newName}' where category='${body.org.category}';`;
+    sql = `update giftsProductsCategories ${update} where category_id='${body.category_id}'`;
     let result = await SqliteRun(sql);
     if (result) {
       globalCategories = [];
@@ -106,33 +112,6 @@ async function UpdateCategory(body: any, res: Response) {
     return res.status(500).send(e);
   }
 }
-
-// @level:
-// 0 - all;  1 - 1st level;  2 - 2nd and above levels
-async function GetCategoriesByLevel(level: number | null) {
-  if (globalCategories.length <= 0) {
-    try {
-      globalCategories = await SqliteAll(
-        'select * from giftsProductsCategories;'
-      );
-    } catch (e) {
-      throw e;
-    }
-  }
-
-  if (!level) {
-    return globalCategories;
-  }
-  const returnCategories: any = [];
-  globalCategories.forEach((cat: any) => {
-    console.log(cat.category.match(new RegExp('/', 'g')));
-    if (cat.category.match(new RegExp('/', 'g')).length <= level) {
-      returnCategories.push(cat);
-    }
-  });
-  return returnCategories;
-}
-GetCategoriesByLevel(0);
 
 export {
   AddCategory,

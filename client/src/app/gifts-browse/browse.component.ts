@@ -13,6 +13,7 @@ import { CartApiService } from '../core/services/cart-api.service';
 export class BrowseComponent implements OnInit {
   categoryBreadcrumb: string[];
   products: Product[];
+  loadingProduct:boolean
   productCurrentQty: number[];
 
   constructor(
@@ -25,6 +26,7 @@ export class BrowseComponent implements OnInit {
   ngOnInit() {
     this.categoryBreadcrumb = null;
     this.products = null;
+    this.loadingProduct = true;
     this.productCurrentQty = [];
 
     this.activatedRoute.params.subscribe(p => {
@@ -49,6 +51,7 @@ export class BrowseComponent implements OnInit {
   }
 
   refresh(category: string) {
+    this.loadingProduct = true;
     this.getProducts(category);
     if (category) {
       this.categoryBreadcrumb = category.split('/');
@@ -56,6 +59,7 @@ export class BrowseComponent implements OnInit {
         this.categoryBreadcrumb.splice(0, 1);
       }
     }
+    this.loadingProduct = false;
   }
 
   onBreadcrumb(ind: number) {

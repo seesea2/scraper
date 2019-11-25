@@ -1,0 +1,85 @@
+##### user logout
+GET http://localhost:8080/api/gifts/users/logout HTTP/1.1
+
+##### get user info
+GET http://localhost:8080/api/gifts/users/info HTTP/1.1
+
+
+### user login
+POST http://localhost:8080/api/gifts/users/login HTTP/1.1
+content-type: application/json
+
+{
+    "uid": "i",
+    "pwd": "aa"
+}
+
+
+### oxford dictionary
+GET http://localhost:8080/api/dictionary/oxford/hi HTTP/1.1
+
+### bus arrival time of bus stop
+GET http://localhost:8080/api/lta/bus/busArrival/60419 HTTP/1.1
+
+
+
+### /gifts/products view one product
+GET http://localhost:8080/api/gifts/products/view/1 HTTP/1.1
+
+
+### /gifts/products view one product
+GET http://localhost:8080/api/gifts/products/product?product_id=1 HTTP/1.1
+
+
+### /gifts/products get multiple products
+GET http://localhost:8080/api/gifts/products HTTP/1.1
+
+### /gifts/products get all categories
+GET http://localhost:8080/api/gifts/products/categories HTTP/1.1
+
+
+####  add a gifts category
+POST  http://localhost:8080/api/gifts/products/category HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Toy",
+    "details": "Toy for baby under 3 years old."
+}
+
+####  delete a gifts category
+DELETE  http://localhost:8080/api/gifts/products/category?category_id=1 HTTP/1.1
+
+
+####  update a gifts category
+PUT  http://localhost:8080/api/gifts/products/category HTTP/1.1
+content-type: application/json
+
+{
+  "category_id": 2,
+  "name": "Cup",
+  "details": "Cup."
+}
+
+
+####  add a product
+POST  http://localhost:8080/api/gifts/products/product HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Pen-1",
+    "category_id": 2,
+    "note": "Pen-1"
+}
+
+
+####  update a product
+PUT  http://localhost:8080/api/gifts/products/product HTTP/1.1
+content-type: application/json
+
+{
+  "product_id": 1,
+    "name": "Pen-2",
+    "category_id": 3,
+    "note": "Pen-2 update."
+}

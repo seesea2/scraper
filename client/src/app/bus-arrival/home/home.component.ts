@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { BusArrivalService } from '../bus-arrival.service';
@@ -26,7 +27,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private busArrivalService: BusArrivalService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {
     this.busStopBookmark = [];
     busArrivalService.busStopBookmark$.subscribe(data => {
@@ -53,9 +55,7 @@ export class HomeComponent implements OnInit {
     this.busArrivalService.deleteBusStopBookmark(busStop);
   }
 
-  getBusArrival(busStopCode: string) {
-    this.busTable = [];
-    this.bExistingBookmark = false;
+  submit(busStopCode: string) {
     this.nearbyBusStops = [];
 
     busStopCode = busStopCode.trim();
@@ -63,40 +63,7 @@ export class HomeComponent implements OnInit {
       this.snackBar.open('Invalid Bus Stop Code.', 'warn', { duration: 2000 });
       return;
     }
-    this.currentBusStopCode = busStopCode;
-    this.busArrivalService.getBusArrival(busStopCode).subscribe(
-      (data: BusArrivalReturn) => {
-        if (data.busArrival.Services.length <= 0) {
-          this.snackBar.open(
-            'Bus service unavailable at the Bus Stop.',
-            'warn',
-            {
-              duration: 2000
-            }
-          );
-          return;
-        }
-
-        data.busArrival.Services.forEach(service => {
-          let busRow: BusTable = {
-            service: service.ServiceNo,
-            bus1: calculateArrivalTime(service.NextBus),
-            bus2: calculateArrivalTime(service.NextBus2),
-            bus3: calculateArrivalTime(service.NextBus3),
-            load: service.NextBus.Load
-          };
-          this.busTable.push(busRow);
-        });
-
-        this.busStopInfo = data.busStopInfo;
-        this.bExistingBookmark = this.busArrivalService.existingBookmark(
-          data.busStopInfo
-        );
-      },
-      err => {
-        this.snackBar.open(err, 'Error', { duration: 4000 });
-      }
-    );
+    this.router.navigate(['/bus', busStopCode]);
   }
 
   getNearbyBusStops(coordinates: Coordinates) {
@@ -134,33 +101,4 @@ export class HomeComponent implements OnInit {
       });
     }
   }
-}
-
-function calculateArrivalTime(bus: NextBusData) {
-  if (!bus || !bus.EstimatedArrival) {
-    return 'NA';
-  }
-
-  const date = new Date(bus.EstimatedArrival);
-  if (date.valueOf() - Date.now() < 0) {
-    return 'Bus left';
-  }
-
-  const diffMinutes = (date.valueOf() - Date.now()) / 1000 / 60;
-  if (diffMinutes < 1) {
-    return '1 min';
-  } else {
-    return diffMinutes.toFixed(0) + ' mins';
-  }
-}
-
-function getLoadDescription(loadType: string): string {
-  if (loadType === 'SEA') {
-    return 'Seats Available';
-  } else if (loadType === 'SDA') {
-    return 'Standing Available';
-  } else if (loadType === 'LSD') {
-    return 'Limited Standing';
-  }
-  return 'NA';
 }

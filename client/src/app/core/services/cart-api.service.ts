@@ -10,6 +10,7 @@ import { Cart } from '../cart-interface';
 import { httpOptions } from '../http-interface';
 
 const cookieExpireDays: number = 90;
+const CartCookieName: string = 'InSgCart';
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +43,7 @@ export class CartApiService {
   }
 
   initCart() {
-    let cookie = this.cookieService.get('InSgCart');
+    let cookie = this.cookieService.get(CartCookieName);
     let cookie_cart: Cart;
     if (!cookie) {
       cookie_cart = new Cart();
@@ -85,7 +86,7 @@ export class CartApiService {
           }
 
           this.cookieService.set(
-            'InSgCart',
+            CartCookieName,
             JSON.stringify(cookie_cart),
             cookieExpireDays,
             '/'
@@ -109,7 +110,7 @@ export class CartApiService {
     this.cartSubject.next(this.cart);
     this.cartItemCountSubject.next(this.cart.cartItems.length);
     this.cookieService.set(
-      'InSgCart',
+      CartCookieName,
       JSON.stringify(this.cart),
       cookieExpireDays,
       '/'
@@ -139,7 +140,7 @@ export class CartApiService {
     this.cartItemCountSubject.next(this.cart.cartItems.length);
 
     this.cookieService.set(
-      'InSgCart',
+      CartCookieName,
       JSON.stringify(this.cart),
       cookieExpireDays,
       '/'
@@ -164,7 +165,7 @@ export class CartApiService {
         this.cartItemCountSubject.next(this.cart.cartItems.length);
 
         this.cookieService.set(
-          'InSgCart',
+          CartCookieName,
           JSON.stringify(this.cart),
           cookieExpireDays,
           '/'
@@ -188,7 +189,7 @@ export class CartApiService {
       }
     }
     // this.cart.cartItems.filter(h => h.product._id != product._id);
-    // this.cookieService.set('InSgCart', JSON.stringify(this.cart));
+    // this.cookieService.set(CartCookieName, JSON.stringify(this.cart));
     // this.cart.total -= this.cart.cartItems[i].product.price  * this.cart.cartItems[i].product.qty;
     console.log('removeFromCart : ', this.cart);
   }
@@ -199,7 +200,7 @@ export class CartApiService {
     this.cartSubject.next(this.cart);
     this.cartItemCountSubject.next(this.cart.cartItems.length);
     this.cookieService.set(
-      'InSgCart',
+      CartCookieName,
       JSON.stringify(this.cart),
       cookieExpireDays,
       '/'

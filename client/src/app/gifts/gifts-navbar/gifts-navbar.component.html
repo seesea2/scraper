@@ -12,20 +12,11 @@
       <button mat-button class="text-white font-weight-bold">Products</button>
     </a>
     <a routerLink="/gifts/cart">
-      <button
-        *ngIf="cartItemCount <= 0"
-        mat-icon-button
-        class="text-white font-weight-bold"
-      >
+      <button *ngIf="cartItemCount <= 0" mat-icon-button class="text-white font-weight-bold">
         <fa-icon icon="shopping-cart">cart</fa-icon>
       </button>
-      <button
-        *ngIf="cartItemCount > 0"
-        mat-icon-button
-        class="text-white font-weight-bold"
-        matBadge="{{ cartItemCount }}"
-        matBadgeColor="accent"
-      >
+      <button *ngIf="cartItemCount > 0" mat-icon-button class="text-white font-weight-bold"
+        matBadge="{{ cartItemCount }}" matBadgeSize="small" matBadgeColor="accent">
         <fa-icon icon="shopping-cart"></fa-icon>
       </button>
     </a>
@@ -58,9 +49,7 @@
       </a>
       <a mat-menu-item routerLink="/gifts/trackOrder">Order</a>
       <a mat-menu-item routerLink="/gifts/auth/register">Support</a>
-      <a mat-menu-item routerLink="/gifts/auth" matTooltip="Sign in"
-        ><i class="fas fa-sign-in-alt"></i
-      ></a>
+      <a mat-menu-item routerLink="/gifts/auth" matTooltip="Sign in"><i class="fas fa-sign-in-alt"></i></a>
     </mat-menu>
   </span>
 </mat-toolbar>

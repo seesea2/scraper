@@ -42,6 +42,9 @@ app.use(
 app.all('/*', (req: Request, res: Response) => {
   return res.status(200).sendFile(join(__dirname, '/client/index.html'));
 });
+app.all('/*', (req: Request, res: Response) => {
+  return res.status(404).send({ result: 'Page not found.' });
+});
 // error handling - 2
 app.use((req: Request, res: Response, next: NextFunction) => {
   return res.status(500).send('Issue happened. Please retry later!');

@@ -1,4 +1,4 @@
-const ltaAccountKey = '6sVzf9zXRaCgkJUdjxIw2A==';
+import { ltaAccountKey } from '../../account-keys';
 
 const busArrivalUrl =
   'http://datamall2.mytransport.sg/ltaodataservice/BusArrivalv2';

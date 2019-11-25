@@ -25,7 +25,7 @@
           <input matInput formControlName="address" type="text" required />
         </mat-form-field>
         <div>
-          <button matStepperNext mat-raised-button color="primary">Next</button>
+          <button matStepperNext mat-flat-button color="primary">Next</button>
         </div>
       </form>
     </mat-step>
@@ -40,8 +40,8 @@
           <textarea matInput formControlName="message"></textarea>
         </mat-form-field>
         <div>
-          <button mat-raised-button matStepperPrevious>Back</button>
-          <button mat-raised-button color="primary" matStepperNext>Next</button>
+          <button mat-flat-button matStepperPrevious>Back</button>
+          <button mat-flat-button color="primary" matStepperNext>Next</button>
         </div>
       </form>
     </mat-step>
@@ -49,9 +49,9 @@
       <ng-template matStepLabel>Done</ng-template>
       <div>{{ submitMsg }}</div>
       <div *ngIf="!submitDone">
-        <button mat-raised-button matStepperPrevious>Back</button>
+        <button mat-flat-button matStepperPrevious>Back</button>
         <button
-          mat-raised-button
+          mat-flat-button
           color="primary"
           (click)="onSubmit()"
           [disabled]="processing"

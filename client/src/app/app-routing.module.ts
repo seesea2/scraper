@@ -11,11 +11,6 @@ const routes: Routes = [
     loadChildren: () =>
       import('./dictionary/dictionary.module').then(m => m.DictionaryModule)
   },
-  // {
-  //   path: 'lunch',
-  //   loadChildren: () =>
-  //     import('./lunchfun/lunchfun.module').then(m => m.LunchfunModule)
-  // },
   {
     path: 'bus',
     loadChildren: () =>
