@@ -1,6 +1,6 @@
 <app-go-back-button></app-go-back-button>
 
-<mat-spinner *ngIf="loading" class="ml-auto mr-auto"></mat-spinner>
+<mat-spinner *ngIf="loading" class="ml-auto mr-auto my-4"></mat-spinner>
 <div class="container">
   <div *ngIf="err_msg && !busTable?.length" class="text-center my-5">
     <mat-error>{{err_msg}}</mat-error>
