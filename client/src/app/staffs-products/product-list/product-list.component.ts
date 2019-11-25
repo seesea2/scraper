@@ -17,7 +17,6 @@ export class ProductListComponent implements OnInit {
     this.getProducts();
   }
 
-
   getProducts() {
     this.productSvc.getProducts().subscribe(
       data => {
@@ -27,7 +26,6 @@ export class ProductListComponent implements OnInit {
         this.products = data;
       },
       err => {
-        alert(err);
         this.products = [];
       }
     );

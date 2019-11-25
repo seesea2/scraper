@@ -8,31 +8,31 @@
       <mat-expansion-panel *ngFor="let product of products">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            {{product.name}}
+            {{ product.name }}
           </mat-panel-title>
           <mat-panel-description>
-            {{product.id}}
-            {{product.category}}
-            {{product.img}}
+            {{ product.id }}
+            {{ product.category }}
+            {{ product.img }}
           </mat-panel-description>
         </mat-expansion-panel-header>
 
-        ID: {{product.id}}
-        Price: {{product.price}}
-        Image: {{product.img}}
-        {{product.packaging}}
-        {{product.material}}
-        {{product.size}}
+        ID: {{ product.id }} Price: {{ product.price }} Image: {{ product.img }}
+        {{ product.packaging }}
+        {{ product.material }}
+        {{ product.size }}
         {{product.note}F}
 
         <mat-action-row>
-          <button mat-flat-button color="primary" [routerLink]="['./new', product]">Edit</button>
+          <button
+            mat-flat-button
+            color="primary"
+            [routerLink]="['./new', product]"
+          >
+            Edit
+          </button>
         </mat-action-row>
       </mat-expansion-panel>
     </mat-accordion>
-
-
   </div>
-
-
 </div>
