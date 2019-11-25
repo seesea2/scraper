@@ -5,20 +5,22 @@ import { CartItem, Customer } from '../gifts-users/users-interface';
 
 async function NewOrder(customer: Customer, cartItems: CartItem[]) {
   try {
-    const dbOrders = await DbCollection('gifts-orders');
-    let insertRslt = dbOrders.insertOne({
-      created_on: new Date(),
-      shipping: {
-        name: customer.name,
-        mobile: customer.mobile,
-        address: customer.address,
-        message: customer.message
-      },
-      payment: { method: 'visa', transaction_id: '2312213312XXXTD' },
-      cartItems: cartItems
-    });
-    console.log('insertRslt: ', insertRslt);
-    return insertRslt;
+    let fields = 'name'
+    let values = `${customer.name}`
+    let sql = 'insert into giftsOrders ('
+    // let insertRslt = dbOrders.insertOne({
+    //   created_on: new Date(),
+    //   shipping: {
+    //     name: customer.name,
+    //     mobile: customer.mobile,
+    //     address: customer.address,
+    //     message: customer.message
+    //   },
+    //   payment: { method: 'visa', transaction_id: '2312213312XXXTD' },
+    //   cartItems: cartItems
+    // });
+    // console.log('insertRslt: ', insertRslt);
+    // return insertRslt;
   } catch (e) {
     throw 'create new order failed.';
   }
