@@ -2,7 +2,7 @@
   "name": "insg.xyz",
   "version": "1.0.0",
   "scripts": {
-    "debug:client": "cd ./client && npm run debug",
+    "debug:client": "cd ./client && npm start",
     "debug:server": "webpack --config ./server/webpack.config.js --colors --mode=development",
     "build:server": "webpack --config ./server/webpack.config.js --progress --colors --mode=production",
     "publish": "npm run build:server && cd ./client/ && npm run build",
@@ -32,15 +32,15 @@
     "@types/cors": "^2.8.6",
     "@types/express": "^4.17.1",
     "@types/express-session": "^1.15.16",
-    "@types/node": "^12.12.12",
-    "@types/nodemailer": "^6.2.1",
+    "@types/node": "^12.12.14",
+    "@types/nodemailer": "^6.2.2",
     "@types/sqlite3": "^3.1.5",
-    "ts-loader": "^6.2.0",
+    "ts-loader": "^6.2.1",
     "ts-node": "^8.5.2",
-    "tslint": "^5.20.0",
-    "typescript": "^3.6.4",
+    "tslint": "^5.20.1",
+    "typescript": "^3.7.2",
     "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.9",
+    "webpack-cli": "^3.3.10",
     "webpack-node-externals": "^1.7.2"
   }
 }
