@@ -16,10 +16,10 @@ import {
   GetProductsByCategory,
   UpdateProduct
 } from '../gifts-products/gifts-products.ops';
-import {
-  AdjustInventory,
-  GetInventory
-} from '../gifts-products/gifts-products-inventory.ops';
+// import {
+//   AdjustInventory,
+//   GetInventory
+// } from '../gifts-products/gifts-products-inventory.ops';
 // import { bStaff } from '../gifts-staffs/gifts-staffs.ops';
 
 const giftsProductsRouter = Router();
@@ -66,11 +66,11 @@ giftsProductsRouter.delete('/product', (req: Request, res: Response) => {
   DeleteProduct(req.query, res);
 });
 
-giftsProductsRouter.get('/inventory', (req, res) => {
-  GetInventory(res);
-});
-giftsProductsRouter.put('/inventory', (req, res) => {
-  AdjustInventory(req.body._id, req.body.qty, res);
-});
+// giftsProductsRouter.get('/inventory', (req, res) => {
+//   GetInventory(res);
+// });
+// giftsProductsRouter.put('/inventory', (req, res) => {
+//   AdjustInventory(req.body._id, req.body.qty, res);
+// });
 
 export default giftsProductsRouter;
