@@ -1,6 +1,8 @@
 import * as express from 'express';
 import * as session from 'express-session';
+import { createServer } from 'https';
 import { join } from 'path';
+import { readFileSync } from 'fs';
 import * as cors from 'cors';
 import * as bodyParser from 'body-parser';
 
@@ -51,5 +53,13 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 app.listen(8080, () => {
-  console.log('App listening on port 8080.');
+  console.log('Listening HTTP on port 8080.');
+});
+
+const httpsOptions = {
+  key: readFileSync(join(__dirname, '/../localhost.key')),
+  cert: readFileSync(join(__dirname, '/../localhost.crt'))
+};
+createServer(httpsOptions, app).listen(8443, () => {
+  console.log('Listening HTTPS on port 8443.');
 });
