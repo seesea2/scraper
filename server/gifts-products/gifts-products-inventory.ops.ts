@@ -42,16 +42,22 @@ async function ReserveInventory(order_id: string, products: any) {
     const success = [];
     const failed = [];
     let sql = '';
-    let rslt = false;
 
+    let dbReserve = false;
+    let dbInventory = false;
     for (let i = 0; i < products.length; i++) {
       let orderQty = products[i].qty;
       sql = `insert into giftsReservation (product_id,order_id,qty,createdOn) 
-            values (${products[i].product_id},"${order_id}",${orderQty},${Date.now()});`;
-      rslt = await SqliteRun(sql);
+            values (${
+              products[i].product_id
+            },"${order_id}",${orderQty},${Date.now()});`;
+      dbReserve = await SqliteRun(sql);
+      if (!dbReserve) {
+        break;
+      }
       sql = `update giftsInventory set qty=qty-${orderQty} where product_id=${products[i].product_id};`;
-      rslt = await SqliteRun(sql);
-      if (!rslt) {
+      dbInventory = await SqliteRun(sql);
+      if (!dbInventory) {
         failed.push(products[i]);
         break;
       } else {
@@ -62,11 +68,18 @@ async function ReserveInventory(order_id: string, products: any) {
     if (failed.length) {
       for (let i = 0; i < success.length; i++) {
         sql = `update giftsInventory set qty=qty+${success[i].qty} where product_id=${success[i].product_id};`;
-        rslt = await SqliteRun(sql);
-        sql = `delete from giftsReservation where order_id="${order_id}" and product_id=${success[i].product_id};`;
-        rslt = await SqliteRun(sql);
+        dbInventory = await SqliteRun(sql);
+        if (dbInventory) {
+          sql = `delete from giftsReservation where order_id="${order_id}" and product_id=${success[i].product_id};`;
+          dbReserve = await SqliteRun(sql);
+          if (!dbReserve) {
+            dbReserve = await SqliteRun(sql);
+          }
+        }
       }
-      throw 'Not enough storage.';
+    }
+    if (success.length != products.length) {
+      throw 'Reserve from Inventory failed.';
     }
     return true;
   } catch (e) {
