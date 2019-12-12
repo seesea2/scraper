@@ -10,21 +10,30 @@ POST http://localhost:8080/api/gifts/users/login HTTP/1.1
 content-type: application/json
 
 {
-    "uid": "i",
-    "pwd": "aa"
+    "id": "1",
+    "pwd": "1"
 }
+
+### user register
+POST http://localhost:8080/api/gifts/users/register HTTP/1.1
+content-type: application/json
+
+{
+    "email": "1",
+    "pwd": "1"
+}
+
+### user disable
+PUT http://localhost:8080/api/gifts/users/disable HTTP/1.1
+content-type: application/json
 
 
 ### oxford dictionary
 GET http://localhost:8080/api/dictionary/oxford/hi HTTP/1.1
 
 ### bus arrival time of bus stop
-GET http://localhost:8080/api/lta/bus/busArrival/60419 HTTP/1.1
+GET http://localhost:8080/api/lta/bus/busArrival/01012 HTTP/1.1
 
-
-
-### /gifts/products view one product
-GET http://localhost:8080/api/gifts/products/view/1 HTTP/1.1
 
 
 ### /gifts/products view one product
@@ -38,13 +47,17 @@ GET http://localhost:8080/api/gifts/products HTTP/1.1
 GET http://localhost:8080/api/gifts/products/categories HTTP/1.1
 
 
+### /gifts/products get samples
+GET http://localhost:8080/api/gifts/products/samples HTTP/1.1
+
+
 ####  add a gifts category
 POST  http://localhost:8080/api/gifts/products/category HTTP/1.1
 content-type: application/json
 
 {
-    "name": "Toy",
-    "details": "Toy for baby under 3 years old."
+    "name": "Bottle",
+    "details": "Water Bottle."
 }
 
 ####  delete a gifts category
@@ -57,8 +70,8 @@ content-type: application/json
 
 {
   "category_id": 2,
-  "name": "Cup",
-  "details": "Cup."
+  "name": "Pen",
+  "details": "Pen."
 }
 
 
@@ -67,9 +80,9 @@ POST  http://localhost:8080/api/gifts/products/product HTTP/1.1
 content-type: application/json
 
 {
-    "name": "Pen-1",
+    "name": "Pen-2",
     "category_id": 2,
-    "note": "Pen-1"
+    "note": "Pen-2"
 }
 
 
@@ -78,11 +91,86 @@ PUT  http://localhost:8080/api/gifts/products/product HTTP/1.1
 content-type: application/json
 
 {
-  "product_id": 1,
-    "name": "Pen-2",
+  "product_id": 2,
+    "name": "Pen-3",
     "category_id": 3,
-    "note": "Pen-2 update."
+    "note": "Pen-3 update."
 }
 
 ####  delete a product
-DELETE  http://localhost:8080/api/gifts/products/product?product_id=5 HTTP/1.1
+DELETE  http://localhost:8080/api/gifts/products/product?product_id=55 HTTP/1.1
+
+
+####  get products inventory
+GET  http://localhost:8080/api/gifts/products/inventory HTTP/1.1
+
+
+####   update products inventory
+PUT  http://localhost:8080/api/gifts/products/inventory HTTP/1.1
+content-type: application/json
+
+{
+  "product_id": 3,
+  "qty": 100
+}
+
+
+####  new staff
+POST  http://localhost:8080/api/gifts/staffs/admin/newStaff HTTP/1.1
+content-type: application/json
+
+{
+  "uid": "yc",
+  "pwd": "ii",
+  "firstName": "yc",
+  "lastName": "li"
+}
+
+####  disable staff
+PUT  http://localhost:8080/api/gifts/staffs/admin/disableStaff HTTP/1.1
+content-type: application/json
+
+{
+  "staff_id": 3
+}
+
+####  delete staff
+DELETE  http://localhost:8080/api/gifts/staffs/admin/deleteStaff?staff_id=3 HTTP/1.1
+
+
+
+### get user's orders
+GET http://localhost:8080/api/gifts/orders/userOrders HTTP/1.1
+
+### staff get orders for processing
+GET http://localhost:8080/api/gifts/orders/staffOrders HTTP/1.1
+
+
+### liych get orders based on order_name
+GET http://localhost:8080/api/gifts/orders/order HTTP/1.1
+
+####  New order
+POST  http://localhost:8080/api/gifts/orders/order HTTP/1.1
+content-type: application/json
+
+{
+  "products": [
+    {
+      "product_id":1,
+      "qty": 5
+    },
+    {
+      "product_id":2,
+      "qty": 5
+    }
+  ],
+  "user": {
+    "email": "a@a.com"
+  },
+  "shipping": {
+    "name": "me",
+    "address": "my home",
+    "contact": 666
+  },
+  "message": "be careful."
+}

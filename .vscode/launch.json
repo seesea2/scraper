@@ -12,7 +12,7 @@
       "program": "${workspaceFolder}/server/server.ts",
       "preLaunchTask": "npm: start",
       "outFiles": ["${workspaceFolder}/debug/*.js"],
-      "restart": false
+      "restart": true
     }
   ]
 }

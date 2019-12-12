@@ -32,8 +32,8 @@ async function CheckOxfordEntries(word: string, res: Response) {
     let resp = await Axios(url, config);
     let entries: OxfordEntries = resp.data;
     let return_result: CheckEntriesResult = { lexicalEntries: [] };
-    for (let result of entries.results) {
-      for (let lexicalEntry of result.lexicalEntries) {
+    for (let result of entries.results || []) {
+      for (let lexicalEntry of result.lexicalEntries || []) {
         let new_lexicalEntry: YcLexicalEntry = {
           entries: [],
           lexicalCategory: '',
@@ -44,21 +44,21 @@ async function CheckOxfordEntries(word: string, res: Response) {
         if (lexicalEntry.lexicalCategory) {
           new_lexicalEntry.lexicalCategory = lexicalEntry.lexicalCategory.text;
         }
-        for (let entry of lexicalEntry.entries) {
-          for (let sense of entry.senses) {
+        for (let entry of lexicalEntry.entries || []) {
+          for (let sense of entry.senses || []) {
             for (let definition of sense.definitions || []) {
               new_lexicalEntry.entries.push(definition);
             }
 
             for (let subsense of sense.subsenses || []) {
-              for (let definition of subsense.definitions) {
+              for (let definition of subsense.definitions || []) {
                 new_lexicalEntry.entries.push(definition);
               }
             }
           }
         }
 
-        for (let pronunciation of lexicalEntry.pronunciations) {
+        for (let pronunciation of lexicalEntry.pronunciations || []) {
           new_lexicalEntry.pronunciations.push({
             audioFile: pronunciation.audioFile,
             phoneticSpelling: pronunciation.phoneticSpelling

@@ -12,7 +12,7 @@ const giftsStaffsRouter = Router();
 giftsStaffsRouter.post('/admin/newStaff', (req: Request, res: Response) => {
   newStaff(req, res);
 });
-giftsStaffsRouter.post('/admin/disableStaff', (req: Request, res: Response) => {
+giftsStaffsRouter.put('/admin/disableStaff', (req: Request, res: Response) => {
   disableStaff(req, res);
 });
 giftsStaffsRouter.delete(

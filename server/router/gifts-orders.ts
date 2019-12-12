@@ -1,15 +1,32 @@
 import { Router } from 'express';
 
 import { Request, Response } from '../interface';
+import {
+  GetUserOrders,
+  GetStaffOrders,
+  NewOrder
+} from '../gifts-orders/gifts-orders.ops';
 
 const giftsOrdersRouter = Router();
 
-// order list with order_no, status & staff id to follow-up.
-giftsOrdersRouter.get('/allOrders', (req: Request, res: Response) => {
+giftsOrdersRouter.get('/userOrders', (req: Request, res: Response) => {
+  if (!req.session || !req.session.user) {
+    return res.sendStatus(401);
+  }
+  GetUserOrders(req.session, res);
+});
+
+// all order for staffs' processing.
+giftsOrdersRouter.get('/staffOrders', (req: Request, res: Response) => {
   if (!req.session || !req.session.staff) {
     return res.sendStatus(401);
   }
-  return res.status(200).send({ result: 'ok' });
+  GetStaffOrders(req.session, res);
+});
+
+// new order from customer.
+giftsOrdersRouter.post('/order', (req: Request, res: Response) => {
+  NewOrder(req, res);
 });
 
 // update order status by staff follow-up.

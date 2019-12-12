@@ -32,7 +32,7 @@ giftsUsersRouter.get('/logout', (req: Request, res: Response) => {
 giftsUsersRouter.post('/register', (req: Request, res: Response) => {
   Register(req.body, res);
 });
-giftsUsersRouter.delete('/account', (req: Request, res: Response) => {
+giftsUsersRouter.put('/disable', (req: Request, res: Response) => {
   DisableAccount(req.session, res);
 });
 // giftsUsersRouter.get('/cart', (req: Request, res: Response) => {

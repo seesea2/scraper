@@ -35,10 +35,9 @@ async function newStaff(req: Request, res: Response) {
     const sql = `insert into giftsStaffs (${fields}) values (${values})`;
     let result = await SqliteRun(sql);
     if (result === true) {
-      res.status(200).send({ result: 'ok' });
-    } else {
-      res.status(200).send({ result: 'failed' + result });
+      return res.status(200).send({ result: 'ok' });
     }
+    res.status(200).send({ result: 'failed' + result });
   } catch (e) {
     console.log(e);
     res.status(500).send(e);
@@ -58,13 +57,12 @@ async function disableStaff(req: Request, res: Response) {
       return res.status(400).send({ result: 'staff_id is empty.' });
     }
 
-    const sql = `update giftsStaffs set inactive=1 where uid='${req.body.staff_id}'`;
+    const sql = `update giftsStaffs set inactive=1 where staff_id=${req.body.staff_id}`;
     let result = await SqliteRun(sql);
     if (result === true) {
-      res.status(200).send({ result: 'ok' });
-    } else {
-      res.status(200).send({ result: 'failed' });
+      return res.status(200).send({ result: 'ok' });
     }
+    res.status(200).send({ result: 'failed' });
   } catch (e) {
     console.log(e);
     res.status(500).send(e);
@@ -80,17 +78,16 @@ async function deleteStaff(req: Request, res: Response) {
   // }
 
   try {
-    if (!req.body.staff_id) {
+    if (!req.query.staff_id) {
       return res.status(400).send({ result: 'staff_id is empty.' });
     }
 
-    const sql = `delete from giftsStaffs where uid='${req.body.staff_id}'`;
+    const sql = `delete from giftsStaffs where staff_id=${req.query.staff_id}`;
     let result = await SqliteRun(sql);
     if (result === true) {
-      res.status(200).send({ result: 'ok' });
-    } else {
-      res.status(200).send({ result: 'failed' });
+      return res.status(200).send({ result: 'ok' });
     }
+    res.status(200).send({ result: 'failed' });
   } catch (e) {
     console.log(e);
     res.status(500).send(e);

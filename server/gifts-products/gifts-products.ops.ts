@@ -120,7 +120,7 @@ async function UpdateProduct(body: any, res: Response) {
       changes += `,price=${body.price}`;
     }
     if (body.category_id) {
-      changes += `,category=${body.category_id}`;
+      changes += `,category_id=${body.category_id}`;
     }
     if (body.colour) {
       changes += `,colour='${body.colour}'`;
@@ -158,7 +158,7 @@ async function DeleteProduct(query: any, res: Response) {
   }
 
   try {
-    const sql = `update giftsProducts set inactive=1 where id=${query.product_id};`;
+    const sql = `update giftsProducts set inactive=1 where product_id=${query.product_id};`;
     const result = await SqliteRun(sql);
     if (result) {
       return res.status(200).send({ result: 'ok' });
