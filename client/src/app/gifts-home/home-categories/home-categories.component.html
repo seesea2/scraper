@@ -2,7 +2,7 @@
   <h2><fa-icon icon="leaf"></fa-icon> Products Categories</h2>
   <mat-spinner *ngIf="loading" class="m-4">Loading...</mat-spinner>
   <section class="container">
-    <div *ngFor="let samplesOfCategory of samplesOfCategories" class="pt-4">
+    <div *ngFor="let sampleProduct of sampleProducts" class="pt-4">
       <div class="d-flex justify-content-between">
         <span>
           <h3>{{ getCategoryName(samplesOfCategory) }}</h3>

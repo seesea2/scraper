@@ -7,6 +7,17 @@ let sqlite3 = verbose();
 let db_r: Database = undefined;
 let db_rw: Database = undefined;
 
+function SqliteReset() {
+  if (db_r) {
+    db_r.close();
+    db_r = undefined;
+  }
+  if (db_rw) {
+    db_rw.close();
+    db_rw = undefined;
+  }
+}
+
 function SqliteGet(sql: string): Promise<any> {
   return new Promise(async (resolve, reject) => {
     try {
@@ -15,11 +26,13 @@ function SqliteGet(sql: string): Promise<any> {
       }
       db_r.get(sql, (err, row) => {
         if (err) {
+          SqliteReset();
           return reject(err);
         }
         resolve(row);
       });
     } catch (e) {
+      SqliteReset();
       reject(e);
     }
   });
@@ -33,11 +46,13 @@ function SqliteAll(sql: string): Promise<any[]> {
       }
       db_r.all(sql, (err, rows) => {
         if (err) {
+          SqliteReset();
           return reject(err);
         }
         resolve(rows);
       });
     } catch (e) {
+      SqliteReset();
       reject(e);
     }
   });
@@ -51,11 +66,13 @@ function SqliteRun(sql: string): Promise<boolean> {
       }
       db_rw.run(sql, [], err => {
         if (err) {
+          SqliteReset();
           return reject(err);
         }
         resolve(true);
       });
     } catch (e) {
+      SqliteReset();
       reject(e);
     }
   });
@@ -70,6 +87,7 @@ function SqlitePrepareRun(sql: string, params: []): Promise<boolean> {
       db_rw.serialize(() => {
         const stmt = db_rw.prepare(sql, err => {
           if (err) {
+            SqliteReset();
             return reject(err);
           }
         });
@@ -78,12 +96,14 @@ function SqlitePrepareRun(sql: string, params: []): Promise<boolean> {
         }
         stmt.finalize(err => {
           if (err) {
+            SqliteReset();
             return reject(err);
           }
           resolve(true);
         });
       });
     } catch (e) {
+      SqliteReset();
       reject(e);
     }
   });

@@ -22,7 +22,7 @@ async function GetSamplesOfCategories(res: Response) {
     return res.status(200).send(globalSamplesOfCategories);
   }
   try {
-    let sql = `SELECT * from giftsProducts as g 
+    let sql = `SELECT * from giftsProducts as g
               where (
                 select count(*) from giftsProducts as g1
                 where g1.category_id = g.category_id and g1.createdOn >= g.createdOn
@@ -46,6 +46,8 @@ async function AddCategory(body: any, res: Response) {
       fields += ',details';
       values += ',"' + body.details + '"';
     }
+    fields += ',createdOn';
+    values += ',' + Date.now();
     const sql = `insert into giftsProductsCategories (${fields}) values (${values})`;
     let result = await SqliteRun(sql);
     if (result) {
@@ -94,6 +96,11 @@ async function UpdateCategory(body: any, res: Response) {
   let update = `set name='${body.name}'`;
   if (body.details) {
     update += `,details='${body.details}'`;
+  }
+  if (body.parent_id) {
+    update += `,parent_id=${body.parent_id}`;
+  } else {
+    update += `,parent_id=0`;
   }
 
   try {
