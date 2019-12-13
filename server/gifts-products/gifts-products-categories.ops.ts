@@ -22,7 +22,12 @@ async function GetSamplesOfCategories(res: Response) {
     return res.status(200).send(globalSamplesOfCategories);
   }
   try {
-    globalSamplesOfCategories = await SqliteAll('');
+    let sql = `SELECT * from giftsProducts as g 
+              where (
+                select count(*) from giftsProducts as g1
+                where g1.category_id = g.category_id and g1.createdOn >= g.createdOn
+              ) <= 3;`;
+    globalSamplesOfCategories = await SqliteAll(sql);
     return res.status(200).send(globalSamplesOfCategories);
   } catch (e) {
     return res.status(500).send(e);
@@ -100,7 +105,7 @@ async function UpdateCategory(body: any, res: Response) {
         .send({ result: 'The category name already exists.' });
     }
 
-    sql = `update giftsProductsCategories ${update} where category_id='${body.category_id}'`;
+    sql = `update giftsProductsCategories ${update} where category_id=${body.category_id}`;
     let result = await SqliteRun(sql);
     if (result) {
       globalCategories = [];

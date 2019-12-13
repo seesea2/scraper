@@ -4,12 +4,12 @@ import { Request, Response } from '../interface';
 import { busRouter } from './lta';
 import dictionaryRouter from './dictionary';
 import giftsRouter from './gifts';
-import httpRouter from './http-request';
+// import httpRouter from './http-request';
 import SendEmail from '../email/email.ops';
 
 const apiRouter = Router();
 
-// url: /api
+// url: /api/*
 apiRouter.use('/lta/bus', busRouter);
 apiRouter.use('/dictionary', dictionaryRouter);
 apiRouter.use('/gifts', giftsRouter);

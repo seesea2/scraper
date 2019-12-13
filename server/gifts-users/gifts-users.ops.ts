@@ -11,23 +11,29 @@ async function Login(req: Request, res: Response) {
     return res.status(200).send({ uid: req.session.user.uid });
   }
   try {
-    const uid = (req.body.uid || '').trim();
+    // the id can be uid or email.
+    const id = (req.body.id || '').trim();
     const pwd = encrypt(req.body.pwd);
-    if (!uid || !pwd) {
+    let sql = '';
+
+    if (!id || !pwd) {
       return res
         .status(400)
         .send({ result: 'username and password required.' });
     }
-    req.session.staff = await SqliteGet(
-      `select * from giftsStaffs where uid="${uid}" and pwd="${pwd}" and (inactive is null or inactive<>1)`
-    );
+
+    sql = `select * from giftsStaffs 
+          where (uid="${id}" or email="${id}") and pwd="${pwd}" 
+          and coalesce(inactive,0) <> 1;`;
+    req.session.staff = await SqliteGet(sql);
     if (req.session.staff) {
       return res.status(200).send({ uid: req.session.staff.uid, bStaff: true });
     }
 
-    req.session.user = await SqliteGet(
-      `select * from giftsUsers where uid="${uid}" and pwd="${pwd}" and (inactive is null or inactive<>1)`
-    );
+    sql = `select * from giftsUsers 
+            where (uid="${id}" or email="${id}") and pwd="${pwd}" 
+            and coalesce(inactive,0) <> 1;`;
+    req.session.user = await SqliteGet(sql);
     if (req.session.user) {
       return res.status(200).send({ uid: req.session.user.uid });
     }
@@ -72,11 +78,14 @@ async function DisableAccount(session: any, res: Response) {
     return res.status(403).send('Login is required.');
   }
   try {
-    SqliteRun(
-      `update giftsUsers set inactive=1 where uid="${session.user.uid}"`
+    let rslt = SqliteRun(
+      `update giftsUsers set inactive=1 where email="${session.user.email}"`
     );
-    session.user = null;
-    return res.status(200).send({ result: 'Account deleted.' });
+    if (rslt) {
+      session.user = null;
+      return res.status(200).send({ result: 'Account disabled.' });
+    }
+    return res.status(500).send({ text: 'Error. Please try again later.' });
   } catch (e) {
     return res.status(400).send(e);
   }
@@ -84,7 +93,7 @@ async function DisableAccount(session: any, res: Response) {
 
 function UserInfo(session: any, res: Response) {
   if (!bLogin(session)) {
-    return res.status(403).send('User not login.');
+    return res.status(403).send({ text: 'User not login.' });
   }
   return res.status(200).send({
     uid: session.staff ? session.staff.uid : session.user.uid,

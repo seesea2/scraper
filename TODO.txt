@@ -7,3 +7,6 @@ Backend Todo:
 # Product Detail Page Service
 # login use either uid or email.
 # 
+
+
+# get samples of categories

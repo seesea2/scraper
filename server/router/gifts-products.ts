@@ -27,9 +27,6 @@ const giftsProductsRouter = Router();
 /*
  * inquiry: /api/gifts/products
  */
-// giftsProductsRouter.get('/view/:product_id', (req, res) => {
-//   GetProduct(req.params, res);
-// });
 giftsProductsRouter.get('/categories', (req: Request, res: Response) => {
   GetCategories(res);
 });
@@ -70,7 +67,7 @@ giftsProductsRouter.get('/inventory', (req, res) => {
   GetInventory(res);
 });
 giftsProductsRouter.put('/inventory', (req, res) => {
-  AdjustInventory(req.body._id, req.body.qty, res);
+  AdjustInventory(req.body, res);
 });
 
 export default giftsProductsRouter;

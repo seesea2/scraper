@@ -2,14 +2,39 @@ import { Request, Response } from '../interface';
 import { SqliteAll, SqliteGet, SqliteRun } from '../db-ops/sqlite-ops';
 import { bLogin } from '../gifts-users/gifts-users.ops';
 import { CartItem, Customer } from '../gifts-users/users-interface';
+import { randomString } from '../string-ops/random';
+import { ReserveInventory } from '../gifts-products/gifts-products-inventory.ops';
 
-async function NewOrder(customer: Customer, cartItems: CartItem[]) {
+async function GetUserOrders(session: any, res: Response) {
   try {
-    let fields = 'name'
-    let values = `${customer.name}`
-    let sql = 'insert into giftsOrders ('
+    let sql = `select * from giftsOrders where user_id=${session.user.user_id}`;
+    const orders = await SqliteAll(sql);
+    return res.status(200).send(orders);
+  } catch (e) {
+    return res.status(500).send(e);
+  }
+}
+
+async function GetStaffOrders(session: any, res: Response) {
+  try {
+    let sql = `select * from giftsOrders`;
+    const orders = await SqliteAll(sql);
+    return res.status(200).send(orders);
+  } catch (e) {
+    return res.status(500).send(e);
+  }
+}
+
+async function NewOrder(req: Request, res: Response) {
+  try {
+    let fields = 'order_id,createdOn';
+
+    let order_id = 'SG_' + randomString(7);
+    let values = `"${order_id}",${Date.now()}`;
+
+    let sql = `insert into giftsOrders (${fields}) values (${values});`;
+    let rslt = SqliteRun(sql);
     // let insertRslt = dbOrders.insertOne({
-    //   created_on: new Date(),
     //   shipping: {
     //     name: customer.name,
     //     mobile: customer.mobile,
@@ -19,19 +44,25 @@ async function NewOrder(customer: Customer, cartItems: CartItem[]) {
     //   payment: { method: 'visa', transaction_id: '2312213312XXXTD' },
     //   cartItems: cartItems
     // });
-    // console.log('insertRslt: ', insertRslt);
-    // return insertRslt;
+    if (!rslt) {
+      return res.status(500).send('Error, please retry later.');
+    }
+
+    let reserveRslt = await ReserveInventory(order_id, req.body.products);
+    if (!reserveRslt) {
+      return res.status(500).send('Error, failed to reserve inventory.');
+    }
+
+    return res.status(200).send('Order successfully.');
   } catch (e) {
-    throw 'create new order failed.';
+    return res.status(500).send(e);
   }
 }
-// async function GetCart(req: Request, res: Response) {
-//   if (!bLogin(req.session)) {
-//     return res.status(403).send('User not login');
-//   }
 
+// async function GetCart(session: any, res: Response) {
 //   try {
-//     const db = await MongoDb();
+//     let sql = `select * from giftsOrders where user_id=${req.session.user.user_id}`;
+//     const orders = await SqliteAll(sql);
 //     let cart = await db
 //       .collection('gifts-carts')
 //       .find({ _id: req.session.user[0]._id })
@@ -139,4 +170,4 @@ async function NewOrder(customer: Customer, cartItems: CartItem[]) {
 // }
 
 // export { DeleteCart, DeleteCartProduct, GetCart, UpdateCartQty };
-export { NewOrder };
+export { GetUserOrders, GetStaffOrders, NewOrder };

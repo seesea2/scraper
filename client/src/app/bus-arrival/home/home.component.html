@@ -35,7 +35,7 @@
       <mat-action-list *ngFor="let nearby of nearbyBusStops" dense>
         <div mat-list-item>
           <button [routerLink]="['./', nearby.BusStopCode]">
-            {{ nearby.Description }} @ {{ nearby.RoadName }}
+            ({{ nearby.BusStopCode }}) {{ nearby.Description }}
           </button>
         </div>
       </mat-action-list>

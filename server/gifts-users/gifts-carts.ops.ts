@@ -4,7 +4,7 @@ import { randomString } from '../string-ops/random';
 import { bLogin } from './gifts-users.ops';
 import { CartItem } from './users-interface';
 import {
-  DeleteInventoryReservation,
+  //   DeleteInventoryReservation,
   ReserveInventory
 } from '../gifts-products/gifts-products-inventory.ops';
 import { NewOrder } from '../gifts-orders/gifts-orders.ops';

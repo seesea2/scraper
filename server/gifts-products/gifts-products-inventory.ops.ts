@@ -1,93 +1,95 @@
 import { Response } from '../interface';
+import { SqliteAll, SqliteRun } from '../db-ops/sqlite-ops';
 
-// async function GetInventory(res: Response) {
+async function GetInventory(res: Response) {
+  try {
+    let sql = `select coalesce(i.qty, 0) as inventory, p.* from giftsProducts as p 
+                left JOIN giftsInventory as i
+                on p.product_id=i.product_id;`;
+    const inventory = await SqliteAll(sql);
+    return res.status(200).send(inventory);
+  } catch (e) {
+    return res.status(500).send(e.message);
+  }
+}
+
+// qty by product now; Todo: qty by each colour, size etc.
+async function AdjustInventory(body: any, res: Response) {
+  if (!body.product_id || !body.qty) {
+    return res.status(400).send('Invalid input.');
+  }
+  try {
+    let time = Date.now();
+    let sql = `insert into giftsInventory (product_id,qty,modifiedOn) 
+                values(${body.product_id},${body.qty},${time})
+                on CONFLICT(product_id) do update set qty=${body.qty}, modifiedOn=${time};`;
+    const rslt = await SqliteRun(sql);
+    if (rslt) {
+      return res.status(200).send('OK');
+    }
+    return res.status(500).send('Failed');
+  } catch (e) {
+    return res.status(500).send(e);
+  }
+}
+
+async function ReserveInventory(order_id: string, products: any) {
+  if (!order_id || !products || products.length <= 0) {
+    throw 'The order is empty.';
+  }
+
+  try {
+    const success = [];
+    const failed = [];
+    let sql = '';
+
+    let dbReserve = false;
+    let dbInventory = false;
+    for (let i = 0; i < products.length; i++) {
+      let orderQty = products[i].qty;
+      sql = `insert into giftsReservation (product_id,order_id,qty,createdOn) 
+            values (${
+              products[i].product_id
+            },"${order_id}",${orderQty},${Date.now()});`;
+      dbReserve = await SqliteRun(sql);
+      if (!dbReserve) {
+        break;
+      }
+      sql = `update giftsInventory set qty=qty-${orderQty} where product_id=${products[i].product_id};`;
+      dbInventory = await SqliteRun(sql);
+      if (!dbInventory) {
+        failed.push(products[i]);
+        break;
+      } else {
+        success.push(products[i]);
+      }
+    }
+
+    if (failed.length) {
+      for (let i = 0; i < success.length; i++) {
+        sql = `update giftsInventory set qty=qty+${success[i].qty} where product_id=${success[i].product_id};`;
+        dbInventory = await SqliteRun(sql);
+        if (dbInventory) {
+          sql = `delete from giftsReservation where order_id="${order_id}" and product_id=${success[i].product_id};`;
+          dbReserve = await SqliteRun(sql);
+          if (!dbReserve) {
+            dbReserve = await SqliteRun(sql);
+          }
+        }
+      }
+    }
+    if (success.length != products.length) {
+      throw 'Reserve from Inventory failed.';
+    }
+    return true;
+  } catch (e) {
+    throw e;
+  }
+}
+
+// async function DeleteInventoryReservation(product_id: number) {
 //   try {
-//     const dbInventory = await DbCollection('gifts-inventory');
-//     const inventory = await dbInventory.find().toArray();
-//     return res.status(200).send(inventory);
-//   } catch (e) {
-//     return res.status(500).send(e.message);
-//   }
-// }
-
-// qty by product; Todo: by colour, size, etc.
-// async function AdjustInventory(_id: string, qty: number, res: Response) {
-//   if (!_id || !qty) {
-//     return res.status(400).send('Invalid input.');
-//   }
-//   try {
-//     const dbInventory = await DbCollection('gifts-inventory');
-//     const rslt = await dbInventory.updateOne(
-//       {
-//         _id: new ObjectID(_id)
-//       },
-//       { $set: { modifiedOn: new Date(), qty: qty } },
-//       { upsert: true }
-//     );
-//     return res.status(200).send(rslt);
-//   } catch (e) {
-//     return res.status(500).send(e);
-//   }
-// }
-
-// async function ReserveInventory(id: string, cartItems: any) {
-//   if (!cartItems || cartItems.length <= 0) {
-//     throw 'The cart is empty.';
-//   }
-
-//   try {
-//     const success = [];
-//     const failed = [];
-
-//     const dbInventory = await DbCollection('gifts-inventory');
-//     for (let i = 0; i < cartItems.length; i++) {
-//       const result = await dbInventory.updateOne(
-//         {
-//           _id: new ObjectID(cartItems[i].product._id),
-//           qty: { $gte: cartItems[i].qty }
-//         },
-//         {
-//           $inc: { qty: -cartItems[i].qty },
-//           $push: {
-//             reservations: {
-//               qty: cartItems[i].qty,
-//               _id: new ObjectID(id),
-//               createdOn: new Date()
-//             }
-//           }
-//         }
-//       );
-//       if (result.result.nModified === 0) {
-//         failed.push(cartItems[i].product);
-//         break;
-//       } else {
-//         success.push(cartItems[i].product);
-//       }
-//     }
-
-//     if (failed.length > 0) {
-//       for (let i = 0; i < success.length; i++) {
-//         dbInventory.updateOne(
-//           {
-//             _id: success[i]._id,
-//             'reservations._id': id
-//           },
-//           {
-//             $inc: { qty: success[i].qty },
-//             $pull: { reservations: { _id: id } }
-//           }
-//         );
-//       }
-//       throw 'Not enough storage.';
-//     }
-//     return 'Success.';
-//   } catch (e) {
-//     throw e;
-//   }
-// }
-
-// async function DeleteInventoryReservation(_id: string) {
-//   try {
+//     let sql = `;`;
 //     const dbInventory = await DbCollection('gifts-inventory');
 //     let updateRslt = await dbInventory.updateOne(
 //       {
@@ -107,8 +109,9 @@ import { Response } from '../interface';
 //   }
 // }
 
-export // AdjustInventory,
-// DeleteInventoryReservation,
-// GetInventory,
-// ReserveInventory
-{};
+export {
+  AdjustInventory,
+  // DeleteInventoryReservation,
+  GetInventory,
+  ReserveInventory
+};
