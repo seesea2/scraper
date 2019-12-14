@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "build": "ng build --prod",
+    "report": "ng build --prod --stats-json && webpack-bundle-analyzer ../dist/client/stats-es2015.json",
     "start": "ng serve --ssl --ssl-key ../localhost.key --ssl-cert ../localhost.crt --proxy-config proxy.conf.json"
   },
   "private": true,
@@ -57,7 +58,8 @@
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
-    "typescript": "~3.5.3"
+    "typescript": "~3.5.3",
+    "webpack-bundle-analyzer": "^3.6.0"
   },
   "license": "ISC",
   "http.proxySupport": "off"

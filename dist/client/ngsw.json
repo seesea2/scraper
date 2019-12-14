@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1574872771870,
+  "timestamp": 1576296281388,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -16,8 +16,8 @@
         "/12-es5.072f3a68f446ada204e9.js",
         "/13-es2015.e6fcbdbc37be28177a49.js",
         "/13-es5.e6fcbdbc37be28177a49.js",
-        "/14-es2015.a88765b3268f193aa507.js",
-        "/14-es5.a88765b3268f193aa507.js",
+        "/14-es2015.61ff413be109d1f4e854.js",
+        "/14-es5.61ff413be109d1f4e854.js",
         "/15-es2015.1e4b5ea47679b05ff836.js",
         "/15-es5.1e4b5ea47679b05ff836.js",
         "/16-es2015.402ace96bb6fe98d340e.js",
@@ -47,8 +47,8 @@
         "/main-es5.f5a42a4fce582fc07132.js",
         "/polyfills-es2015.70587aa54d3cd9f0a3b6.js",
         "/polyfills-es5.b9a3c3d03cdc21dd0a13.js",
-        "/runtime-es2015.e75532c255ebb98d20b4.js",
-        "/runtime-es5.e75532c255ebb98d20b4.js",
+        "/runtime-es2015.cf899e8d2487a882cb2b.js",
+        "/runtime-es5.cf899e8d2487a882cb2b.js",
         "/styles.abb857dddfdb44fadb43.css"
       ],
       "patterns": []
@@ -93,7 +93,8 @@
         "/assets/web-dev/garden_by_the_bay.jpg",
         "/assets/web-dev/marina_bay_sands.jpg",
         "/desktop.8eea67eb6a2632aea9fe.jpg",
-        "/manifest.json"
+        "/manifest.json",
+        "/stats-es2015.json"
       ],
       "patterns": []
     }
@@ -108,8 +109,8 @@
     "/12-es5.072f3a68f446ada204e9.js": "ff592f554a6305e276a11eb55d99d3a95951d10f",
     "/13-es2015.e6fcbdbc37be28177a49.js": "0e7d2eee4568959066e17020bb6ffc31fda7c02b",
     "/13-es5.e6fcbdbc37be28177a49.js": "4e6efebe0b53c2e8509f75c456f96f4b14d368ed",
-    "/14-es2015.a88765b3268f193aa507.js": "37376444a24eb348e97c0bff8ec8afafef3793f2",
-    "/14-es5.a88765b3268f193aa507.js": "f0a76fc981453853789f39137b7f5a996ffc4792",
+    "/14-es2015.61ff413be109d1f4e854.js": "e8c3c348d7038df889505184317fd128d9d27ee9",
+    "/14-es5.61ff413be109d1f4e854.js": "d693618390dac86b735039186f0bdf66cc661173",
     "/15-es2015.1e4b5ea47679b05ff836.js": "58e8af39ee27861625d3b0eeb70f0fded8f91afe",
     "/15-es5.1e4b5ea47679b05ff836.js": "cf3e1b1e12d9ef539e0d0119f2687fdf173d14c6",
     "/16-es2015.402ace96bb6fe98d340e.js": "47b56bab26816e80798775b154155cfea4fcc894",
@@ -169,14 +170,15 @@
     "/common-es2015.58fa71cf732170d7273c.js": "0b66c91c09ce05f1d05f78962a5919c4fc888759",
     "/common-es5.58fa71cf732170d7273c.js": "0468f72276af887f00e1fe921f68d42be1d1cbbc",
     "/desktop.8eea67eb6a2632aea9fe.jpg": "60c9a5e6c1de36e1ed5d63ca7584bf46c6dee978",
-    "/index.html": "c9e23fc76fce5f602b53ea77e8417fafc92efccd",
+    "/index.html": "6cab796b75473220b0f5ea5935f152c8a38a3126",
     "/main-es2015.f5a42a4fce582fc07132.js": "e4cbf22677293f613798df18e6f72b694f737f88",
     "/main-es5.f5a42a4fce582fc07132.js": "175d4f782ed043ec3332744de89b427fb6ef9f99",
     "/manifest.json": "ec5c8f9f036bf56240a5845fae1f41ca6d55ba64",
     "/polyfills-es2015.70587aa54d3cd9f0a3b6.js": "39b876b3659f25f3a29143e2a98d49c70587424b",
     "/polyfills-es5.b9a3c3d03cdc21dd0a13.js": "0c4ffe9f4e13ffff469de5d1bdd167bcc96a01a4",
-    "/runtime-es2015.e75532c255ebb98d20b4.js": "609824fe9a45f46d5b755347b9c96fd605acab48",
-    "/runtime-es5.e75532c255ebb98d20b4.js": "a7ad2ebfe741fb9224092b324a36114f1ef87ac1",
+    "/runtime-es2015.cf899e8d2487a882cb2b.js": "5bd908e84c1042971658600e36b9ca847293d02a",
+    "/runtime-es5.cf899e8d2487a882cb2b.js": "b890d63f91687218b7a10029cbb44cac4ee5615e",
+    "/stats-es2015.json": "3578774bc17a797e463ee6016b3418e6cc4ca767",
     "/styles.abb857dddfdb44fadb43.css": "ecbc521e485de5ac45d991d47b7dcb4fbba35843"
   },
   "navigationUrls": [
