@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { SharedModule } from '@shared/shared.module';
+import { SharedComponentsModule } from '@shared/shared-components.module';
 import { StaffsRoutingModule } from './staffs-routing.module';
 
 import { ProductsApiService } from '@core/services/products-api.service';
@@ -10,7 +10,7 @@ import { RouterOutletComponent } from './router-outlet/router-outlet.component';
 
 @NgModule({
   declarations: [StaffsNavbarComponent, RouterOutletComponent],
-  imports: [SharedModule, StaffsRoutingModule],
+  imports: [SharedComponentsModule, StaffsRoutingModule],
   providers: [ProductsApiService]
 })
 export class StaffsModule {}

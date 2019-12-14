@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { SharedModule } from '@shared/shared.module';
+import { SharedComponentsModule } from '@shared/shared-components.module';
 import { GiftsHomeComponent } from './gifts-home.component';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
@@ -18,7 +18,7 @@ const giftsHomeRoutes: Routes = [{ path: '', component: GiftsHomeComponent }];
     HomeCategoriesComponent,
     HomeCarouselComponent
   ],
-  imports: [SharedModule, RouterModule.forChild(giftsHomeRoutes)],
+  imports: [SharedComponentsModule, RouterModule.forChild(giftsHomeRoutes)],
   exports: [GiftsHomeComponent]
 })
 export class GiftsHomeModule {}

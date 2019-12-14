@@ -1,13 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-// import { RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { HttpClientModule } from '@angular/common/http';
 
-import {
-  FontAwesomeModule,
-  FaIconLibrary
-} from '@fortawesome/angular-fontawesome';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { NgBootstrapModule } from './ng-bootstrap.module';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,10 +15,6 @@ import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
-  declarations: [
-    // CategoriesTreeComponent,
-    // SendMessageComponent,
-  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -31,10 +24,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatListModule,
     MatFormFieldModule,
     MatInputModule,
-    NgBootstrapModule
+    NgBootstrapModule,
     // FontAwesomeModule
-    // FaIconLibrary,
-    // RouterModule
+    RouterModule
   ],
   exports: [
     CommonModule,
@@ -47,15 +39,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatListModule,
     MatProgressSpinnerModule,
     FontAwesomeModule,
-    // FaIconLibrary,
     NgBootstrapModule,
     ReactiveFormsModule
   ]
 })
-export class SharedModule {
-  // constructor(library: FaIconLibrary) {
-  //   fontawesomeIcons.forEach(icon => {
-  //     library.addIcons(icon);
-  //   });
-  // }
-}
+export class SharedModule {}

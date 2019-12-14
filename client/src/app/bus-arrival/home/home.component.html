@@ -7,10 +7,10 @@
     <mat-form-field>
       <mat-label>Bus Stop Code</mat-label>
       <input matInput #busStopCode type="text" />
-      <button mat-flat-button matSuffix color="primary" type="submit">
-        Get
-      </button>
     </mat-form-field>
+    <button mat-flat-button class="ml-3" color="primary" type="submit">
+      Get
+    </button>
   </form>
 
   <div *ngIf="busStopBookmark.length" class="pt-3 text-center">
