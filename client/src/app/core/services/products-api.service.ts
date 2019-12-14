@@ -5,7 +5,6 @@ import { Observable, Subject, of } from 'rxjs';
 import { httpOptions } from '../http-interface';
 import {
   Category,
-  CategoryWithSamples,
   InventoryItem,
   Product
 } from '../products-interface';
@@ -21,8 +20,8 @@ export class ProductsApiService {
     return this.http.get<Category[]>('/api/gifts/products/categories');
   }
 
-  getCategoriesWithSamples() {
-    return this.http.get<CategoryWithSamples[]>('/api/gifts/products/samples');
+  getSampleProducts() {
+    return this.http.get<Product[]>('/api/gifts/products/samples');
   }
 
   getProducts(category?: string) {

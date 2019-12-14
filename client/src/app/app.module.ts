@@ -16,7 +16,6 @@ import { AppComponent } from './app.component';
     SharedModule,
     BrowserAnimationsModule,
     AppRoutingModule
-    // NgZorroAntdModule.forRoot()
     // ServiceWorkerModule.register('ngsw-worker.js', {
     //   enabled: true
     // })

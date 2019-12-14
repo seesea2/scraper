@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ProductsApiService } from '../../core/services/products-api.service';
-import { CategoryWithSamples } from '../../core/products-interface';
+import { CategoryWithSamples, Product } from '../../core/products-interface';
 
 @Component({
   selector: 'home-categories',
@@ -10,6 +10,7 @@ import { CategoryWithSamples } from '../../core/products-interface';
   styleUrls: ['./home-categories.component.css']
 })
 export class HomeCategoriesComponent implements OnInit {
+  sampleProducts: Product[];
   samplesOfCategories: CategoryWithSamples[];
   loading: boolean;
 
@@ -21,9 +22,10 @@ export class HomeCategoriesComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     this.samplesOfCategories = null;
-    this.productsApi.getCategoriesWithSamples().subscribe(
+    this.productsApi.getSampleProducts().subscribe(
       samples => {
-        this.samplesOfCategories = samples;
+        console.log('sample products: ', samples)
+        this.sampleProducts = samples;
         this.loading = false;
       },
       err => {
