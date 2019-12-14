@@ -3,12 +3,7 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { BusArrivalService } from '../bus-arrival.service';
-import {
-  BusStopInfo,
-  BusTable,
-  NextBusData,
-  BusArrivalReturn
-} from '../bus-arrival-interface';
+import { BusStopInfo } from '../bus-arrival-interface';
 
 @Component({
   selector: 'bus-arrival-home',
@@ -16,14 +11,9 @@ import {
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  busTable: BusTable[];
-  busTableColumn: string[] = ['service', 'bus1', 'bus2', 'bus3', 'load'];
   busStopBookmark: BusStopInfo[];
-  busStopInfo: BusStopInfo;
-  bExistingBookmark: boolean;
   nearbyBusStops: BusStopInfo[];
   bSpinnerShowNearbyBusStops = false;
-  currentBusStopCode: string;
 
   constructor(
     private busArrivalService: BusArrivalService,
@@ -37,21 +27,11 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.busTable = [];
     this.nearbyBusStops = [];
-    this.busStopInfo = undefined;
-    this.bExistingBookmark = false;
     this.bSpinnerShowNearbyBusStops = false;
-    this.currentBusStopCode = '';
-  }
-
-  addBusStopBookmark() {
-    this.bExistingBookmark = true;
-    this.busArrivalService.addBusStopBookmark(this.busStopInfo);
   }
 
   deleteBusStopBookmark(busStop: BusStopInfo) {
-    this.bExistingBookmark = false;
     this.busArrivalService.deleteBusStopBookmark(busStop);
   }
 
