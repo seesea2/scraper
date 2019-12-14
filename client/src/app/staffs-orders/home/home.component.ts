@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Order } from '../../core/order-interface';
-import { OrdersApiService } from '../../core/services/orders-api.service';
+import { Order } from '@core/order-interface';
+import { OrdersApiService } from '@core/services/orders-api.service';
 
 @Component({
   selector: 'app-home',

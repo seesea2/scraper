@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Cart } from '../core/cart-interface';
-import { CartApiService } from '../core/services/cart-api.service';
-// import { ProductsApiService } from '../core/services/products-api.service';
-// import { Product } from '../core/products-interface';
+import { Cart } from '@core/cart-interface';
+import { CartApiService } from '@core/services/cart-api.service';
+// import { ProductsApiService } from '@core/services/products-api.service';
+// import { Product } from '@core/products-interface';
 
 @Component({
   selector: 'cart-home',

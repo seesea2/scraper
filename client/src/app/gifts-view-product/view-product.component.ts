@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Product } from '../core/products-interface';
-import { ProductsApiService } from '../core/services/products-api.service';
-import { CartApiService } from '../core/services/cart-api.service';
+import { Product } from '@core/products-interface';
+import { ProductsApiService } from '@core/services/products-api.service';
+import { CartApiService } from '@core/services/cart-api.service';
 
 @Component({
   selector: 'gifts-view-product',

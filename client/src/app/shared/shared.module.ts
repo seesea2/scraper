@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 import {
   FontAwesomeModule,
@@ -12,41 +11,49 @@ import {
 
 import { NgBootstrapModule } from './ng-bootstrap.module';
 import { fontawesomeIcons } from './ng-fontawesome-icons';
-import { MaterialModule } from './material.module';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatListModule } from '@angular/material/list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-import { CategoriesTreeComponent } from './categories-tree/categories-tree.component';
-import { SendMessageComponent } from './send-message/send-message.component';
+// import { CategoriesTreeComponent } from './categories-tree/categories-tree.component';
+// import { SendMessageComponent } from './send-message/send-message.component';
 import { TestingLinksComponent } from './testing-links/testing-links.component';
 import { GoBackButtonComponent } from './go-back-button/go-back-button.component';
 
 @NgModule({
   declarations: [
-    CategoriesTreeComponent,
-    SendMessageComponent,
+    // CategoriesTreeComponent,
+    // SendMessageComponent,
     TestingLinksComponent,
     GoBackButtonComponent
   ],
   imports: [
     CommonModule,
-    FormsModule,
+    // FormsModule,
     HttpClientModule,
-    ReactiveFormsModule,
+    // ReactiveFormsModule,
+    // MatButtonModule,
+    MatListModule,
     NgBootstrapModule,
     FontAwesomeModule,
-    MaterialModule,
     RouterModule
   ],
   exports: [
     CommonModule,
     FormsModule,
     HttpClientModule,
-    FlexLayoutModule,
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatListModule,
+    MatProgressSpinnerModule,
     FontAwesomeModule,
     NgBootstrapModule,
-    MaterialModule,
     ReactiveFormsModule,
-    CategoriesTreeComponent,
-    SendMessageComponent,
+    // CategoriesTreeComponent,
+    // SendMessageComponent,
     GoBackButtonComponent,
     TestingLinksComponent
   ]

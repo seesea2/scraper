@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { UsersService } from '../../core/services/users.service';
+import { UsersService } from '@core/services/users.service';
 
 @Component({
   selector: 'staffs-navbar',

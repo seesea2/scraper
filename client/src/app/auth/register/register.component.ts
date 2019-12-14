@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 
-import { UsersService } from '../../core/services/users.service';
+import { UsersService } from '@core/services/users.service';
 
 @Component({
   selector: 'auth-register',

@@ -7,7 +7,7 @@ import { CookieService } from 'ngx-cookie-service';
 
 import { HttpErrorInterceptor } from './http-error.interceptor';
 
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '@shared/shared.module';
 
 import { throwIfAlreadyLoaded } from './module-import-guard';
 import { FooterComponent } from './footer/footer.component';

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ProductsApiService } from '../../core/services/products-api.service';
-import { CategoryWithSamples, Product } from '../../core/products-interface';
+import { ProductsApiService } from '@core/services/products-api.service';
+import { CategoryWithSamples, Product } from '@core/products-interface';
 
 @Component({
   selector: 'home-categories',

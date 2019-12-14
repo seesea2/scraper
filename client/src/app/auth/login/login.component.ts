@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { UsersService } from '../../core/services/users.service';
+import { UsersService } from '@core/services/users.service';
 
 @Component({
   selector: 'auth-login',

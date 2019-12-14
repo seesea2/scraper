@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
 import { switchMap } from 'rxjs/operators';
 
-import { ProductsApiService } from 'src/app/core/services/products-api.service';
+import { ProductsApiService } from '@core/services/products-api.service';
 
 @Component({
   selector: 'staffs-new-product',

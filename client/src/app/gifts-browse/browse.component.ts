@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Product, Category } from '../core/products-interface';
-import { ProductsApiService } from '../core/services/products-api.service';
-import { CartApiService } from '../core/services/cart-api.service';
+import { Product, Category } from '@core/products-interface';
+import { ProductsApiService } from '@core/services/products-api.service';
+import { CartApiService } from '@core/services/cart-api.service';
 
 @Component({
   selector: 'gifts-browse',
@@ -13,7 +13,7 @@ import { CartApiService } from '../core/services/cart-api.service';
 export class BrowseComponent implements OnInit {
   categoryBreadcrumb: string[];
   products: Product[];
-  loadingProduct:boolean
+  loadingProduct: boolean;
   productCurrentQty: number[];
 
   constructor(
@@ -32,7 +32,6 @@ export class BrowseComponent implements OnInit {
     this.activatedRoute.params.subscribe(p => {
       this.refresh(p.category);
     });
-    
   }
 
   getProducts(category: string) {

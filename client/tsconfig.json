@@ -17,6 +17,10 @@
       {
         "name": "@angular/language-service"
       }
-    ]
+    ],
+    "paths": {
+      "@core/*": ["src/app/core/*"],
+      "@shared/*": ["src/app/shared/*"]
+    }
   }
 }

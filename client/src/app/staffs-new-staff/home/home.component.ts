@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { StaffsAdminService } from 'src/app/core/services/staffs-admin.service';
+import { StaffsAdminService } from '@core/services/staffs-admin.service';
 
 @Component({
   selector: 'new-staff-home',

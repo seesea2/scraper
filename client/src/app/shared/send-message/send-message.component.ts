@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { UsersService } from '../../core/services/users.service';
+import { UsersService } from '@core/services/users.service';
 
 @Component({
   selector: 'send-message',

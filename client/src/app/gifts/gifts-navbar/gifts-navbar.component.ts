@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { UsersService } from '../../core/services/users.service';
-import { CartApiService } from '../../core/services/cart-api.service';
+import { UsersService } from '@core/services/users.service';
+import { CartApiService } from '@core/services/cart-api.service';
 
 @Component({
   selector: 'gifts-navbar',

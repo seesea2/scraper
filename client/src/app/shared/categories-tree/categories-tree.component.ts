@@ -11,8 +11,8 @@ import {
   Category,
   CategoryNode,
   CategoryFlatNode
-} from '../../core/products-interface';
-import { ProductsApiService } from '../../core/services/products-api.service';
+} from '@core/products-interface';
+import { ProductsApiService } from '@core/services/products-api.service';
 
 @Component({
   selector: 'categories-tree',

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ProductsApiService } from '../core/services/products-api.service';
-import { InventoryItem, Product } from '../core/products-interface';
+import { ProductsApiService } from '@core/services/products-api.service';
+import { InventoryItem, Product } from '@core/products-interface';
 
 @Component({
   selector: 'staffs-inventory',

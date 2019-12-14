@@ -2,9 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { Cart } from '../../core/cart-interface';
-import { CartApiService } from '../../core/services/cart-api.service';
-import { UsersService } from '../../core/services/users.service';
+import { Cart } from '@core/cart-interface';
+import { CartApiService } from '@core/services/cart-api.service';
+import { UsersService } from '@core/services/users.service';
 
 @Component({
   selector: 'cart-checkout',
