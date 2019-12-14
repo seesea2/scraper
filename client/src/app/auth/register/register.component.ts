@@ -39,7 +39,6 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('Register onSubmit()');
     this.submitted = true;
 
     // stop here if form is invalid
@@ -59,9 +58,5 @@ export class RegisterComponent implements OnInit {
         this.errMsg = err.result;
       }
     );
-  }
-
-  cancel() {
-    this.location.back();
   }
 }

@@ -1,5 +1,6 @@
 import { Response } from '../interface';
 import { SqliteAll, SqliteRun } from '../db-ops/sqlite-ops';
+import { createTestAccount } from 'nodemailer';
 
 let globalCategories: any = [];
 let globalSamplesOfCategories: any = [];
@@ -132,3 +133,71 @@ export {
   GetSamplesOfCategories,
   UpdateCategory
 };
+
+interface ArrangedCategory {
+  category_id: number;
+  children: ArrangedCategory[];
+}
+
+async function arrangeCategories() {
+  try {
+    const sql = `select * from giftsProductsCategories;`;
+    globalCategories = await SqliteAll(sql);
+    console.log(globalCategories);
+
+    let arrangedCategories: ArrangedCategory[] = [];
+    for (let i = 0; i < globalCategories.length; i++) {
+      if (!globalCategories[i].parent_id) {
+        arrangedCategories.push({
+          category_id: globalCategories[i].category_id,
+          children: []
+        });
+        globalCategories[i].added = true;
+      }
+    }
+
+    let processed = false;
+    do {
+      processed = false;
+      for (let i = 0; i < globalCategories.length; i++) {
+        if (globalCategories[i].added) {
+          continue;
+        }
+        for (let ind = 0; ind < arrangedCategories.length; ind++) {
+          processed =
+            processed ||
+            testChildParent(globalCategories[i], arrangedCategories[ind]);
+        }
+      }
+      console.log(processed);
+    } while (processed);
+
+    console.log('arranged categories: ', arrangedCategories);
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+function testChildParent(child: any, parent: ArrangedCategory): boolean {
+  if (child.parent_id === parent.category_id) {
+    parent.children.push({
+      category_id: child.category_id,
+      children: []
+    });
+    child.added = true;
+    return true;
+  }
+  let rslt = false;
+  for (let i = 0; i < parent.children.length; i++) {
+    rslt = testChildParent(child, parent.children[i]);
+    if (rslt) {
+      parent.children[i].children.push({
+        category_id: child.category_id,
+        children: []
+      });
+      child.added = true;
+      return true;
+    }
+  }
+  return false;
+}

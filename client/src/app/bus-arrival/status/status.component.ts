@@ -32,7 +32,6 @@ export class StatusComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-    this.busStopCode = '';
     this.busTable = [];
     this.bExistingBookmark = false;
     this.busStopCode = this.route.snapshot.paramMap.get('BusStopCode');

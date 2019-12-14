@@ -60,6 +60,6 @@ const httpsOptions = {
   key: readFileSync(join(__dirname, '/../localhost.key')),
   cert: readFileSync(join(__dirname, '/../localhost.crt'))
 };
-createServer(httpsOptions, app).listen(443, () => {
-  console.log('Listening HTTPS on port 443.');
+createServer(httpsOptions, app).listen(8443, () => {
+  console.log('Listening HTTPS on port 8443.');
 });
