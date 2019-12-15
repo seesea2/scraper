@@ -1,12 +1,12 @@
 import { Response } from '../interface';
 import { SqliteAll, SqliteRun } from '../db-ops/sqlite-ops';
-import { createTestAccount } from 'nodemailer';
 
 let globalCategories: any = [];
 let globalSamplesOfCategories: any = [];
+let globalCategoryJson:any[] = [];
 
 async function GetCategories(res: Response) {
-  if (globalCategories.length > 0) {
+  if (globalCategories.length) {
     return res.status(200).send(globalCategories);
   }
   try {
@@ -134,21 +134,20 @@ export {
   UpdateCategory
 };
 
-interface ArrangedCategory {
+interface CategoryJson {
   category_id: number;
-  children: ArrangedCategory[];
+  children: CategoryJson[];
 }
 
 async function arrangeCategories() {
   try {
     const sql = `select * from giftsProductsCategories;`;
     globalCategories = await SqliteAll(sql);
-    console.log(globalCategories);
 
-    let arrangedCategories: ArrangedCategory[] = [];
+    globalCategoryJson = [];
     for (let i = 0; i < globalCategories.length; i++) {
       if (!globalCategories[i].parent_id) {
-        arrangedCategories.push({
+        globalCategoryJson.push({
           category_id: globalCategories[i].category_id,
           children: []
         });
@@ -159,26 +158,24 @@ async function arrangeCategories() {
     let processed = false;
     do {
       processed = false;
-      for (let i = 0; i < globalCategories.length; i++) {
-        if (globalCategories[i].added) {
-          continue;
+      globalCategories.forEach((element: any) => {
+        if (element.added) {
+          return;
         }
-        for (let ind = 0; ind < arrangedCategories.length; ind++) {
-          processed =
-            processed ||
-            testChildParent(globalCategories[i], arrangedCategories[ind]);
-        }
-      }
+        globalCategoryJson.forEach(arrangedCategory => {
+          processed = processed || testChildParent(element, arrangedCategory);
+        });
+      });
       console.log(processed);
     } while (processed);
 
-    console.log('arranged categories: ', arrangedCategories);
+    console.log('arranged categories: ', globalCategoryJson);
   } catch (e) {
     console.log(e);
   }
 }
 
-function testChildParent(child: any, parent: ArrangedCategory): boolean {
+function testChildParent(child: any, parent: CategoryJson): boolean {
   if (child.parent_id === parent.category_id) {
     parent.children.push({
       category_id: child.category_id,
@@ -187,6 +184,7 @@ function testChildParent(child: any, parent: ArrangedCategory): boolean {
     child.added = true;
     return true;
   }
+
   let rslt = false;
   for (let i = 0; i < parent.children.length; i++) {
     rslt = testChildParent(child, parent.children[i]);
@@ -201,3 +199,5 @@ function testChildParent(child: any, parent: ArrangedCategory): boolean {
   }
   return false;
 }
+
+arrangeCategories()
