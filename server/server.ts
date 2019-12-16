@@ -56,10 +56,10 @@ app.listen(8080, () => {
   console.log('Listening HTTP on port 8080.');
 });
 
-const httpsOptions = {
-  key: readFileSync(join(__dirname, '/../localhost.key')),
-  cert: readFileSync(join(__dirname, '/../localhost.crt'))
-};
-createServer(httpsOptions, app).listen(8443, () => {
-  console.log('Listening HTTPS on port 8443.');
-});
+// const httpsOptions = {
+//   key: readFileSync(join(__dirname, '/../localhost.key')),
+//   cert: readFileSync(join(__dirname, '/../localhost.crt'))
+// };
+// createServer(httpsOptions, app).listen(8443, () => {
+//   console.log('Listening HTTPS on port 8443.');
+// });
