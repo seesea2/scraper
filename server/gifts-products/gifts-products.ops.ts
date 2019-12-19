@@ -46,7 +46,7 @@ async function AddProduct(body: any, res: Response) {
   try {
     let fields = 'name';
     let values = '"' + body.name + '"';
-    console.log(typeof body.price);
+    // console.log(typeof body.price);
     if ((body.price || 0) <= 0) {
       body.price = 0;
     }
@@ -101,7 +101,7 @@ async function AddProduct(body: any, res: Response) {
     }
     return res.status(500).send({ result: 'failed' });
   } catch (e) {
-    console.log(e);
+    // console.log(e);
     return res.status(500).send(e);
   }
 }

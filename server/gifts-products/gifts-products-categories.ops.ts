@@ -166,10 +166,10 @@ async function arrangeCategories() {
           processed = processed || testChildParent(element, arrangedCategory);
         });
       });
-      console.log(processed);
+      // console.log(processed);
     } while (processed);
 
-    console.log('arranged categories: ', globalCategoryJson);
+    // console.log('arranged categories: ', globalCategoryJson);
   } catch (e) {
     console.log(e);
   }

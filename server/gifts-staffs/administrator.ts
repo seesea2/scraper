@@ -39,7 +39,7 @@ async function newStaff(req: Request, res: Response) {
     }
     res.status(200).send({ result: 'failed' + result });
   } catch (e) {
-    console.log(e);
+    // console.log(e);
     res.status(500).send(e);
   }
 }
@@ -64,7 +64,7 @@ async function disableStaff(req: Request, res: Response) {
     }
     res.status(200).send({ result: 'failed' });
   } catch (e) {
-    console.log(e);
+    // console.log(e);
     res.status(500).send(e);
   }
 }
@@ -89,7 +89,7 @@ async function deleteStaff(req: Request, res: Response) {
     }
     res.status(200).send({ result: 'failed' });
   } catch (e) {
-    console.log(e);
+    // console.log(e);
     res.status(500).send(e);
   }
 }

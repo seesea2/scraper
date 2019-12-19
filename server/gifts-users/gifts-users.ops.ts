@@ -39,7 +39,7 @@ async function Login(req: Request, res: Response) {
     }
     return res.status(403).send('Incorrect username or password');
   } catch (e) {
-    console.log(e);
+    // console.log(e);
     return res.status(500).send('server error.');
   }
 }
