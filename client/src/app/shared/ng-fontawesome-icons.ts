@@ -1,4 +1,3 @@
-
 import {
   faLeaf,
   faSignInAlt,
@@ -28,13 +27,13 @@ import {
   faMobileAlt,
   faDesktop
 } from '@fortawesome/free-solid-svg-icons';
-import {
-  faWhatsapp,
-  faFacebook,
-  faTwitter,
-  faLinkedin,
-  faWeixin
-} from '@fortawesome/free-brands-svg-icons';
+// import {
+//   faWhatsapp,
+//   faFacebook,
+//   faTwitter,
+//   faLinkedin,
+//   faWeixin
+// } from '@fortawesome/free-brands-svg-icons';
 
 export const fontawesomeIcons = [
   faAlignJustify,
@@ -63,10 +62,10 @@ export const fontawesomeIcons = [
   faSignOutAlt,
   faTrash,
   faUser,
-  faInfo,
-  faFacebook,
-  faTwitter,
-  faWhatsapp,
-  faLinkedin,
-  faWeixin
+  faInfo
+  // faFacebook,
+  // faTwitter,
+  // faWhatsapp,
+  // faLinkedin,
+  // faWeixin
 ];
