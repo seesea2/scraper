@@ -25,7 +25,7 @@ giftsOrdersRouter.get('/staffOrders', (req: Request, res: Response) => {
 });
 
 // new order from customer.
-giftsOrdersRouter.post('/order', (req: Request, res: Response) => {
+giftsOrdersRouter.post('', (req: Request, res: Response) => {
   NewOrder(req, res);
 });
 

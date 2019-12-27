@@ -8,9 +8,8 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
-      "runtimeExecutable": "node",
+      "runtimeExecutable": "nodemon",
       "program": "${workspaceFolder}/server/server.ts",
-      "preLaunchTask": "npm: start",
       "outFiles": ["${workspaceFolder}/debug/*.js"],
       "restart": true
     }
