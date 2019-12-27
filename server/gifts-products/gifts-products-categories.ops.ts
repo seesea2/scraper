@@ -3,7 +3,7 @@ import { SqliteAll, SqliteRun } from '../db-ops/sqlite-ops';
 
 let globalCategories: any = [];
 let globalSamplesOfCategories: any = [];
-let globalCategoryJson:any[] = [];
+let globalCategoryJson: any[] = [];
 
 async function GetCategories(res: Response) {
   if (globalCategories.length) {
@@ -37,7 +37,7 @@ async function GetSamplesOfCategories(res: Response) {
 
 async function AddCategory(body: any, res: Response) {
   if (!body.name) {
-    return res.status(400).send('Invalid name.');
+    return res.status(400).send({ message: 'Invalid name.' });
   }
 
   try {
@@ -54,9 +54,9 @@ async function AddCategory(body: any, res: Response) {
     if (result) {
       globalCategories = [];
       globalSamplesOfCategories = [];
-      return res.status(200).send({ result: 'ok' });
+      return res.status(200).send({ message: 'ok' });
     }
-    return res.status(200).send({ result: 'failed' });
+    return res.status(200).send({ message: 'failed' });
   } catch (e) {
     return res.status(500).send(e);
   }
@@ -64,23 +64,23 @@ async function AddCategory(body: any, res: Response) {
 
 async function DeleteCategory(query: any, res: Response) {
   if (!query.category_id) {
-    return res.status(400).send('Invalid input.');
+    return res.status(400).send({ message: 'Invalid input.' });
   }
 
   try {
     let sql = `select count(*) from giftsProducts where category_id='${query.category_id}';`;
     let num = await SqliteAll(sql);
     if (num && num[0] > 0) {
-      return res.status(403).send({ result: 'The category is not empty.' });
+      return res.status(403).send({ message: 'The category is not empty.' });
     }
     sql = `delete from giftsProductsCategories where category_id='${query.category_id}';`;
     let result = await SqliteRun(sql);
     if (result) {
       globalCategories = [];
       globalSamplesOfCategories = [];
-      return res.status(200).send({ result: 'ok' });
+      return res.status(200).send({ message: 'ok' });
     }
-    return res.status(500).send({ result: 'failed' });
+    return res.status(500).send({ message: 'failed' });
   } catch (e) {
     return res.status(500).send(e);
   }
@@ -88,10 +88,10 @@ async function DeleteCategory(query: any, res: Response) {
 
 async function UpdateCategory(body: any, res: Response) {
   if (!body.category_id) {
-    return res.status(400).send('Invalid category_id.');
+    return res.status(400).send({ message: 'Invalid category_id.' });
   }
   if (!body.name) {
-    return res.status(400).send('Invalid category name.');
+    return res.status(400).send({ message: 'Invalid category name.' });
   }
 
   let update = `set name='${body.name}'`;
@@ -110,7 +110,7 @@ async function UpdateCategory(body: any, res: Response) {
     if (num && num[0].cnt > 0) {
       return res
         .status(400)
-        .send({ result: 'The category name already exists.' });
+        .send({ message: 'The category name already exists.' });
     }
 
     sql = `update giftsProductsCategories ${update} where category_id=${body.category_id}`;
@@ -118,9 +118,9 @@ async function UpdateCategory(body: any, res: Response) {
     if (result) {
       globalCategories = [];
       globalSamplesOfCategories = [];
-      return res.status(200).send({ result: 'ok' });
+      return res.status(200).send({ message: 'ok' });
     }
-    return res.status(500).send({ result: 'failed' });
+    return res.status(500).send({ message: 'failed' });
   } catch (e) {
     return res.status(500).send(e);
   }
@@ -200,4 +200,4 @@ function testChildParent(child: any, parent: CategoryJson): boolean {
   return false;
 }
 
-arrangeCategories()
+arrangeCategories();

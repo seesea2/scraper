@@ -1,21 +1,36 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 
+import { MatDividerModule } from '@angular/material/divider';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 import { HttpErrorInterceptor } from './http-error.interceptor';
-import { SharedModule } from '@shared/shared.module';
-
 import { throwIfAlreadyLoaded } from './module-import-guard';
-import { FooterComponent } from './footer/footer.component';
 
-import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { faAnchor, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [FooterComponent],
-  imports: [CommonModule, HttpClientModule, SharedModule],
-  exports: [CommonModule, FooterComponent, HttpClientModule],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    RouterModule,
+    MatDividerModule,
+    NgbModule,
+    FontAwesomeModule
+  ],
+  exports: [
+    CommonModule,
+    FooterComponent,
+    HttpClientModule,
+    RouterModule,
+    NgbModule,
+    FontAwesomeModule
+  ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
@@ -26,11 +41,7 @@ import { faAnchor, faHeart } from '@fortawesome/free-solid-svg-icons';
   ]
 })
 export class CoreModule {
-  constructor(
-    @Optional() @SkipSelf() parentModule: CoreModule,
-    library: FaIconLibrary
-  ) {
+  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
     throwIfAlreadyLoaded(parentModule, 'CoreModule');
-    library.addIcons(faAnchor, faHeart);
   }
 }

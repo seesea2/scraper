@@ -19,7 +19,7 @@ async function Login(req: Request, res: Response) {
     if (!id || !pwd) {
       return res
         .status(400)
-        .send({ result: 'username and password required.' });
+        .send({ message: 'username and password required.' });
     }
 
     sql = `select * from giftsStaffs 
@@ -37,10 +37,10 @@ async function Login(req: Request, res: Response) {
     if (req.session.user) {
       return res.status(200).send({ uid: req.session.user.uid });
     }
-    return res.status(403).send('Incorrect username or password');
+    return res.status(403).send({ message: 'Incorrect username or password' });
   } catch (e) {
     // console.log(e);
-    return res.status(500).send('server error.');
+    return res.status(500).send({ message: 'server error.' });
   }
 }
 

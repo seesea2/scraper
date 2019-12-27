@@ -6,6 +6,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -45,6 +46,7 @@ import { MatTreeModule } from '@angular/material/tree';
     MatAutocompleteModule,
     MatBadgeModule,
     MatBottomSheetModule,
+    MatButtonModule,
     MatButtonToggleModule,
     MatCardModule,
     MatCheckboxModule,

@@ -36,7 +36,7 @@ function SendEmail(body: any, res: Response) {
   // mailOptions.subject = 'User Inquiry';
   // mailOptions.html = emailHtml;
   transporter.sendMail(mailOptions);
-  return res.status(200).send({ result: 'ok' });
+  return res.status(200).send({ message: 'ok' });
 }
 
 export default SendEmail;

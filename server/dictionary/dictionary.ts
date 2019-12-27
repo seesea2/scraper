@@ -19,7 +19,7 @@ const config = {
 
 async function CheckOxfordEntries(word: string, res: Response) {
   if (!word || !word.trim()) {
-    return res.status(400).send('Invalid word.');
+    return res.status(400).send({ message: 'Invalid word.' });
   }
   word = word.trim().toLowerCase();
 
@@ -68,7 +68,7 @@ async function CheckOxfordEntries(word: string, res: Response) {
     }
     return res.status(200).send(return_result);
   } catch (e) {
-    return res.status(400).send(e.message);
+    return res.status(400).send(e);
   }
 }
 

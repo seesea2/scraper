@@ -14,7 +14,7 @@ statsRouter.get('/salesman', (req: Request, res: Response) => {
     !req.body.fromDate ||
     !req.body.toDate
   ) {
-    return res.status(400).send('Failed. Invalid input.');
+    return res.status(400).send({ message: 'Failed. Invalid input.' });
   }
 
   const params = {
@@ -22,7 +22,7 @@ statsRouter.get('/salesman', (req: Request, res: Response) => {
     toDate: req.body.toDate,
     topNo: req.body.topNo
   };
-  return res.status(200).send({ result: 'ok' });
+  return res.status(200).send({ message: 'ok' });
 });
 
 statsRouter.get('/turnover', (req: Request, res: Response) => {
@@ -30,7 +30,7 @@ statsRouter.get('/turnover', (req: Request, res: Response) => {
     return res.sendStatus(401);
   }
   if (!req.body.turnoverType || !req.body.fromDate || !req.body.toDate) {
-    return res.status(400).send('Failed. Invalid input.');
+    return res.status(400).send({ message: 'Failed. Invalid input.' });
   }
 
   const params = {
@@ -38,7 +38,7 @@ statsRouter.get('/turnover', (req: Request, res: Response) => {
     $fromDate: req.body.fromDate,
     $toDate: req.body.toDate
   };
-  return res.status(200).send({ result: 'ok' });
+  return res.status(200).send({ message: 'ok' });
 });
 
 statsRouter.get('/bestseller', (req: Request, res: Response) => {
@@ -51,7 +51,7 @@ statsRouter.get('/bestseller', (req: Request, res: Response) => {
     !req.body.fromDate ||
     !req.body.toDate
   ) {
-    return res.status(400).send('Failed. Invalid input.');
+    return res.status(400).send({ message: 'Failed. Invalid input.' });
   }
 
   const params = {
@@ -59,7 +59,7 @@ statsRouter.get('/bestseller', (req: Request, res: Response) => {
     $toDate: req.body.toDate,
     $topNo: req.body.topNo
   };
-  return res.status(200).send({ result: 'ok' });
+  return res.status(200).send({ message: 'ok' });
 });
 
 statsRouter.get('/buyer', (req: Request, res: Response) => {
@@ -72,7 +72,7 @@ statsRouter.get('/buyer', (req: Request, res: Response) => {
     !req.body.fromDate ||
     !req.body.toDate
   ) {
-    return res.status(400).send('Failed. Invalid input.');
+    return res.status(400).send({ message: 'Failed. Invalid input.' });
   }
 
   const param = {
@@ -80,7 +80,7 @@ statsRouter.get('/buyer', (req: Request, res: Response) => {
     $toDate: req.body.toDate,
     $topNo: req.body.topNo
   };
-  return res.status(200).send({ result: 'ok' });
+  return res.status(200).send({ message: 'ok' });
 });
 
 export default statsRouter;

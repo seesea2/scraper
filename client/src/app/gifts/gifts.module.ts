@@ -9,7 +9,11 @@ import { RouterOutletComponent } from './router-outlet/router-outlet.component';
 
 @NgModule({
   declarations: [GiftsNavbarComponent, RouterOutletComponent],
-  imports: [SharedComponentsModule, GiftsRoutingModule, AuthModule],
+  imports: [
+    SharedComponentsModule,
+    GiftsRoutingModule,
+    AuthModule
+  ],
   exports: []
 })
 export class GiftsModule {}

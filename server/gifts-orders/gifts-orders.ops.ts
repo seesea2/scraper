@@ -45,15 +45,17 @@ async function NewOrder(req: Request, res: Response) {
     //   cartItems: cartItems
     // });
     if (!rslt) {
-      return res.status(500).send('Error, please retry later.');
+      return res.status(500).send({ message: 'Error, please retry later.' });
     }
 
     let reserveRslt = await ReserveInventory(order_id, req.body.products);
     if (!reserveRslt) {
-      return res.status(500).send('Error, failed to reserve inventory.');
+      return res
+        .status(500)
+        .send({ message: 'Error, failed to reserve inventory.' });
     }
 
-    return res.status(200).send('Order successfully.');
+    return res.status(200).send({ message: 'Order successfully.' });
   } catch (e) {
     return res.status(500).send(e);
   }

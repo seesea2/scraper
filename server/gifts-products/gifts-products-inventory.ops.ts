@@ -9,14 +9,14 @@ async function GetInventory(res: Response) {
     const inventory = await SqliteAll(sql);
     return res.status(200).send(inventory);
   } catch (e) {
-    return res.status(500).send(e.message);
+    return res.status(500).send(e);
   }
 }
 
 // qty by product now; Todo: qty by each colour, size etc.
 async function AdjustInventory(body: any, res: Response) {
   if (!body.product_id || !body.qty) {
-    return res.status(400).send('Invalid input.');
+    return res.status(400).send({ message: 'Invalid input.' });
   }
   try {
     let time = Date.now();
@@ -25,9 +25,9 @@ async function AdjustInventory(body: any, res: Response) {
                 on CONFLICT(product_id) do update set qty=${body.qty}, modifiedOn=${time};`;
     const rslt = await SqliteRun(sql);
     if (rslt) {
-      return res.status(200).send('OK');
+      return res.status(200).send({ message: 'OK' });
     }
-    return res.status(500).send('Failed');
+    return res.status(500).send({ message: 'Failed' });
   } catch (e) {
     return res.status(500).send(e);
   }

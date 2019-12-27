@@ -53,18 +53,18 @@ function checkBusStopLocally(busStopCode: string) {
 
 function getBusStopInfo(busStopCode: string, res: Response) {
   if (!busStopCode) {
-    return res.status(400).send('Invalid Bus Stop Code.');
+    return res.status(400).send({ message: 'Invalid Bus Stop Code.' });
   }
   let busStopInfo = checkBusStopLocally(busStopCode);
   if (busStopInfo) {
     return res.status(200).send(busStopInfo);
   }
-  return res.status(400).send('Bus Stop Info not found.');
+  return res.status(400).send({ message: 'Bus Stop info not found.' });
 }
 
 function getNearbyBusStops(latitude: number, longitude: number, res: Response) {
   if (latitude === undefined || longitude === undefined) {
-    return res.status(400).send('Invalid coordinates.');
+    return res.status(400).send({ message: 'Invalid coordinates.' });
   }
 
   let nearbyStops = [];
@@ -82,9 +82,18 @@ function getNearbyBusStops(latitude: number, longitude: number, res: Response) {
     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     let dist = R * c;
     if (Math.abs(dist) < 280) {
-      nearbyStops.push(busStops[i]);
+      nearbyStops.push({ dist: dist, busStops: busStops[i] });
     }
   }
+  nearbyStops.sort((a, b) => {
+    if (a.dist > b.dist) {
+      return 1;
+    } else if (a.dist < b.dist) {
+      return -1;
+    } else {
+      return 0;
+    }
+  });
   res.status(200).send(nearbyStops);
 }
 

@@ -84,7 +84,7 @@ export class BusArrivalService {
   }
 
   getNearbyBusStops(coordinate: Coordinates) {
-    return this.httpClient.get<BusStopInfo[]>(
+    return this.httpClient.get<{ dist: number; BusStopInfo: BusStopInfo }[]>(
       '/api/lta/bus/nearbyBusStops?' +
         `latitude=${coordinate.latitude}` +
         `&longitude=${coordinate.longitude}`

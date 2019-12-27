@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { faPlay } from '@fortawesome/free-solid-svg-icons';
 
 import { DictionaryService } from '../dictionary.service';
 import CheckEntriesResult from '../oxford-interface';
@@ -9,16 +10,17 @@ import CheckEntriesResult from '../oxford-interface';
   styleUrls: ['./oxford.component.css']
 })
 export class OxfordComponent implements OnInit {
+  faPlay = faPlay;
   checkEntriesResult: CheckEntriesResult;
   errMsg: string;
-  bChecking: boolean;
+  inquiring: boolean;
 
   constructor(private dictionaryService: DictionaryService) {}
 
   ngOnInit() {
     this.checkEntriesResult = { lexicalEntries: [] };
     this.errMsg = '';
-    this.bChecking = false;
+    this.inquiring = false;
   }
 
   getOxfordDefinition(word: string) {
@@ -27,18 +29,18 @@ export class OxfordComponent implements OnInit {
     if (!(word || '').trim()) {
       return (this.errMsg = 'Please input a word.');
     }
-    this.bChecking = true;
+    this.inquiring = true;
     this.dictionaryService
       .getOxfordDefinition(word.trim().toLowerCase())
       .subscribe(
         definition => {
           this.checkEntriesResult = definition;
-          this.bChecking = false;
+          this.inquiring = false;
         },
         err => {
           this.checkEntriesResult = { lexicalEntries: [] };
           this.errMsg = err.result;
-          this.bChecking = false;
+          this.inquiring = false;
         }
       );
   }

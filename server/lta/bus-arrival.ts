@@ -7,12 +7,12 @@ import { checkBusStopLocally } from './bus-stops';
 function getBusArrival(busStopCode: string, res: Response) {
   busStopCode = busStopCode.trim();
   if (!busStopCode) {
-    return res.status(400).send('Invalid BusStopCode.');
+    return res.status(400).send({ message: 'Invalid BusStopCode.' });
   }
 
   let busStopInfo = checkBusStopLocally(busStopCode);
   if (!busStopInfo) {
-    return res.status(400).send('Bus Stop not found.');
+    return res.status(400).send({ message: 'Bus Stop not found.' });
   }
 
   let url = `${busArrivalUrl}?BusStopCode=${busStopCode}`;

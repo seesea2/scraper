@@ -3,7 +3,7 @@ import { Response } from '../interface';
 
 async function GetProduct(params: any, res: Response) {
   if (!params.product_id) {
-    return res.status(400).send('Invalid product ID.');
+    return res.status(400).send({ message: 'Invalid product ID.' });
   }
 
   try {
@@ -27,7 +27,7 @@ async function GetProducts(params: any, res: Response) {
 
 async function GetProductsByCategory(query: any, res: Response) {
   if (!query.category_id) {
-    return res.status(400).send({ result: 'Invalid category.' });
+    return res.status(400).send({ message: 'Invalid category.' });
   }
   try {
     let sql = `select * from giftsProducts where category_id='${query.category_id}' limit 50`;
@@ -40,7 +40,7 @@ async function GetProductsByCategory(query: any, res: Response) {
 
 async function AddProduct(body: any, res: Response) {
   if (!body.name) {
-    return res.status(400).send('Invalid name.');
+    return res.status(400).send({ message: 'Invalid name.' });
   }
 
   try {
@@ -97,9 +97,9 @@ async function AddProduct(body: any, res: Response) {
     const sql = `insert into giftsProducts (${fields}) values (${values});`;
     let result = await SqliteRun(sql);
     if (result) {
-      return res.status(200).send({ result: 'ok' });
+      return res.status(200).send({ message: 'ok' });
     }
-    return res.status(500).send({ result: 'failed' });
+    return res.status(500).send({ message: 'failed' });
   } catch (e) {
     // console.log(e);
     return res.status(500).send(e);
@@ -108,7 +108,7 @@ async function AddProduct(body: any, res: Response) {
 
 async function UpdateProduct(body: any, res: Response) {
   if (!body.product_id) {
-    return res.status(400).send('Invalid product_id.');
+    return res.status(400).send({ message: 'Invalid product_id.' });
   }
 
   try {
@@ -144,9 +144,9 @@ async function UpdateProduct(body: any, res: Response) {
     const sql = `update giftsProducts set ${changes} where product_id=${body.product_id}`;
     let result = await SqliteRun(sql);
     if (result) {
-      return res.status(200).send({ result: 'ok' });
+      return res.status(200).send({ message: 'ok' });
     }
-    return res.status(500).send({ result: 'failed' });
+    return res.status(500).send({ message: 'failed' });
   } catch (e) {
     return res.status(500).send(e);
   }
@@ -154,16 +154,16 @@ async function UpdateProduct(body: any, res: Response) {
 
 async function DeleteProduct(query: any, res: Response) {
   if (!query.product_id) {
-    return res.status(400).send('Invalid product id.');
+    return res.status(400).send({ message: 'Invalid product id.' });
   }
 
   try {
     const sql = `update giftsProducts set inactive=1 where product_id=${query.product_id};`;
     const result = await SqliteRun(sql);
     if (result) {
-      return res.status(200).send({ result: 'ok' });
+      return res.status(200).send({ message: 'ok' });
     }
-    return res.status(500).send({ result: 'failed' });
+    return res.status(500).send({ message: 'failed' });
   } catch (e) {
     return res.status(500).send(e);
   }

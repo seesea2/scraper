@@ -49,7 +49,9 @@ export class HomeComponent implements OnInit {
   getNearbyBusStops(coordinates: Coordinates) {
     this.busArrivalService.getNearbyBusStops(coordinates).subscribe(
       data => {
-        this.nearbyBusStops = data;
+        for (let i = 0; i < data.length; ++i) {
+          this.nearbyBusStops.push(data[i].BusStopInfo);
+        }
         this.bSpinnerShowNearbyBusStops = false;
       },
       err => {
