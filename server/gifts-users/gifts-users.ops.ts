@@ -51,12 +51,12 @@ function Logout(req: Request, res: Response) {
   if (req.session && req.session.user) {
     req.session.user = null;
   }
-  return res.status(200).send({ result: 'ok' });
+  return res.status(200).send({ message: 'ok' });
 }
 
 async function Register(body: any, res: Response) {
   if (!body.email || !body.pwd) {
-    return res.status(400).send('Invalid input.');
+    return res.status(400).send({ message: 'Invalid input.' });
   }
   try {
     let fields = 'email,pwd,createdOn';
@@ -65,17 +65,17 @@ async function Register(body: any, res: Response) {
       `insert into giftsUsers (${fields}) values (${values})`
     );
     if (rslt) {
-      return res.status(200).send({ result: 'ok' });
+      return res.status(200).send({ message: 'ok' });
     }
-    return res.status(500).send('Register failed. Please try again later.');
+    return res.status(500).send({ message: 'Register failed. Please try again later.' });
   } catch (e) {
-    return res.status(500).send('Register failed. Please try again later.');
+    return res.status(500).send({ message: 'Register failed. Please try again later.' });
   }
 }
 
 async function DisableAccount(session: any, res: Response) {
   if (!session || !session.user) {
-    return res.status(403).send('Login is required.');
+    return res.status(403).send({ message: 'Login is required.' });
   }
   try {
     let rslt = SqliteRun(
@@ -83,9 +83,9 @@ async function DisableAccount(session: any, res: Response) {
     );
     if (rslt) {
       session.user = null;
-      return res.status(200).send({ result: 'Account disabled.' });
+      return res.status(200).send({ message: 'Account disabled.' });
     }
-    return res.status(500).send({ text: 'Error. Please try again later.' });
+    return res.status(500).send({ message: 'Error. Please try again later.' });
   } catch (e) {
     return res.status(400).send(e);
   }
@@ -93,7 +93,7 @@ async function DisableAccount(session: any, res: Response) {
 
 function UserInfo(session: any, res: Response) {
   if (!bLogin(session)) {
-    return res.status(403).send({ text: 'User not login.' });
+    return res.status(403).send({ message: 'User not login.' });
   }
   return res.status(200).send({
     uid: session.staff ? session.staff.uid : session.user.uid,

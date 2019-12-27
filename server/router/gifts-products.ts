@@ -33,7 +33,7 @@ giftsProductsRouter.get('/categories', (req: Request, res: Response) => {
 giftsProductsRouter.post('/category', (req: Request, res: Response) => {
   // liych
   // if (!bStaff(req.session)) {
-  //   return res.status(403).send({ result: 'forbiddent' });
+  //   return res.status(403).send({ message: 'forbiddent' });
   // }
   AddCategory(req.body, res);
 });
