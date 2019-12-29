@@ -7,11 +7,15 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Program",
+      "name": "nodemon",
       "runtimeExecutable": "nodemon",
-      "program": "${workspaceFolder}/server/server.ts",
-      "outFiles": ["${workspaceFolder}/debug/*.js"],
-      "restart": true
+      "program": "${workspaceFolder}/debug/server.js",
+      "restart": true,
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
     }
   ]
 }
