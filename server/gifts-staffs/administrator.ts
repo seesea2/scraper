@@ -11,13 +11,13 @@ async function newStaff(req: Request, res: Response) {
   // }
 
   try {
-    if (!req.body.uid) {
-      return res.status(400).send({ message: 'uid is empty.' });
+    if (!req.body.id) {
+      return res.status(400).send({ message: 'ID is empty.' });
     }
-    let fields = 'uid';
-    let values = '"' + req.body.uid + '"';
+    let fields = 'uname';
+    let values = '"' + req.body.id + '"';
     if (!req.body.pwd) {
-      return res.status(400).send({ message: 'pwd is empty.' });
+      return res.status(400).send({ message: 'PWD is empty.' });
     }
     fields += ',pwd';
     values += ',"' + encrypt(req.body.pwd) + '"';

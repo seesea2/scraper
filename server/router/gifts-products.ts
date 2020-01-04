@@ -11,7 +11,6 @@ import {
 import {
   AddProduct,
   DeleteProduct,
-  GetProduct,
   GetProducts,
   GetProductsByCategory,
   UpdateProduct
@@ -33,7 +32,7 @@ giftsProductsRouter.get('/categories', (req: Request, res: Response) => {
 giftsProductsRouter.post('/category', (req: Request, res: Response) => {
   // liych
   // if (!bStaff(req.session)) {
-  //   return res.status(403).send({ result: 'forbiddent' });
+  //   return res.status(403).send({ message: 'forbiddent' });
   // }
   AddCategory(req.body, res);
 });
@@ -50,16 +49,13 @@ giftsProductsRouter.get('/samples', (req: Request, res: Response) => {
 giftsProductsRouter.get('', (req: Request, res: Response) => {
   GetProducts(req.query, res);
 });
-giftsProductsRouter.get('/product', (req: Request, res: Response) => {
-  GetProduct(req.query, res);
-});
-giftsProductsRouter.post('/product', (req: Request, res: Response) => {
+giftsProductsRouter.post('/', (req: Request, res: Response) => {
   AddProduct(req.body, res);
 });
-giftsProductsRouter.put('/product', (req: Request, res: Response) => {
+giftsProductsRouter.put('/', (req: Request, res: Response) => {
   UpdateProduct(req.body, res);
 });
-giftsProductsRouter.delete('/product', (req: Request, res: Response) => {
+giftsProductsRouter.delete('/', (req: Request, res: Response) => {
   DeleteProduct(req.query, res);
 });
 

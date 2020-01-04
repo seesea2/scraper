@@ -2,7 +2,7 @@
 GET http://localhost:8080/api/gifts/users/logout HTTP/1.1
 
 ##### get user info
-GET http://localhost:8080/api/gifts/users/info HTTP/1.1
+GET http://localhost:8080/api/gifts/users HTTP/1.1
 
 
 ### user login
@@ -15,7 +15,7 @@ content-type: application/json
 }
 
 ### user register
-POST http://localhost:8080/api/gifts/users/register HTTP/1.1
+POST http://localhost:8080/api/gifts/users HTTP/1.1
 content-type: application/json
 
 {
@@ -24,9 +24,12 @@ content-type: application/json
 }
 
 ### user disable
-PUT http://localhost:8080/api/gifts/users/disable HTTP/1.1
+PUT http://localhost:8080/api/gifts/users HTTP/1.1
 content-type: application/json
 
+{
+  "disable": true
+}
 
 ### oxford dictionary
 GET http://localhost:8080/api/dictionary/oxford/hi HTTP/1.1
@@ -37,7 +40,7 @@ GET http://localhost:8080/api/lta/bus/busArrival/01012 HTTP/1.1
 
 
 ### /gifts/products view one product
-GET http://localhost:8080/api/gifts/products/product?product_id=1 HTTP/1.1
+GET http://localhost:8080/api/gifts/products?product_id=1 HTTP/1.1
 
 
 ### /gifts/products get multiple products
@@ -76,7 +79,7 @@ content-type: application/json
 
 
 ####  add a product
-POST  http://localhost:8080/api/gifts/products/product HTTP/1.1
+POST  http://localhost:8080/api/gifts/products HTTP/1.1
 content-type: application/json
 
 {
@@ -87,7 +90,7 @@ content-type: application/json
 
 
 ####  update a product
-PUT  http://localhost:8080/api/gifts/products/product HTTP/1.1
+PUT  http://localhost:8080/api/gifts/products HTTP/1.1
 content-type: application/json
 
 {
@@ -98,7 +101,7 @@ content-type: application/json
 }
 
 ####  delete a product
-DELETE  http://localhost:8080/api/gifts/products/product?product_id=55 HTTP/1.1
+DELETE  http://localhost:8080/api/gifts/products?product_id=55 HTTP/1.1
 
 
 ####  get products inventory
@@ -120,7 +123,7 @@ POST  http://localhost:8080/api/gifts/staffs/admin/newStaff HTTP/1.1
 content-type: application/json
 
 {
-  "uid": "yc",
+  "uname": "yc",
   "pwd": "ii",
   "firstName": "yc",
   "lastName": "li"
@@ -150,7 +153,7 @@ GET http://localhost:8080/api/gifts/orders/staffOrders HTTP/1.1
 GET http://localhost:8080/api/gifts/orders/order HTTP/1.1
 
 ####  New order
-POST  http://localhost:8080/api/gifts/orders/order HTTP/1.1
+POST  http://localhost:8080/api/gifts/orders HTTP/1.1
 content-type: application/json
 
 {

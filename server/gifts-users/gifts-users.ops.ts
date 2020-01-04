@@ -5,13 +5,13 @@ import { encrypt } from '../string-ops/crypto';
 
 async function Login(req: Request, res: Response) {
   if (req.session && req.session.staff) {
-    return res.status(200).send({ uid: req.session.staff.uid, bStaff: true });
+    return res.status(200).send({ staff_id: req.session.staff.staff_id, bStaff: true });
   }
   if (req.session && req.session.user) {
-    return res.status(200).send({ uid: req.session.user.uid });
+    return res.status(200).send({ uname: req.session.user.uname, email: req.session.user.email });
   }
   try {
-    // the id can be uid or email.
+    // the id can be uname or email.
     const id = (req.body.id || '').trim();
     const pwd = encrypt(req.body.pwd);
     let sql = '';
@@ -23,24 +23,24 @@ async function Login(req: Request, res: Response) {
     }
 
     sql = `select * from giftsStaffs 
-          where (uid="${id}" or email="${id}") and pwd="${pwd}" 
+          where (staff_id="${id}" or email="${id}") and pwd="${pwd}" 
           and coalesce(inactive,0) <> 1;`;
     req.session.staff = await SqliteGet(sql);
     if (req.session.staff) {
-      return res.status(200).send({ uid: req.session.staff.uid, bStaff: true });
+      return res.status(200).send({ staff_id: req.session.staff.staff_id, bStaff: true });
     }
 
     sql = `select * from giftsUsers 
-            where (uid="${id}" or email="${id}") and pwd="${pwd}" 
+            where (uname="${id}" or email="${id}") and pwd="${pwd}" 
             and coalesce(inactive,0) <> 1;`;
     req.session.user = await SqliteGet(sql);
     if (req.session.user) {
-      return res.status(200).send({ uid: req.session.user.uid });
+      return res.status(200).send({ uname: req.session.user.uname, email: req.session.user.email });
     }
-    return res.status(403).send({ message: 'Incorrect username or password' });
+    return res.status(401).send({ message: 'Incorrect username or password' });
   } catch (e) {
     // console.log(e);
-    return res.status(500).send({ message: 'server error.' });
+    return res.status(500).send({ message: 'Server error.' });
   }
 }
 
@@ -51,12 +51,12 @@ function Logout(req: Request, res: Response) {
   if (req.session && req.session.user) {
     req.session.user = null;
   }
-  return res.status(200).send({ result: 'ok' });
+  return res.status(200).send({ message: 'ok' });
 }
 
 async function Register(body: any, res: Response) {
   if (!body.email || !body.pwd) {
-    return res.status(400).send('Invalid input.');
+    return res.status(400).send({ message: 'Invalid input.' });
   }
   try {
     let fields = 'email,pwd,createdOn';
@@ -65,27 +65,27 @@ async function Register(body: any, res: Response) {
       `insert into giftsUsers (${fields}) values (${values})`
     );
     if (rslt) {
-      return res.status(200).send({ result: 'ok' });
+      return res.status(200).send({ message: 'ok' });
     }
-    return res.status(500).send('Register failed. Please try again later.');
+    return res.status(500).send({ message: 'Register failed. Please try again later.' });
   } catch (e) {
-    return res.status(500).send('Register failed. Please try again later.');
+    return res.status(500).send({ message: 'Register failed. Please try again later.' });
   }
 }
 
 async function DisableAccount(session: any, res: Response) {
   if (!session || !session.user) {
-    return res.status(403).send('Login is required.');
+    return res.status(401).send({ message: 'Login is required.' });
   }
   try {
     let rslt = SqliteRun(
-      `update giftsUsers set inactive=1 where email="${session.user.email}"`
+      `update giftsUsers set inactive=1 where user_id="${session.user.user_id}"`
     );
     if (rslt) {
       session.user = null;
-      return res.status(200).send({ result: 'Account disabled.' });
+      return res.status(200).send({ message: 'Account disabled.' });
     }
-    return res.status(500).send({ text: 'Error. Please try again later.' });
+    return res.status(500).send({ message: 'Error. Please try again later.' });
   } catch (e) {
     return res.status(400).send(e);
   }
@@ -93,12 +93,21 @@ async function DisableAccount(session: any, res: Response) {
 
 function UserInfo(session: any, res: Response) {
   if (!bLogin(session)) {
-    return res.status(403).send({ text: 'User not login.' });
+    return res.status(401).send({ message: 'User not login.' });
   }
-  return res.status(200).send({
-    uid: session.staff ? session.staff.uid : session.user.uid,
-    email: session.staff ? session.staff.email : session.user.email
-  });
+  if (session.staff) {
+    return res.status(200).send({
+      staff_id: session.staff.staff_id,
+      email: session.staff.email
+    });
+
+  } else {
+    return res.status(200).send({
+      uname: session.user.uname,
+      email: session.user.email
+    });
+
+  }
 }
 
 function bLogin(session: any) {

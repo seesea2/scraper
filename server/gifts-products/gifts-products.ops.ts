@@ -1,23 +1,14 @@
 import { SqliteAll, SqliteGet, SqliteRun } from '../db-ops/sqlite-ops';
 import { Response } from '../interface';
 
-async function GetProduct(params: any, res: Response) {
-  if (!params.product_id) {
-    return res.status(400).send({ message: 'Invalid product ID.' });
-  }
-
-  try {
-    const sql = `select * from giftsProducts where product_id=${params.product_id};`;
-    const product = await SqliteGet(sql);
-    return res.status(200).send(product);
-  } catch (e) {
-    return res.status(500).send(e);
-  }
-}
-
 async function GetProducts(params: any, res: Response) {
   try {
-    const sql = `select * from giftsProducts where (inactive is null or inactive<>1) limit 50;`;
+    let sql = ''
+    if (params.product_id) {
+       sql = `select * from giftsProducts where product_id=${params.product_id};`;
+    } else {
+       sql = `select * from giftsProducts where (inactive is null or inactive<>1) limit 50;`;
+    }
     const products = await SqliteAll(sql);
     return res.status(200).send(products);
   } catch (e) {
@@ -173,7 +164,6 @@ export {
   AddProduct,
   DeleteProduct,
   GetProductsByCategory,
-  GetProduct,
   GetProducts,
   UpdateProduct
 };

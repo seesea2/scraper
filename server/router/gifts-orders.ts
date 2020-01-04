@@ -25,7 +25,7 @@ giftsOrdersRouter.get('/staffOrders', (req: Request, res: Response) => {
 });
 
 // new order from customer.
-giftsOrdersRouter.post('/order', (req: Request, res: Response) => {
+giftsOrdersRouter.post('', (req: Request, res: Response) => {
   NewOrder(req, res);
 });
 
@@ -35,7 +35,7 @@ giftsOrdersRouter.put('/updateStatus', (req: Request, res: Response) => {
     return res.sendStatus(401);
   }
   if (!req.body.new_status || !req.body.sno || !req.body.order_no) {
-    return res.status(400).send('Failed. Pleaes review inputs.');
+    return res.status(400).send({ message: 'Failed. Pleaes review inputs.' });
   }
 
   const param = {
@@ -46,7 +46,7 @@ giftsOrdersRouter.put('/updateStatus', (req: Request, res: Response) => {
     5: req.body.new_status,
     6: req.body.note || null
   };
-  return res.status(200).send({ result: 'ok' });
+  return res.status(200).send({ message: 'ok' });
 });
 
 // staff to update contact info of the order.
@@ -55,7 +55,7 @@ giftsOrdersRouter.put('/updateContact', (req: Request, res: Response) => {
     return res.sendStatus(401);
   }
   if (!req.body.order_no) {
-    return res.status(400).send('Order_no empty.');
+    return res.status(400).send({ message: 'Order_no empty.' });
   } else if (
     !req.body.email ||
     !req.body.email.includes('@') ||
@@ -63,9 +63,9 @@ giftsOrdersRouter.put('/updateContact', (req: Request, res: Response) => {
     req.body.email.includes('/') ||
     req.body.email.includes('\\')
   ) {
-    return res.status(400).send('Invalid email.');
+    return res.status(400).send({ message: 'Invalid email.' });
   } else if (!req.body.name) {
-    return res.status(400).send('Invalid name.');
+    return res.status(400).send({ message: 'Invalid name.' });
   }
 
   const param = {
@@ -77,7 +77,7 @@ giftsOrdersRouter.put('/updateContact', (req: Request, res: Response) => {
     6: req.body.addr || null,
     7: req.body.order_no
   };
-  return res.status(200).send({ result: 'ok' });
+  return res.status(200).send({ message: 'ok' });
 });
 
 // staff to change order details e.g. price, qty, in case users changed mind.
@@ -88,10 +88,10 @@ giftsOrdersRouter.put('/updateOrderItem', (req: Request, res: Response) => {
   }
 
   if (!req.body.order_no) {
-    return res.status(400).send('Failed. Invalid Order No.');
+    return res.status(400).send({ message: 'Failed. Invalid Order No.' });
   }
   if (!req.body.sno || req.body.sno === '') {
-    return res.status(400).send('Failed. Invalid Order Sno.');
+    return res.status(400).send({ message: 'Failed. Invalid Order Sno.' });
   }
 
   const param = {
@@ -101,7 +101,7 @@ giftsOrdersRouter.put('/updateOrderItem', (req: Request, res: Response) => {
     4: req.body.order_no,
     5: req.body.sno
   };
-  return res.status(200).send({ result: 'ok' });
+  return res.status(200).send({ message: 'ok' });
 });
 
 export default giftsOrdersRouter;

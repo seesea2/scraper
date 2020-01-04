@@ -22,7 +22,7 @@ apiRouter.post('/msg', (req: Request, res: Response) => {
 
 // error handling
 apiRouter.all('/*', (req: Request, res: Response) => {
-  return res.status(400).send('Invalid Request');
+  return res.status(400).send({ message: 'Invalid Request' });
 });
 
 export default apiRouter;

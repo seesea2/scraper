@@ -23,17 +23,20 @@ const giftsUsersRouter = Router();
 giftsUsersRouter.post('/login', (req: Request, res: Response) => {
   Login(req, res);
 });
-giftsUsersRouter.get('/info', (req: Request, res: Response) => {
+giftsUsersRouter.get('/', (req: Request, res: Response) => {
   UserInfo(req.session, res);
 });
 giftsUsersRouter.get('/logout', (req: Request, res: Response) => {
   Logout(req, res);
 });
-giftsUsersRouter.post('/register', (req: Request, res: Response) => {
+giftsUsersRouter.post('/', (req: Request, res: Response) => {
   Register(req.body, res);
 });
-giftsUsersRouter.put('/disable', (req: Request, res: Response) => {
+giftsUsersRouter.put('/', (req: Request, res: Response) => {
+  console.log(req.body.disable)
+  if(req.body.disable) {
   DisableAccount(req.session, res);
+  }
 });
 // giftsUsersRouter.get('/cart', (req: Request, res: Response) => {
 //   GetCart(req.session, res);
