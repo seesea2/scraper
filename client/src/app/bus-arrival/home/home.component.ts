@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit {
     this.busArrivalService.getNearbyBusStops(coordinates).subscribe(
       data => {
         for (let i = 0; i < data.length; ++i) {
-          this.nearbyBusStops.push(data[i].BusStopInfo);
+          this.nearbyBusStops.push(data[i].busStop);
         }
         this.bSpinnerShowNearbyBusStops = false;
       },
@@ -74,6 +74,9 @@ export class HomeComponent implements OnInit {
           this.getNearbyBusStops(pos.coords);
         } else {
           this.bSpinnerShowNearbyBusStops = false;
+          this.snackBar.open('Cannot get coordinate of your device.', 'warn', {
+            duration: 2000
+          });
         }
       });
     } else {

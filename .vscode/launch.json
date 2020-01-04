@@ -10,7 +10,6 @@
       "name": "Launch Program",
       "runtimeExecutable": "node",
       "program": "${workspaceFolder}/server/server.ts",
-      "preLaunchTask": "npm: start",
       "outFiles": ["${workspaceFolder}/debug/*.js"],
       "restart": true
     }

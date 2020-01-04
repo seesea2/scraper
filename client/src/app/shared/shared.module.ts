@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialModule } from './material.module';
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+// import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {
   FontAwesomeModule,
   FaIconLibrary
@@ -25,7 +25,7 @@ import { GoBackButtonComponent } from './go-back-button/go-back-button.component
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    NgbModule,
+    // NgbModule,
     FontAwesomeModule,
     RouterModule
   ],
@@ -33,7 +33,7 @@ import { GoBackButtonComponent } from './go-back-button/go-back-button.component
     CommonModule,
     FormsModule,
     MaterialModule,
-    NgbModule,
+    // NgbModule,
     FontAwesomeModule,
     ReactiveFormsModule,
     RouterModule,

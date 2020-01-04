@@ -82,10 +82,10 @@ function getNearbyBusStops(latitude: number, longitude: number, res: Response) {
     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     let dist = R * c;
     if (Math.abs(dist) < 280) {
-      nearbyStops.push({ dist: dist, busStops: busStops[i] });
+      nearbyStops.push({ dist: dist, busStop: busStops[i] });
     }
   }
-  nearbyStops.sort((a, b) => {
+  nearbyStops = nearbyStops.sort((a, b) => {
     if (a.dist > b.dist) {
       return 1;
     } else if (a.dist < b.dist) {
