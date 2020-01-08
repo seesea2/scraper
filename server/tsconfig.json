@@ -13,6 +13,6 @@
     "sourceMap": true,
     "target": "es5"
   },
-  "include": ["./**/*"],
+  "include": ["./**/*.ts"],
   "exclude": ["node_modules", "**/*.spec.ts", "obsolete"]
 }
