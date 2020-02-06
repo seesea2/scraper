@@ -27,4 +27,11 @@ function decrypt(text: string): string {
   }
 }
 
-export { encrypt, decrypt };
+function hash(text: string): string {
+  const hash = crypto.createHash('sha512');
+  let rslt = hash.update(text).digest('hex');
+
+  console.log(rslt);
+  return rslt;
+}
+export { encrypt, decrypt, hash };

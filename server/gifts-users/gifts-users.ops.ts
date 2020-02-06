@@ -1,19 +1,23 @@
 import { SqliteGet, SqliteAll, SqliteRun } from '../db-ops/sqlite-ops';
 
 import { Request, Response } from '../interface';
-import { encrypt } from '../string-ops/crypto';
+import { hash } from '../string-ops/crypto';
 
 async function Login(req: Request, res: Response) {
   if (req.session && req.session.staff) {
-    return res.status(200).send({ staff_id: req.session.staff.staff_id, bStaff: true });
+    return res
+      .status(200)
+      .send({ staff_id: req.session.staff.staff_id, bStaff: true });
   }
   if (req.session && req.session.user) {
-    return res.status(200).send({ uname: req.session.user.uname, email: req.session.user.email });
+    return res
+      .status(200)
+      .send({ uname: req.session.user.uname, email: req.session.user.email });
   }
   try {
     // the id can be uname or email.
     const id = (req.body.id || '').trim();
-    const pwd = encrypt(req.body.pwd);
+    const pwd = hash(req.body.pwd);
     let sql = '';
 
     if (!id || !pwd) {
@@ -27,7 +31,9 @@ async function Login(req: Request, res: Response) {
           and coalesce(inactive,0) <> 1;`;
     req.session.staff = await SqliteGet(sql);
     if (req.session.staff) {
-      return res.status(200).send({ staff_id: req.session.staff.staff_id, bStaff: true });
+      return res
+        .status(200)
+        .send({ staff_id: req.session.staff.staff_id, bStaff: true });
     }
 
     sql = `select * from giftsUsers 
@@ -35,7 +41,9 @@ async function Login(req: Request, res: Response) {
             and coalesce(inactive,0) <> 1;`;
     req.session.user = await SqliteGet(sql);
     if (req.session.user) {
-      return res.status(200).send({ uname: req.session.user.uname, email: req.session.user.email });
+      return res
+        .status(200)
+        .send({ uname: req.session.user.uname, email: req.session.user.email });
     }
     return res.status(401).send({ message: 'Incorrect username or password' });
   } catch (e) {
@@ -60,16 +68,20 @@ async function Register(body: any, res: Response) {
   }
   try {
     let fields = 'email,pwd,createdOn';
-    let values = `"${body.email}","` + encrypt(body.pwd) + '",' + Date.now();
+    let values = `"${body.email}","` + hash(body.pwd) + '",' + Date.now();
     let rslt = await SqliteRun(
       `insert into giftsUsers (${fields}) values (${values})`
     );
     if (rslt) {
       return res.status(200).send({ message: 'ok' });
     }
-    return res.status(500).send({ message: 'Register failed. Please try again later.' });
+    return res
+      .status(500)
+      .send({ message: 'Register failed. Please try again later.' });
   } catch (e) {
-    return res.status(500).send({ message: 'Register failed. Please try again later.' });
+    return res
+      .status(500)
+      .send({ message: 'Register failed. Please try again later.' });
   }
 }
 
@@ -100,13 +112,11 @@ function UserInfo(session: any, res: Response) {
       staff_id: session.staff.staff_id,
       email: session.staff.email
     });
-
   } else {
     return res.status(200).send({
       uname: session.user.uname,
       email: session.user.email
     });
-
   }
 }
 
