@@ -8,10 +8,7 @@ import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [HomeComponent],
-  imports: [
-    SharedModule,
-    MatSnackBarModule,
-    BusArrivalRoutingModule
-  ]
+  imports: [SharedModule, MatSnackBarModule, BusArrivalRoutingModule],
+  exports: [HomeComponent]
 })
 export class BusArrivalModule {}

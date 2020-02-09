@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 
+import { QuicklinkStrategy, QuicklinkModule } from 'ngx-quicklink';
+
+import { HomeComponent } from './bus-arrival/home/home.component';
+
 const routes: Routes = [
   {
     path: 'gifts',
@@ -28,16 +32,19 @@ const routes: Routes = [
   // },
   {
     path: '',
-    redirectTo: 'bus',
+    // redirectTo: 'bus',
+    component: HomeComponent,
     pathMatch: 'full'
   }
 ];
 
 @NgModule({
   imports: [
+    QuicklinkModule,
     RouterModule.forRoot(
-      routes
+      routes,
       // { preloadingStrategy: PreloadAllModules, enableTracing: false } // liych true for debugging
+      { preloadingStrategy: QuicklinkStrategy } // liych true for debugging
     )
   ],
   exports: [RouterModule],

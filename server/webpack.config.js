@@ -27,7 +27,7 @@ var config = {
   node: {
     __dirname: false
   },
-  watch: true
+  watch: false
 };
 
 module.exports = (env, argv) => {

@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 
 import { MatDividerModule } from '@angular/material/divider';
-// import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { HttpErrorInterceptor } from './http-error.interceptor';
@@ -20,7 +19,6 @@ import { FooterComponent } from './footer/footer.component';
     HttpClientModule,
     RouterModule,
     MatDividerModule,
-    // NgbModule,
     FontAwesomeModule
   ],
   exports: [
@@ -28,7 +26,6 @@ import { FooterComponent } from './footer/footer.component';
     FooterComponent,
     HttpClientModule,
     RouterModule,
-    // NgbModule,
     FontAwesomeModule
   ],
   providers: [
