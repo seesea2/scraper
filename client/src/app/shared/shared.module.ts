@@ -1,47 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { MaterialModule } from './material.module';
-
-// import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {
-  FontAwesomeModule,
-  FaIconLibrary
-} from '@fortawesome/angular-fontawesome';
-import {
-  faLeaf,
-  faSearch,
-  faChevronLeft
-} from '@fortawesome/free-solid-svg-icons';
-
-import { GoBackButtonComponent } from './go-back-button/go-back-button.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
-  declarations: [GoBackButtonComponent],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MaterialModule,
-    // NgbModule,
-    FontAwesomeModule,
-    RouterModule
-  ],
+  declarations: [],
   exports: [
     CommonModule,
     FormsModule,
-    MaterialModule,
-    // NgbModule,
-    FontAwesomeModule,
     ReactiveFormsModule,
-    RouterModule,
-    GoBackButtonComponent
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatListModule,
+    MatSnackBarModule
   ]
 })
-export class SharedModule {
-  constructor(library: FaIconLibrary) {
-    library.addIcons(faLeaf, faSearch, faChevronLeft);
-  }
-}
+export class SharedModule {}

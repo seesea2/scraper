@@ -13,25 +13,24 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "../debug/client",
+            "outputPath": "dist/client",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
+            "aot": true,
             "assets": [
-              "src/manifest.json",
-              "src/assets",
-              "src/manifest.webmanifest",
-              "src/manifest.webmanifest"
+              "src/favicon.ico",
+              "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
             "scripts": []
           },
           "configurations": {
             "production": {
-              "outputPath": "../dist/client",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -43,7 +42,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -54,19 +52,11 @@
                   "maximumError": "5mb"
                 },
                 {
-                  "type": "bundle",
-                  "name": "main",
-                  "maximumWarning": "500kb",
-                  "maximumError": "900kb"
-                },
-                {
                   "type": "anyComponentStyle",
                   "maximumWarning": "6kb",
                   "maximumError": "10kb"
                 }
-              ],
-              "serviceWorker": true,
-              "ngswConfigPath": "src/ngsw-config.json"
+              ]
             }
           }
         },
@@ -94,16 +84,15 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
-            "scripts": [],
-            "assets": [
-              "src/manifest.json",
-              "src/assets",
-              "src/manifest.webmanifest",
-              "src/manifest.webmanifest"
-            ]
+            "scripts": []
           }
         },
         "lint": {
@@ -118,14 +107,7 @@
               "**/node_modules/**"
             ]
           }
-        }
-      }
-    },
-    "client-e2e": {
-      "root": "e2e/",
-      "projectType": "application",
-      "prefix": "",
-      "architect": {
+        },
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
@@ -136,15 +118,6 @@
             "production": {
               "devServerTarget": "client:serve:production"
             }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": "e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
           }
         }
       }

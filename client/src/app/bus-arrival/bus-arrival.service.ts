@@ -5,7 +5,7 @@ import { CookieService } from 'ngx-cookie-service';
 
 import { BusArrivalReturn, BusStopInfo } from './bus-arrival-interface';
 
-const BusBookmarksCookieName: string = 'InSgBusStopBookmark';
+const BusBookmarksCookieName = 'InSgBusStopBookmark';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +26,7 @@ export class BusArrivalService {
   }
 
   getCookieBusStopBookmark() {
-    let cookie = this.cookieService.get(BusBookmarksCookieName);
+    const cookie = this.cookieService.get(BusBookmarksCookieName);
     if (cookie) {
       this.busStopBookmarkSubject.next(JSON.parse(cookie));
     }
@@ -75,8 +75,8 @@ export class BusArrivalService {
   }
 
   existingBookmark(busStopInfo: BusStopInfo) {
-    for (let i = 0; i < this.busStopBookmark.length; i++) {
-      if (busStopInfo.BusStopCode === this.busStopBookmark[i].BusStopCode) {
+    for (const bookmarkItem of this.busStopBookmark) {
+      if (busStopInfo.BusStopCode === bookmarkItem.BusStopCode) {
         return true;
       }
     }

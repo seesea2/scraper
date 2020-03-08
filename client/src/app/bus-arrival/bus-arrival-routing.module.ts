@@ -1,19 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { HomeComponent } from './home/home.component';
 
-const routes: Routes = [
-  {
-    path: ':BusStopCode',
-    loadChildren: () =>
-      import('./status/status.module').then(m => m.StatusModule)
-  },
-  { path: '', component: HomeComponent }
-];
+const routes: Routes = [];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class BusArrivalRoutingModule {}
+export class BusArrivalRoutingModule { }
