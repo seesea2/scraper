@@ -4,13 +4,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [],
-  exports: [
+  imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -19,6 +20,17 @@ import { MatListModule } from '@angular/material/list';
     MatInputModule,
     MatListModule,
     MatSnackBarModule
+  ],
+  exports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatListModule,
+    MatProgressSpinnerModule,
+    MatSnackBarModule
   ]
 })
-export class SharedModule {}
+export class SharedModule { }

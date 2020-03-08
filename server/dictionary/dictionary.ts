@@ -1,5 +1,6 @@
 import Axios from 'axios';
-import { Response } from '../interface';
+import { Response } from 'express';
+
 import {
   CheckEntriesResult,
   OxfordEntries,

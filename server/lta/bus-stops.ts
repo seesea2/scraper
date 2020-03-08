@@ -1,6 +1,6 @@
 import Axios from 'axios';
+import { Response } from 'express';
 
-import { Response } from '../interface';
 import { busStopsUrl, headerConfig } from './lta';
 import { BusStopInfo } from './bus-stops-interface';
 

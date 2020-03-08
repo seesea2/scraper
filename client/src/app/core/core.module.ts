@@ -9,7 +9,7 @@ import { throwIfAlreadyLoaded } from './module-import-guard';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule, HttpClientModule, RouterModule],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
@@ -18,7 +18,7 @@ import { throwIfAlreadyLoaded } from './module-import-guard';
     },
     CookieService
   ],
-  exports: [HttpClientModule]
+  exports: [HttpClientModule, RouterModule]
 })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
