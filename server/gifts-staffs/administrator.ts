@@ -1,6 +1,6 @@
 import { Request, Response } from '../interface';
 import { SqliteRun } from '../db-ops/sqlite-ops';
-import { encrypt } from '../string-ops/crypto';
+import { hash } from '../string-ops/crypto';
 
 async function newStaff(req: Request, res: Response) {
   if (!req.session || !req.session.staff) {
@@ -20,7 +20,7 @@ async function newStaff(req: Request, res: Response) {
       return res.status(400).send({ message: 'PWD is empty.' });
     }
     fields += ',pwd';
-    values += ',"' + encrypt(req.body.pwd) + '"';
+    values += ',"' + hash(req.body.pwd) + '"';
     if (!req.body.firstName) {
       return res.status(400).send({ message: 'first name is empty.' });
     }

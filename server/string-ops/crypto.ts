@@ -27,11 +27,15 @@ function decrypt(text: string): string {
   }
 }
 
-function hash(text: string): string {
-  const hash = crypto.createHash('sha512');
+function hash(text: string, type?: number): string {
+  let hash;
+  if (type === 512) {
+    hash = crypto.createHash('sha512');
+  } else {
+    hash = crypto.createHash('sha256');
+  }
   let rslt = hash.update(text).digest('hex');
 
-  console.log(rslt);
   return rslt;
 }
 export { encrypt, decrypt, hash };

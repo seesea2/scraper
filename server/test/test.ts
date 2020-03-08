@@ -22,40 +22,12 @@
 // }
 // downloadUrl();
 
-import * as crypto from 'crypto';
+import { hash } from '../string-ops/crypto';
+import { randomPassword } from '../string-ops/random';
+
 try {
-  // const algorithm = 'aes-192-cbc';
-  // const password = 'inSGyc83';
-  // const key = crypto.scryptSync(password, 'salt', 24);
-  // const iv = Buffer.alloc(16, 0);
-
-  // let cipher = crypto.createCipheriv(algorithm, key, iv);
-  // let crypted: string = cipher.update('yc@insg.xyz', 'utf8', 'hex');
-  // crypted += cipher.final('hex');
-
-  // console.log(crypted);
-  // // console.log(cipher.getAuthTag());
-
-  // const decipher = crypto.createDecipheriv(algorithm, key, iv);
-  // let dec = decipher.update('413e0d295a542b39864ba62fdb0ad096', 'hex', 'utf8');
-  // dec += decipher.final('utf8');
-  // console.log(dec);
-
-  // const hash = crypto.createHash('sha512');
-  // let hashCode = hash.update('aa').digest('hex');
-  // console.log(hashCode);
-
-  // const hmac = crypto.createHmac('sha256', '');
-  // let hmacCode = hmac.update('aa').digest('hex');
-  // console.log(hmacCode);
-
-  // console.log(crypto.getHashes());
-
-  crypto.randomBytes(10, (err, data) => {
-    console.log(data.length);
-    console.log(data.toString('ascii'));
-    console.log(data.toString('hex'));
-  });
+  let str = randomPassword(8);
+  console.info(str)//, hash(str), hash(str, 256), hash(str, 512));
 } catch (err) {
   console.log('error: ', err);
 }

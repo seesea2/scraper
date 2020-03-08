@@ -1,6 +1,10 @@
 /*
  * string operation
  */
+
+import * as crypto from 'crypto';
+import { stringify } from 'querystring';
+
 enum RandomTypes {
   Capital,
   Number,
@@ -50,4 +54,16 @@ function random(type: RandomTypes, length: number): string {
   return result;
 }
 
-export { randomCapitals, randomNumber, randomString };
+function randomPassword(length: number): string {
+  let str = '';
+  while (str.length < length) {
+    let temp = crypto.randomBytes(1).toString();
+    if (temp >= '!' && temp <= '~') {
+      str += temp;
+    }
+  }
+
+  return str;
+}
+
+export { randomCapitals, randomNumber, randomString, randomPassword };
