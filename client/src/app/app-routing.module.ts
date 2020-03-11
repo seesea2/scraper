@@ -3,18 +3,17 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { QuicklinkStrategy, QuicklinkModule } from 'ngx-quicklink';
 
-import { HomePageComponent } from './bus-arrival/home-page/home-page.component';
-
 const routes: Routes = [
   {
-    path: '',
-    component: HomePageComponent,
-    pathMatch: 'full'
+    path: 'go-back',
+    loadChildren: () =>
+      import('./shared/shared.module').then(m => m.SharedModule)
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [QuicklinkModule,
+    RouterModule.forRoot(routes, { preloadingStrategy: QuicklinkStrategy })],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

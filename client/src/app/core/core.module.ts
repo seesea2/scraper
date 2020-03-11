@@ -9,7 +9,9 @@ import { throwIfAlreadyLoaded } from './module-import-guard';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, HttpClientModule, RouterModule],
+  imports: [
+    CommonModule, CommonModule, HttpClientModule, RouterModule
+  ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
