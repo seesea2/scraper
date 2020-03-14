@@ -12,7 +12,7 @@ import { getBusStop, getNearbyBusStops } from './lta/bus-stops';
 // Express server
 const app = express();
 
-app.use(compression);
+app.use(compression());
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
