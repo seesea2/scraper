@@ -1,4 +1,3 @@
-import * as compression from 'compression';
 import * as express from 'express';
 import { Request, Response, NextFunction } from 'express';
 import { join } from 'path';
@@ -12,7 +11,6 @@ import { getBusStop, getNearbyBusStops } from './lta/bus-stops';
 // Express server
 const app = express();
 
-app.use(compression());
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
