@@ -10,17 +10,15 @@ function getBusArrival(busStopCode: string, res: Response) {
     return res.status(400).send({ message: 'Invalid BusStopCode.' });
   }
 
-  let busStopInfo = checkBusStopLocally(busStopCode);
-  if (!busStopInfo) {
+  let busStop = checkBusStopLocally(busStopCode);
+  if (!busStop) {
     return res.status(400).send({ message: 'Bus Stop not found.' });
   }
 
   let url = `${busArrivalUrl}?BusStopCode=${busStopCode}`;
   Axios.get(url, headerConfig)
     .then(respose => {
-      res
-        .status(200)
-        .send({ busStopInfo: busStopInfo, busArrival: respose.data });
+      res.status(200).send({ busStop: busStop, busArrival: respose.data });
     })
     .catch(e => {
       res.status(400).send(e);

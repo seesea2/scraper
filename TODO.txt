@@ -10,3 +10,6 @@ Backend Todo:
 
 
 # get samples of categories
+
+
+1. root module do not import Shared module to reduce dependency and first page size.

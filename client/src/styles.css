@@ -6,7 +6,24 @@ html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+.icon-25 {
+  width: 25px;
+  height: auto;
+}
+
+.icon-32 {
+  width: 32px;
+  height: auto;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: bold;
 }

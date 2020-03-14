@@ -1,17 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-go-back-button',
+  selector: 'go-back-button',
   templateUrl: './go-back-button.component.html',
   styleUrls: ['./go-back-button.component.css']
 })
 export class GoBackButtonComponent implements OnInit {
+  @Input() word: string;
 
-  constructor(private location: Location) { }
+  faChevronLeft = faChevronLeft;
 
-  ngOnInit(): void {
-  }
+  constructor(private location: Location) {}
+
+  ngOnInit(): void {}
 
   goBack() {
     this.location.back();

@@ -2,11 +2,11 @@ import Axios from 'axios';
 import { Response } from 'express';
 
 import { busStopsUrl, headerConfig } from './lta';
-import { BusStopInfo } from './bus-stops-interface';
+import { BusStop } from './bus-stops-interface';
 
-let busStops: BusStopInfo[] = [];
+let busStops: BusStop[] = [];
 
-async function getBusStopsFromLta(skip?: number): Promise<BusStopInfo[]> {
+async function getBusStopsFromLta(skip?: number): Promise<BusStop[]> {
   try {
     let url = busStopsUrl;
     if (skip) {
@@ -25,7 +25,7 @@ async function getBusStopsFromLta(skip?: number): Promise<BusStopInfo[]> {
 async function getAllBusStops() {
   try {
     let skip = 0;
-    let newBusStops: BusStopInfo[] = [];
+    let newBusStops: BusStop[] = [];
     do {
       newBusStops = await getBusStopsFromLta(skip);
       let temp = busStops;
@@ -51,13 +51,13 @@ function checkBusStopLocally(busStopCode: string) {
   return;
 }
 
-function getBusStopInfo(busStopCode: string, res: Response) {
+function getBusStop(busStopCode: string, res: Response) {
   if (!busStopCode) {
     return res.status(400).send({ message: 'Invalid Bus Stop Code.' });
   }
-  let busStopInfo = checkBusStopLocally(busStopCode);
-  if (busStopInfo) {
-    return res.status(200).send(busStopInfo);
+  let busStop = checkBusStopLocally(busStopCode);
+  if (busStop) {
+    return res.status(200).send(busStop);
   }
   return res.status(400).send({ message: 'Bus Stop info not found.' });
 }
@@ -97,4 +97,4 @@ function getNearbyBusStops(latitude: number, longitude: number, res: Response) {
   res.status(200).send(nearbyStops);
 }
 
-export { busStops, checkBusStopLocally, getBusStopInfo, getNearbyBusStops };
+export { busStops, checkBusStopLocally, getBusStop, getNearbyBusStops };

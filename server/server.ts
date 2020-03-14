@@ -6,7 +6,7 @@ import * as bodyParser from 'body-parser';
 
 import CheckOxfordEntries from './dictionary/dictionary';
 import getBusArrival from './lta/bus-arrival';
-import { getBusStopInfo, getNearbyBusStops } from './lta/bus-stops';
+import { getBusStop, getNearbyBusStops } from './lta/bus-stops';
 
 // Express server
 const app = express();
@@ -15,17 +15,20 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.get('/dictionary/oxford/:word', (req: Request, res: Response) => {
+app.get('/api/dictionary/oxford/:word', (req: Request, res: Response) => {
   CheckOxfordEntries(req.params.word, res);
 });
-app.get('/lta/bus/busArrival/:busStopCode', (req: Request, res: Response) => {
-  getBusArrival(req.params.busStopCode, res);
-});
-app.get('/lta/bus/busStop/:busStopCode', (req: Request, res: Response) => {
-  getBusStopInfo(req.params.busStopCode, res);
+app.get(
+  '/api/lta/bus/busArrival/:busStopCode',
+  (req: Request, res: Response) => {
+    getBusArrival(req.params.busStopCode, res);
+  }
+);
+app.get('/api/lta/bus/busStop/:busStopCode', (req: Request, res: Response) => {
+  getBusStop(req.params.busStopCode, res);
 });
 
-app.get('/lta/bus/nearbyBusStops', (req: Request, res: Response) => {
+app.get('/api/lta/bus/nearbyBusStops', (req: Request, res: Response) => {
   getNearbyBusStops(req.query.latitude, req.query.longitude, res);
 });
 
