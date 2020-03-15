@@ -1,15 +1,2 @@
-Backend Todo: 
-# Product Catalog Search Service
-# User Registration service
-# User Login Service
- user add/update/delete address
-# Shopping Cart Service
-# Product Detail Page Service
-# login use either uid or email.
-# 
-
-
-# get samples of categories
-
 
 1. root module do not import Shared module to reduce dependency and first page size.
