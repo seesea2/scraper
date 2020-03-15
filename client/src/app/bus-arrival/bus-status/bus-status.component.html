@@ -42,18 +42,19 @@
       </ul>
     </div>
 
-    <div class="text-center">
-      <div>
-        <button *ngIf="!existingBookmark" mat-flat-button color="primary" (click)="addBusStopBookmark()" class="my-3">
-          Bookmark this Bus Stop
-        </button>
-      </div>
-      <div>
-        <button mat-flat-button color="primary" (click)="getBusArrival()" class="my-3">
-          Refresh
-        </button>
-        <go-back-button word="Back"></go-back-button>
-      </div>
+  </div>
+  <div class="text-center">
+    <div>
+      <button *ngIf="!errMsg && !existingBookmark" mat-flat-button color="primary" (click)="addBusStopBookmark()"
+        class="my-3">
+        Bookmark this Bus Stop
+      </button>
+    </div>
+    <div>
+      <button mat-flat-button color="primary" (click)="getBusArrival()" class="my-3">
+        Refresh
+      </button>
+      <go-back-button word="Back"></go-back-button>
     </div>
   </div>
 </div>

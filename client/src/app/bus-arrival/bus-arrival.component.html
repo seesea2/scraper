@@ -3,15 +3,15 @@
     <h1>Bus Arrival Time</h1>
     <h6>Get bus arrival time by bus stop code.</h6>
   </div>
-  <form class="pt-4 text-center" (ngSubmit)="submit(busStopCode.value)">
+  <div class="pt-4 text-center">
     <mat-form-field>
       <mat-label>Bus Stop Code</mat-label>
       <input matInput #busStopCode type="text" />
     </mat-form-field>
-    <button mat-flat-button class="ml-3" color="primary" type="submit">
+    <button mat-flat-button (click)="submit(busStopCode.value)" class="ml-3" color="primary">
       Get
     </button>
-  </form>
+  </div>
 
   <div *ngIf="busStopBookmark.length" class="pt-3 text-center">
     <h3>Bus Stop Bookmark</h3>

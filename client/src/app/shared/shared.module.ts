@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialModule } from './material/material.module';
 import { GoBackButtonComponent } from './go-back-button/go-back-button.component';
@@ -19,8 +20,20 @@ import {
 
 @NgModule({
   declarations: [GoBackButtonComponent],
-  imports: [CommonModule, MaterialModule, FontAwesomeModule],
-  exports: [GoBackButtonComponent, MaterialModule, FontAwesomeModule]
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MaterialModule,
+    FontAwesomeModule
+  ],
+  exports: [
+    GoBackButtonComponent,
+    FormsModule,
+    ReactiveFormsModule,
+    MaterialModule,
+    FontAwesomeModule
+  ]
 })
 export class SharedModule {
   constructor(faIconLib: FaIconLibrary) {

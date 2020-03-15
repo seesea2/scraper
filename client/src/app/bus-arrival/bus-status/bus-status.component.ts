@@ -12,7 +12,7 @@ import { BusStop, BusTable, NextBusData, BusArrival } from '../bus-arrival';
 })
 export class BusStatusComponent implements OnInit {
   loading: boolean;
-  busStopCode: string;
+  // busStopCode: string;
   busTable: BusTable[];
   busTableColumn: string[] = ['service', 'bus1', 'bus2', 'bus3', 'load'];
   existingBookmark: boolean;
@@ -27,7 +27,6 @@ export class BusStatusComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
-    this.busStopCode = this.route.snapshot.paramMap.get('BusStopCode');
     this.busTable = [];
     this.existingBookmark = false;
     this.errMsg = '';
@@ -43,15 +42,16 @@ export class BusStatusComponent implements OnInit {
   getBusArrival() {
     this.busTable = [];
 
-    this.busStopCode = this.busStopCode.trim();
-    if (!this.busStopCode) {
+    let busStopCode = this.route.snapshot.paramMap.get('BusStopCode');
+    busStopCode = busStopCode.trim();
+    if (!busStopCode) {
       this.errMsg = 'Invalid Bus Stop Code.';
       this.snackBar.open('Invalid Bus Stop Code.', 'warn', { duration: 3000 });
       return;
     }
 
     this.loading = true;
-    this.busSvc.getBusArrival(this.busStopCode).subscribe(
+    this.busSvc.getBusArrival(busStopCode).subscribe(
       (data: BusArrival) => {
         this.loading = false;
         if (data.busArrival.Services.length <= 0) {
@@ -85,8 +85,8 @@ export class BusStatusComponent implements OnInit {
       },
       err => {
         this.loading = false;
-        this.errMsg = err;
-        this.snackBar.open(err, 'Error', { duration: 4000 });
+        this.errMsg = err.message;
+        this.snackBar.open(this.errMsg, 'Error', { duration: 4000 });
       }
     );
   }
