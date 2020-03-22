@@ -14,5 +14,11 @@
         "editor.defaultFormatter": "vscode.json-language-features"
     },
     "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\cmd.exe",
-    "editor.tabSize": 2
+    "[css]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "explorer.confirmDelete": false,
+    "editor.tabSize": 2,
+    "git.confirmSync": false,
+    "files.autoSaveDelay": 8000
 }
