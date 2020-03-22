@@ -54,37 +54,41 @@ export class BusArrivalComponent implements OnInit {
 
     this.spinnerNearbyBusStops = true;
     if (navigator && navigator.geolocation) {
-      function geoError(error) {
-        let text = '';
-        switch (error.code) {
-          case error.PERMISSION_DENIED:
-            text = 'Request for Geolocation is denied.';
-            break;
-          case error.POSITION_UNAVAILABLE:
-            text = 'Location information is unavailable.';
-            break;
-          case error.TIMEOUT:
-            text = 'Request to get location timed out.';
-            break;
-          case error.UNKNOWN_ERROR:
-            text = 'An unknown error occurred.';
-            break;
-        }
-        this.snackBar.open(text, 'warn', {
-          duration: 2000
-        });
-      }
-      function geoSuccess(pos) {
-        if (pos && pos.coords) {
-          this.getNearbyBusStops(pos.coords);
-        } else {
-          this.spinnerNearbyBusStops = false;
-          this.snackBar.open('Get current location failed.f', 'warn', {
+      navigator.geolocation.getCurrentPosition(
+        pos => {
+          {
+            if (pos && pos.coords) {
+              this.getNearbyBusStops(pos.coords);
+            } else {
+              this.spinnerNearbyBusStops = false;
+              this.snackBar.open('Get current location failed.f', 'warn', {
+                duration: 2000
+              });
+            }
+          }
+        },
+        error => {
+          let text = '';
+          switch (error.code) {
+            case error.PERMISSION_DENIED:
+              text = 'Request for Geolocation is denied.';
+              break;
+            case error.POSITION_UNAVAILABLE:
+              text = 'Location information is unavailable.';
+              break;
+            case error.TIMEOUT:
+              text = 'Request to get location timed out.';
+              break;
+            default:
+              // case error.UNKNOWN_ERROR:
+              text = 'An unknown error occurred.';
+              break;
+          }
+          this.snackBar.open(text, 'warn', {
             duration: 2000
           });
         }
-      }
-      navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
+      );
     } else {
       this.spinnerNearbyBusStops = false;
       this.snackBar.open('Please enable the location access.', 'warn', {
