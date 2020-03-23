@@ -17,16 +17,21 @@
     "@fortawesome/angular-fontawesome": "^0.6.0",
     "axios": "^0.19.2",
     "body-parser": "^1.19.0",
+    "cheerio": "^1.0.0-rc.3",
     "cors": "^2.8.5",
+    "cron": "^1.8.2",
     "express": "^4.17.1",
-    "express-session": "^1.17.0"
+    "express-session": "^1.17.0",
+    "sqlite3": "^4.1.1"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
-    "@types/compression": "^1.7.0",
+    "@types/cheerio": "^0.22.17",
     "@types/cors": "^2.8.6",
+    "@types/cron": "^1.7.2",
     "@types/express": "^4.17.1",
     "@types/node": "^12.12.26",
+    "@types/sqlite3": "^3.1.6",
     "ts-loader": "^6.2.1",
     "ts-node": "^8.6.2",
     "typescript": "^3.7.5",
