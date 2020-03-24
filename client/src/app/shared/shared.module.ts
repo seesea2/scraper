@@ -1,14 +1,14 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
-import { MaterialModule } from './material/material.module';
-import { GoBackButtonComponent } from './go-back-button/go-back-button.component';
+import { MaterialModule } from "./material/material.module";
+import { GoBackButtonComponent } from "./go-back-button/go-back-button.component";
 
 import {
   FontAwesomeModule,
   FaIconLibrary
-} from '@fortawesome/angular-fontawesome';
+} from "@fortawesome/angular-fontawesome";
 import {
   faAnchor,
   faChevronLeft,
@@ -16,7 +16,7 @@ import {
   faLeaf,
   faPlay,
   faSearch
-} from '@fortawesome/free-solid-svg-icons';
+} from "@fortawesome/free-solid-svg-icons";
 
 @NgModule({
   declarations: [GoBackButtonComponent],
@@ -28,6 +28,7 @@ import {
     FontAwesomeModule
   ],
   exports: [
+    CommonModule,
     GoBackButtonComponent,
     FormsModule,
     ReactiveFormsModule,

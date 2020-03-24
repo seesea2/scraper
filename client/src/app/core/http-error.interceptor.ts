@@ -4,9 +4,9 @@ import {
   HttpHandler,
   HttpRequest,
   HttpErrorResponse
-} from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
+} from "@angular/common/http";
+import { Observable, throwError } from "rxjs";
+import { retry, catchError } from "rxjs/operators";
 
 export class HttpErrorInterceptor implements HttpInterceptor {
   intercept(
@@ -15,7 +15,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        let errorMessage = '';
+        let errorMessage = "";
         if (error.error instanceof ErrorEvent) {
           // client-side error
           errorMessage = `client-Error: ${error.error.message}`;

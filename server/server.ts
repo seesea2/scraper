@@ -7,7 +7,7 @@ import * as bodyParser from "body-parser";
 import CheckOxfordEntries from "./dictionary/dictionary";
 import getBusArrival from "./lta/bus-arrival";
 import { getBusStop, getNearbyBusStops } from "./lta/bus-stops";
-import { wordFrequence } from "./scraper/scrape";
+import { wordsFrequence, wordsTotal } from "./scraper/scrape";
 
 // Express server
 const app = express();
@@ -34,8 +34,10 @@ app.get("/api/lta/bus/nearbyBusStops", (req: Request, res: Response) => {
 });
 
 app.get("/api/scraper/words", (req: Request, res: Response) => {
-  console.log("get words", req.baseUrl);
-  wordFrequence(req.query, res);
+  wordsFrequence(req.query, res);
+});
+app.get("/api/scraper/words/total", (req: Request, res: Response) => {
+  wordsTotal(res);
 });
 
 app.get("/", (req: Request, res: Response) => {
@@ -47,16 +49,13 @@ app.use(express.static(join(__dirname, "/client")));
 
 // error handling - 1
 app.all("/*", (req: Request, res: Response) => {
-  console.log("all 1", req.baseUrl);
   return res.status(200).sendFile(join(__dirname, "/client/index.html"));
 });
 app.all("/*", (req: Request, res: Response) => {
-  console.log("all 2", req.baseUrl);
   return res.status(404).send({ message: "Page not found." });
 });
 // error handling - 2
 app.use((req: Request, res: Response, next: NextFunction) => {
-  console.log("all 3", req.baseUrl);
   return res
     .status(500)
     .send({ message: "Issue happened. Please retry later!" });

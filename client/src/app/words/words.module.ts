@@ -1,13 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { WordsComponent } from './words.component';
+import { NgModule } from "@angular/core";
 
+import { SharedModule } from "@shared/shared.module";
 
+import { WordsRoutingModule } from "./words-routing.module";
+import { WordsComponent } from "./words.component";
 
 @NgModule({
   declarations: [WordsComponent],
-  imports: [
-    CommonModule
-  ]
+  imports: [SharedModule, WordsRoutingModule]
 })
-export class WordsModule { }
+export class WordsModule {}

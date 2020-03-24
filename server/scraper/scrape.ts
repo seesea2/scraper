@@ -144,12 +144,12 @@ new CronJob(
   "Asia/Singapore"
 );
 
-export function wordFrequence(query: any, res: Response) {
+export function wordsFrequence(query: any, res: Response) {
   let offset = 0;
   if (query && query.offset && query.offset > 0) {
     offset = query.offset;
   }
-  const sql = `select * from words order by frequence limit 200 offset ${offset};`;
+  const sql = `select * from words order by frequence desc limit 50 offset ${offset};`;
 
   try {
     dbRead().all(sql, (err, rows) => {
@@ -161,6 +161,23 @@ export function wordFrequence(query: any, res: Response) {
       res.status(200).json(rows);
     });
   } catch (err) {
-    console.log(new Date(), err);
+    console.error(new Date(), err);
+  }
+}
+
+export function wordsTotal(res: Response) {
+  const sql = `select count(*) as qty from words;`;
+
+  try {
+    dbRead().get(sql, (err, row) => {
+      if (err) {
+        dbReset();
+        res.status(200).send({ qty: 0 });
+        return;
+      }
+      res.status(200).send(row);
+    });
+  } catch (err) {
+    console.error(new Date(), err);
   }
 }

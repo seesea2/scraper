@@ -1,30 +1,29 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
 
-import { QuicklinkStrategy, QuicklinkModule } from 'ngx-quicklink';
+import { QuicklinkStrategy, QuicklinkModule } from "ngx-quicklink";
 
-import { BusArrivalComponent } from './bus-arrival/bus-arrival.component';
+import { BusArrivalComponent } from "./bus-arrival/bus-arrival.component";
 
 const routes: Routes = [
   {
-    path: 'go-back',
-    loadChildren: () =>
-      import('./shared/shared.module').then(m => m.SharedModule)
+    path: "words",
+    loadChildren: () => import("./words/words.module").then(m => m.WordsModule)
   },
   {
-    path: 'dictionary',
+    path: "dictionary",
     loadChildren: () =>
-      import('./dictionary/dictionary.module').then(m => m.DictionaryModule)
+      import("./dictionary/dictionary.module").then(m => m.DictionaryModule)
   },
   {
-    path: 'bus-arrival',
+    path: "bus-arrival",
     loadChildren: () =>
-      import('./bus-arrival/bus-arrival.module').then(m => m.BusArrivalModule)
+      import("./bus-arrival/bus-arrival.module").then(m => m.BusArrivalModule)
   },
   {
-    path: '',
+    path: "",
     component: BusArrivalComponent,
-    pathMatch: 'full'
+    pathMatch: "full"
   }
 ];
 
