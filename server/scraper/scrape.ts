@@ -144,6 +144,9 @@ new CronJob(
   "Asia/Singapore"
 );
 
+//scrape("slashdot.org");
+//scrape("gov.sg");
+
 export function wordsFrequence(query: any, res: Response) {
   let offset = 0;
   if (query && query.offset && query.offset > 0) {
