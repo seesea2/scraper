@@ -11,33 +11,9 @@
 # compiled output
 **/tmp
 **/out-tsc
-**/coverage
 **/debug
 
 # dependencies
 **/node_modules
 
-# IDEs and editors
-/.idea
-.project
-.classpath
-.c9/
-*.launch
-.settings
-*.sublime-workspace
-
-# IDE - VSCode
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-
-# misc
-/.sass-cache
-/connect.lock
-/typings
-
-# System Files
-.DS_Store
-.cache
-Thumbs.db
+**/*.db3
