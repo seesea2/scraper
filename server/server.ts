@@ -59,5 +59,5 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 app.listen(8080, () => {
-  console.log("Listening HTTP on port 8080.");
+  console.log("InSG listening HTTP on port 8080.");
 });
