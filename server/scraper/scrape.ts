@@ -155,10 +155,10 @@ export function wordFrequence(query: any, res: Response) {
     dbRead().all(sql, (err, rows) => {
       if (err) {
         dbReset();
-        res.send([]);
+        res.status(200).send([]);
         return;
       }
-      res.send(rows);
+      res.status(200).send(rows);
     });
   } catch (err) {
     console.log(new Date(), err);
