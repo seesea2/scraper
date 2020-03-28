@@ -7,7 +7,12 @@ import * as bodyParser from "body-parser";
 import CheckOxfordEntries from "./dictionary/dictionary";
 import getBusArrival from "./lta/bus-arrival";
 import { getBusStop, getNearbyBusStops } from "./lta/bus-stops";
-import { wordsFrequence, wordsTotal } from "./scraper/scrape";
+import {
+  wordsFrequence,
+  wordsTotal,
+  urlsScanned,
+  urlsTotal
+} from "./scraper/scrape";
 
 // Express server
 const app = express();
@@ -38,6 +43,13 @@ app.get("/api/scraper/words", (req: Request, res: Response) => {
 });
 app.get("/api/scraper/words/total", (req: Request, res: Response) => {
   wordsTotal(res);
+});
+
+app.get("/api/scraper/urls/scanned", (req: Request, res: Response) => {
+  urlsScanned(res);
+});
+app.get("/api/scraper/urls/total", (req: Request, res: Response) => {
+  urlsTotal(res);
 });
 
 app.get("/", (req: Request, res: Response) => {

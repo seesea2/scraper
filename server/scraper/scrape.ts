@@ -1,6 +1,7 @@
 import { Response } from "express";
 import Axios from "axios";
 import * as cheerio from "cheerio";
+import { CronJob } from "cron";
 
 import { dbRW, dbClose } from "../db-ops";
 
@@ -235,35 +236,69 @@ export function wordsTotal(res: Response) {
   }
 }
 
-async function scrapeLoop() {
-  try {
-    await scrape("www.slashdot.org");
-    await scrape("www.bbc.com");
-    await scrape("news.sky.com");
-    await scrape("https://www.theguardian.com/international");
+export function urlsTotal(res: Response) {
+  const sql = `select count(*) as qty from urls;`;
 
-    while (1) {
-      let sql = `SELECT url from urls where domain in 
-        (SELECT domain from urls group by domain ORDER by max(scanDate) limit 1)`;
-      await new Promise((resolve, reject) => {
-        dbRW().get(sql, async (err, row) => {
-          if (err || !row) {
-            console.error(new Date(), err);
-            dbClose();
-            reject(false);
-            return;
-          }
-          let scrapeRslt = await scrape(row.url);
-          setTimeout(() => {
-            resolve(scrapeRslt);
-          }, 3000);
-        });
-      });
-    }
+  try {
+    dbRW().get(sql, (err, row) => {
+      if (err) {
+        dbClose();
+        res.status(200).send({ qty: 0 });
+        return;
+      }
+      res.status(200).send(row);
+    });
   } catch (err) {
+    console.error(new Date(), err);
     dbClose();
-    console.error(err);
+  }
+}
+export function urlsScanned(res: Response) {
+  const sql = `select count(*) as qty from urls where scanDate is not null;`;
+
+  try {
+    dbRW().get(sql, (err, row) => {
+      if (err) {
+        dbClose();
+        res.status(200).send({ qty: 0 });
+        return;
+      }
+      res.status(200).send(row);
+    });
+  } catch (err) {
+    console.error(new Date(), err);
+    dbClose();
   }
 }
 
-scrapeLoop();
+async function scrapeSchedule() {
+  await scrape("www.slashdot.org");
+  await scrape("www.bbc.com");
+  await scrape("news.sky.com");
+  await scrape("https://www.theguardian.com/international");
+
+  new CronJob(
+    "0/10 * * * * *",
+    () => {
+      let sql = `SELECT url from urls where domain in 
+          (SELECT domain from urls group by domain ORDER by max(scanDate) limit 1)`;
+      try {
+        dbRW().get(sql, (err, row) => {
+          if (err || !row) {
+            console.error(new Date(), err);
+            dbClose();
+            return;
+          }
+          scrape(row.url);
+        });
+      } catch (err) {
+        dbClose();
+      }
+    },
+    null,
+    true,
+    "Asia/Singapore"
+  );
+}
+
+scrapeSchedule();
