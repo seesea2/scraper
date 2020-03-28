@@ -1,43 +1,33 @@
 import { join } from "path";
-import { Database, OPEN_READONLY, OPEN_READWRITE, verbose } from "sqlite3";
+import { Database, OPEN_CREATE, OPEN_READWRITE, verbose } from "sqlite3";
 
-const DB = join(__dirname, "/../db.db3");
+let database: Database = null;
 
-let sqlite3 = verbose();
-let db_r: Database = undefined;
-let db_rw: Database = undefined;
-
-function dbReset() {
-  if (db_r) {
-    db_r.close();
-    db_r = undefined;
+export function dbRW() {
+  if (!database) {
+    const sqlite3 = verbose();
+    const dbFile = join(__dirname, "/../db.db3");
+    database = new sqlite3.Database(
+      dbFile,
+      OPEN_READWRITE | OPEN_CREATE,
+      err => {
+        if (err) {
+          console.log("dbRW error", err);
+          database = undefined;
+        }
+      }
+    );
   }
-  if (db_rw) {
-    db_rw.close();
-    db_rw = undefined;
-  }
+  return database;
 }
 
-function dbRead() {
-  if (!db_r) {
-    try {
-      db_r = new sqlite3.Database(DB, OPEN_READONLY);
-    } catch (err) {
-      console.log("dbRead:", err);
-    }
+export function dbClose() {
+  if (database) {
+    database.close(err => {
+      if (err) {
+        console.error(err);
+      }
+    });
+    database = undefined;
   }
-  return db_r;
 }
-
-function dbWrite() {
-  if (!db_rw) {
-    try {
-      db_rw = new sqlite3.Database(DB, OPEN_READWRITE);
-    } catch (err) {
-      console.log("dbWrite:", err);
-    }
-  }
-  return db_rw;
-}
-
-export { dbReset, dbWrite, dbRead };

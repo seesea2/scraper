@@ -1,112 +1,148 @@
 import { Response } from "express";
 import Axios from "axios";
 import * as cheerio from "cheerio";
-import { CronJob } from "cron";
 
-import { dbRead, dbWrite, dbReset } from "../db-ops";
+import { dbRW, dbClose } from "../db-ops";
 
-function scrapeUrl(url: string, cheerioStatic: CheerioStatic) {
-  if (!url) return;
+interface WordFrequence {
+  word: string;
+  frequence: number;
+}
 
-  if (!cheerioStatic) return;
+try {
+  dbRW().run(
+    `create table if not exists urls(url TEXT UNIQUE PRIMARY KEY,
+     scanDateStr TEXT, scanDate INTEGER);`,
+    err => {
+      if (err) {
+        console.log(err);
+      }
+    }
+  );
+
+  dbRW().run(
+    `create table if not exists words(word TEXT UNIQUE PRIMARY KEY, frequence INTEGER);`,
+    err => {
+      if (err) {
+        console.log(err);
+      }
+    }
+  );
+} catch (err) {
+  console.error(err);
+}
+
+async function scrapeUrls(
+  url: string,
+  cheerioStatic: CheerioStatic
+): Promise<string[]> {
+  if (!url || !cheerioStatic) {
+    return [];
+  }
 
   if (url[url.length - 1] === "/") {
     url = url.substring(0, length - 1);
   }
 
-  let title = cheerioStatic("title").text() || "";
-  cheerioStatic("html *").each(function() {
-    if (this.type != "tag") return;
-
-    let obj = cheerioStatic(this);
-    let href = obj.attr("href");
-    if (!href) return;
-
-    if (href.includes("http:")) return;
-    if (href.includes("#")) return;
-    if (href.includes(".css")) return;
-    if (href.includes(".pdf")) return;
-    if (href.includes("resources")) return;
-    if (href.includes("?")) return;
-
-    if (href === "/") {
-      href = "";
-    } else if (href[href.length - 1] === "/") {
-      href = href.substring(0, href.length - 1);
-    }
-
-    let sql = "";
-    if (href.includes("//")) {
-      sql = `insert or ignore into urls(web,url) values("${title}","${href}")`;
-    } else if (!href || href[0] === "/") {
-      sql = `insert or ignore into urls(web,url) values("${title}","${url}${href}")`;
-    } else {
-      sql = `insert or ignore into urls(web,url) values("${title}","${url}/${href}")`;
-    }
-    try {
-      dbWrite().run(sql, err => {
-        if (err) {
-          dbReset();
-        }
-      });
-    } catch (err) {
-      dbReset();
-    }
-  });
-}
-
-function scrapeWords(url: string, cheerioStatic: CheerioStatic) {
-  if (!url || !cheerioStatic) return;
-
-  cheerioStatic("body *").each(function() {
-    if (this.type != "tag") return;
-
-    let obj = cheerioStatic(this);
-    if (obj.html().indexOf("<") != -1) return;
-
-    let text = obj.text();
-    if (!text) return;
-
-    let words = text.split(" ");
-    words.forEach(word => {
-      word = word.trim();
-      if (!word) return;
-      if (!word.match(/^[a-zA-Z]+$/)) return;
-
-      word = word.toLocaleLowerCase();
-      const sql = `insert into words(word,frequence) values("${word}",1)
-        on conflict(word) do update set frequence=frequence+1`;
+  return new Promise((resolve, reject) => {
+    let urls = [];
+    cheerioStatic("html *").each(function() {
       try {
-        dbWrite().run(sql, err => {
-          if (err) {
-            dbReset();
-          }
-        });
+        if (this.type != "tag") {
+          return;
+        }
+
+        let obj = cheerioStatic(this);
+        let href = obj.attr("href");
+        href = (href || " ").trim();
+        if (
+          !href ||
+          href == "/" ||
+          href === "//" ||
+          href.includes("http:") ||
+          href.includes("#") ||
+          href.includes(".css") ||
+          href.includes(".pdf") ||
+          href.includes("resources") ||
+          href.includes("?")
+        ) {
+          return;
+        }
+
+        if (href[href.length - 1] === "/") {
+          href = href.substring(0, href.length - 1);
+        }
+
+        if (!href.includes("//")) {
+          href = url + "/" + href;
+        }
+        if (!urls.includes(href)) {
+          urls.push(href);
+        }
       } catch (err) {
-        dbReset();
+        reject();
       }
     });
+    resolve(urls);
   });
 }
 
-async function scrape(url: string) {
-  if (!url) return;
-  if (!url.includes("//")) {
-    url = "https://" + url;
+async function scrapeWords(
+  url: string,
+  cheerioStatic: CheerioStatic
+): Promise<WordFrequence[]> {
+  if (!url || !cheerioStatic) {
+    return [];
   }
 
+  return new Promise((resolve, reject) => {
+    let wordsObj = [];
+    cheerioStatic("body *").each(function() {
+      if (this.type != "tag") return;
+
+      let obj = cheerioStatic(this);
+      if (!obj || obj.html().indexOf("<") != -1) return;
+      let text = obj.text();
+      if (!text) return;
+
+      let words = text.split(" ");
+      words.forEach(word => {
+        word = word.trim();
+        if (!word || word.length <= 2 || !word.match(/^[a-zA-Z]+$/)) return;
+
+        word = word.toLocaleLowerCase();
+        for (let item of wordsObj) {
+          if (item.word === word) {
+            return item.frequence++;
+          }
+        }
+        wordsObj.push({ word: word, frequence: 1 });
+      });
+    });
+    resolve(wordsObj);
+  });
+}
+
+async function scrape(url: string): Promise<boolean> {
+  if (!url) return false;
+
+  console.log("scraping: ", url);
   try {
-    console.log(new Date(), "scraping: ", url);
+    url = url.trim();
+    if (!url.includes("//")) {
+      url = "https://" + url;
+    }
+
     let dateStr = new Date().toLocaleString();
     let date = Date.now();
-    let sql = `insert into urls(url,scanDateStr,scanDate) 
+    let sql = `insert into urls (url,scanDateStr,scanDate)
       values("${url}","${dateStr}",${date})
-      on conflict(url) do update set scanDateStr="${dateStr}",scanDate=${date}`;
-    dbWrite().run(sql, err => {
+      on conflict(url) do update set scanDateStr="${dateStr}",scanDate=${date};`;
+    dbRW().run(sql, err => {
       if (err) {
         console.error(new Date(), err);
         console.error(new Date(), sql);
-        dbReset();
+        dbClose();
       }
     });
 
@@ -118,46 +154,48 @@ async function scrape(url: string) {
     };
     const urlResponse = await Axios(url, config);
     let cheerioLoad = cheerio.load(urlResponse.data);
-    scrapeUrl(url, cheerioLoad);
-    scrapeWords(url, cheerioLoad);
-    return;
+
+    await scrapeUrls(url, cheerioLoad).then(urls => {
+      urls.forEach(element => {
+        let sql = `insert or ignore into urls(url) values("${element}");`;
+        dbRW().run(sql, err => {
+          if (err) {
+            console.error(new Date(), sql, err);
+            dbClose();
+          }
+        });
+      });
+    });
+    await scrapeWords(url, cheerioLoad).then(words => {
+      words.forEach(element => {
+        let sql = `insert into words(word,frequence) values("${element.word}",${element.frequence})
+        on conflict(word) do update set frequence=frequence+${element.frequence};`;
+        dbRW().run(sql, err => {
+          if (err) {
+            console.error(new Date(), sql, err);
+            dbClose();
+          }
+        });
+      });
+    });
+    return true;
   } catch (error) {
-    console.error(new Date(), "scrape function error");
+    // console.error(new Date(), "scrape function error", error);
+    return false;
   }
 }
-
-new CronJob(
-  "0 */2 * * * *",
-  () => {
-    let sql = "select url from urls where scanDate is null;";
-    dbRead().get(sql, (err, row) => {
-      if (err) {
-        console.error(new Date(), err);
-        dbReset();
-        return;
-      }
-      scrape(row.url);
-    });
-  },
-  null,
-  true,
-  "Asia/Singapore"
-);
-
-//scrape("slashdot.org");
-//scrape("gov.sg");
 
 export function wordsFrequence(query: any, res: Response) {
   let offset = 0;
   if (query && query.offset && query.offset > 0) {
     offset = query.offset;
   }
-  const sql = `select * from words order by frequence desc limit 50 offset ${offset};`;
 
+  const sql = `select * from words order by frequence desc limit 50 offset ${offset};`;
   try {
-    dbRead().all(sql, (err, rows) => {
+    dbRW().all(sql, (err, rows) => {
       if (err) {
-        dbReset();
+        dbClose();
         res.status(200).json([]);
         return;
       }
@@ -165,6 +203,7 @@ export function wordsFrequence(query: any, res: Response) {
     });
   } catch (err) {
     console.error(new Date(), err);
+    dbClose();
   }
 }
 
@@ -172,9 +211,9 @@ export function wordsTotal(res: Response) {
   const sql = `select count(*) as qty from words;`;
 
   try {
-    dbRead().get(sql, (err, row) => {
+    dbRW().get(sql, (err, row) => {
       if (err) {
-        dbReset();
+        dbClose();
         res.status(200).send({ qty: 0 });
         return;
       }
@@ -182,5 +221,38 @@ export function wordsTotal(res: Response) {
     });
   } catch (err) {
     console.error(new Date(), err);
+    dbClose();
   }
 }
+
+async function scrapeLoop() {
+  try {
+    await scrape("www.slashdot.org");
+    await scrape("www.bbc.com");
+    await scrape("news.sky.com");
+    await scrape("https://www.theguardian.com/international");
+
+    while (1) {
+      let sql = `select url from urls where scanDate is null limit 1;`;
+      await new Promise((resolve, reject) => {
+        dbRW().get(sql, async (err, row) => {
+          if (err || !row) {
+            console.error(new Date(), err);
+            dbClose();
+            reject(false);
+            return;
+          }
+          let scrapeRslt = await scrape(row.url);
+          setTimeout(() => {
+            resolve(scrapeRslt);
+          }, 5000);
+        });
+      });
+    }
+  } catch (err) {
+    dbClose();
+    console.error(err);
+  }
+}
+
+scrapeLoop();
