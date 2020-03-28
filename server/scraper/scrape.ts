@@ -278,7 +278,7 @@ async function scrapeSchedule() {
   await scrape("https://www.theguardian.com/international");
 
   new CronJob(
-    "0/10 * * * * *",
+    "0/15 * * * * *",
     () => {
       let sql = `SELECT url from urls where domain in 
           (SELECT domain from urls group by domain ORDER by max(scanDate) limit 1)`;
