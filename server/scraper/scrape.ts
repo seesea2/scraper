@@ -12,7 +12,7 @@ interface WordFrequence {
 try {
   dbRW().run(
     `create table if not exists urls(url TEXT UNIQUE PRIMARY KEY,
-     scanDateStr TEXT, scanDate INTEGER);`,
+      domain TEXT, scanDateStr TEXT, scanDate INTEGER);`,
     err => {
       if (err) {
         console.log(err);
@@ -138,9 +138,8 @@ async function scrape(url: string): Promise<boolean> {
 
     let dateStr = new Date().toLocaleString();
     let date = Date.now();
-    let sql = `insert into urls (url,scanDateStr,scanDate)
-      values("${url}","${dateStr}",${date})
-      on conflict(url) do update set scanDateStr="${dateStr}",scanDate=${date};`;
+    let sql = `update urls set scanDateStr="${dateStr}", scanDate=${date}
+      where url="${url}" and scanDate is null;`;
     dbRW().run(sql, err => {
       if (err) {
         console.error(new Date(), err);
@@ -160,7 +159,15 @@ async function scrape(url: string): Promise<boolean> {
 
     await scrapeUrls(url, cheerioLoad).then(urls => {
       urls.forEach(element => {
-        let sql = `insert or ignore into urls(url) values("${element}");`;
+        let urlSplits = element.split("/");
+        let domain = "";
+        for (let split of urlSplits) {
+          if (split.includes(".")) {
+            domain = split;
+            break;
+          }
+        }
+        let sql = `insert or ignore into urls(url,domain) values("${element}","${domain}");`;
         dbRW().run(sql, err => {
           if (err) {
             console.error(new Date(), sql, err);
@@ -236,7 +243,8 @@ async function scrapeLoop() {
     await scrape("https://www.theguardian.com/international");
 
     while (1) {
-      let sql = `select url from urls where scanDate is null limit 1;`;
+      let sql = `SELECT url from urls where domain in 
+        (SELECT domain from urls group by domain ORDER by max(scanDate) limit 1)`;
       await new Promise((resolve, reject) => {
         dbRW().get(sql, async (err, row) => {
           if (err || !row) {
@@ -248,7 +256,7 @@ async function scrapeLoop() {
           let scrapeRslt = await scrape(row.url);
           setTimeout(() => {
             resolve(scrapeRslt);
-          }, 5000);
+          }, 3000);
         });
       });
     }
