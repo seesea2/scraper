@@ -69,6 +69,9 @@ async function scrapeUrls(
           return;
         }
 
+        if (href[0] == "/" && href[1] == "/") {
+          href = "https:" + href;
+        }
         if (href[href.length - 1] === "/") {
           href = href.substring(0, href.length - 1);
         }
