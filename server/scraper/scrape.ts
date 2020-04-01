@@ -296,7 +296,7 @@ async function scrapeSchedule() {
       }
     },
     null,
-    true,
+    false,
     "Asia/Singapore"
   );
 }
