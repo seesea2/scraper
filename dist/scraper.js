@@ -40,7 +40,7 @@ var axios_1 = require("axios");
 var cheerio = require("cheerio");
 var cron_1 = require("cron");
 var db_ops_1 = require("./db-ops");
-function init() {
+function initDb() {
     try {
         db_ops_1.dbRW().run("create table if not exists urls(url TEXT UNIQUE PRIMARY KEY,\n             domain TEXT, scanDateStr TEXT, scanDate INTEGER);", function (err) {
             if (err) {
@@ -59,7 +59,7 @@ function init() {
         console.error(err);
     }
 }
-init();
+initDb();
 function scrapeUrls(url, cheerioStatic) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
@@ -167,7 +167,7 @@ function scrape(url) {
                     }
                     dateStr = new Date().toLocaleString();
                     date = Date.now();
-                    sql_1 = "update urls set scanDateStr=\"" + dateStr + "\", scanDate=" + date + "\n      where url=\"" + url + "\" and scanDate is null;";
+                    sql_1 = "update urls set scanDateStr=\"" + dateStr + "\", scanDate=" + date + "\n                  where url=\"" + url + "\" and scanDate is null;";
                     db_ops_1.dbRW().run(sql_1, function (err) {
                         if (err) {
                             console.error(new Date(), err);
@@ -336,7 +336,7 @@ function scrapeSchedule() {
                         catch (err) {
                             db_ops_1.dbClose();
                         }
-                    }, null, false, "Asia/Singapore");
+                    }, null, true, "Asia/Singapore");
                     return [2];
             }
         });

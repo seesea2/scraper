@@ -8,16 +8,16 @@ var app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.get("/api/scraper/words", function (req, res) {
+app.get("/api/words", function (req, res) {
     scraper_1.wordsFrequence(req.query, res);
 });
-app.get("/api/scraper/words/total", function (req, res) {
+app.get("/api/words/total", function (req, res) {
     scraper_1.wordsTotal(res);
 });
-app.get("/api/scraper/urls/scanned", function (req, res) {
+app.get("/api/urls/scanned", function (req, res) {
     scraper_1.urlsScanned(res);
 });
-app.get("/api/scraper/urls/total", function (req, res) {
+app.get("/api/urls/total", function (req, res) {
     scraper_1.urlsTotal(res);
 });
 app.all("/*", function (req, res) {
@@ -29,6 +29,6 @@ app.use(function (req, res, next) {
         .send({ message: "Server Issue." });
 });
 app.listen(8888, function () {
-    console.log("Scraper listening HTTP on port 8888.");
+    console.log("Scraper is listening HTTP on port 8888.");
 });
 //# sourceMappingURL=server.js.map

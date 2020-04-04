@@ -10,7 +10,7 @@ interface WordFrequence {
     frequence: number;
 }
 
-function init() {
+function initDb() {
     try {
         dbRW().run(
             `create table if not exists urls(url TEXT UNIQUE PRIMARY KEY,
@@ -36,7 +36,7 @@ function init() {
         console.error(err);
     }
 }
-init();
+initDb();
 
 
 async function scrapeUrls(url: string, cheerioStatic: CheerioStatic): Promise<string[]> {
@@ -94,39 +94,38 @@ async function scrapeUrls(url: string, cheerioStatic: CheerioStatic): Promise<st
     });
 }
 
-async function scrapeWords(url: string,
-    cheerioStatic: CheerioStatic): Promise<WordFrequence[]> {
-        if (!url || !cheerioStatic) {
-            return [];
-        }
-
-        return new Promise((resolve, reject) => {
-            let wordsObj = [];
-            cheerioStatic("body *").each(function() {
-                if (this.type != "tag") return;
-
-                let obj = cheerioStatic(this);
-                if (!obj || obj.html().indexOf("<") != -1) return;
-                let text = obj.text();
-                if (!text) return;
-
-                let words = text.split(" ");
-                words.forEach(word => {
-                    word = word.trim();
-                    if (!word || word.length <= 2 || !word.match(/^[a-zA-Z]+$/)) return;
-
-                    word = word.toLocaleLowerCase();
-                    for (let item of wordsObj) {
-                        if (item.word === word) {
-                            return item.frequence++;
-                        }
-                    }
-                    wordsObj.push({ word: word, frequence: 1 });
-                });
-            });
-            resolve(wordsObj);
-        });
+async function scrapeWords(url: string, cheerioStatic: CheerioStatic): Promise<WordFrequence[]> {
+    if (!url || !cheerioStatic) {
+        return [];
     }
+
+    return new Promise((resolve, reject) => {
+        let wordsObj = [];
+        cheerioStatic("body *").each(function() {
+            if (this.type != "tag") return;
+
+            let obj = cheerioStatic(this);
+            if (!obj || obj.html().indexOf("<") != -1) return;
+            let text = obj.text();
+            if (!text) return;
+
+            let words = text.split(" ");
+            words.forEach(word => {
+                word = word.trim();
+                if (!word || word.length <= 2 || !word.match(/^[a-zA-Z]+$/)) return;
+
+                word = word.toLocaleLowerCase();
+                for (let item of wordsObj) {
+                    if (item.word === word) {
+                        return item.frequence++;
+                    }
+                }
+                wordsObj.push({ word: word, frequence: 1 });
+            });
+        });
+        resolve(wordsObj);
+    });
+}
 
 async function scrape(url: string): Promise<boolean> {
     if (!url) return false;
@@ -141,7 +140,7 @@ async function scrape(url: string): Promise<boolean> {
         let dateStr = new Date().toLocaleString();
         let date = Date.now();
         let sql = `update urls set scanDateStr="${dateStr}", scanDate=${date}
-      where url="${url}" and scanDate is null;`;
+                  where url="${url}" and scanDate is null;`;
         dbRW().run(sql, err => {
             if (err) {
                 console.error(new Date(), err);
@@ -297,7 +296,7 @@ async function scrapeSchedule() {
             }
         },
         null,
-        false,
+        true,
         "Asia/Singapore"
     );
 }
